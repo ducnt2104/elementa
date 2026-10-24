@@ -4,22 +4,22 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T01:26:00+07:00`  
-**Elapsed Real Time:** `2h 37m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T01:32:00+07:00`  
+**Elapsed Real Time:** `2h 43m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 2h 37m)
+## 1. CURRENT AUDIT SUMMARY (T = 2h 43m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 187 / 187 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 189 / 189 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.06s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.50 MB) & advanced (1.53 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.02s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.54 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -323,3 +323,31 @@
   - Code splitting enhancement in `vite.config.ts`: Split visualizers into curriculum (1.50 MB) and advanced (1.53 MB), eliminating 3000 kB chunk warning.
   - Production build compiled in 15.06s with entry chunk size preserved at 682.96 kB (134.30 kB gzip).
   - Total test suites expanded to 187 / 187 with 100% pass rate.
+- **2026-10-25 01:32 (Iteration 20 Checkpoint - 30-Minute Daemon Milestone 6)**:
+  - Implemented comprehensive Halogen Derivatives & Reaction Mechanisms ($S_N1, S_N2, E1, E2$) Engine in `src/domain/halogenDerivativesEngine.ts` strictly conforming to GDPT 2018 Grade 11 (Chủ đề 5: Dẫn xuất Halogen) & IUPAC Standards:
+    - Complete catalog of 8 representative halogen derivatives (Ethyl chloride, Isopropyl bromide, tert-Butyl chloride, Allyl chloride, Benzyl chloride, Chlorobenzene, Vinyl chloride, Freon-12 / CFC-12) with $C-X$ bond energies, reactivity classifications, and curricular references.
+    - Aqueous Alkaline Hydrolysis & Halogen Diagnostic Test ($AgNO_3$):
+      - Acidification with dilute $HNO_3$ prevents false-positive brown $Ag_2O \downarrow$ interference ($2Ag^+ + 2OH^- \to Ag_2O \downarrow + H_2O$) from residual $NaOH$.
+      - Precise halogen precipitate identification: $AgCl \downarrow$ (white, soluble in dilute $NH_3$ via $[Ag(NH_3)_2]^+$ complexation), $AgBr \downarrow$ (pale yellow, slightly soluble in conc $NH_3$), $AgI \downarrow$ (bright yellow, insoluble in conc $NH_3$).
+      - Exam trap highlight: Aryl halides (Chlorobenzene) and Vinyl halides (Vinyl chloride) possess $sp^2$-hybridized $C-X$ bonds with $p-\pi$ resonance delocalization, rendering them completely impervious to hydrolysis under standard aqueous conditions and yielding zero precipitate with $AgNO_3$.
+    - Ethanolic Dehydrohalogenation (Zaitsev Elimination):
+      - Solvent discrimination: $KOH / C_2H_5OH$ drives elimination ($E2$) creating an alkene, whereas $KOH / H_2O$ drives nucleophilic substitution ($S_N$) creating an alcohol.
+      - Zaitsev's rule enforcement: preferential elimination of $\beta$-hydrogen from less hydrogenated carbon, yielding more substituted alkene e.g. 2-Bromobutane $\to$ But-2-ene (major, 81%) + But-1-ene (minor, 19%).
+    - Reaction Mechanism Decision Matrix ($S_N1, S_N2, E1, E2$):
+      - Governed by substrate degree ($1^\circ, 2^\circ, 3^\circ$), nucleophile strength, base strength, and solvent proticity (polar protic vs polar aprotic).
+      - Kinetic rate laws: $v = k[RX]$ (unimolecular, $S_N1/E1$) vs $v = k[RX][Nu-]$ / $v = k[RX][Base]$ (bimolecular, $S_N2/E2$).
+      - Stereochemical consequences: 100% Walden inversion for $S_N2$, racemization for $S_N1$ via planar $sp^2$ carbocation intermediate, anti-periplanar for $E2$.
+    - Freon CFC Stratospheric Ozone Depletion:
+      - Photolytic cleavage by stratospheric UV ($\lambda < 240\text{ nm}$): $CF_2Cl_2 \to \ ^\bullet CF_2Cl + Cl^\bullet$.
+      - Catalytic chain cycle ($Cl^\bullet + O_3 \to ClO^\bullet + O_2$; $ClO^\bullet + O \to Cl^\bullet + O_2$).
+      - Extreme catalytic multiplier: single $Cl^\bullet$ destroys $>100,000\ O_3$ molecules.
+      - Montreal Protocol compliance: phase-out and replacement by zero-ODP HFCs and HFOs.
+  - Created and passed Test Suite 188 (`test-halogen-derivatives.mjs`, 17/17 passed).
+  - Implemented `HalogenDerivativesVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Alkaline hydrolysis & $AgNO_3$ test tube simulation with $HNO_3$ acidification toggle, $Ag_2O$ interference alert, $NH_3$ complexation solubility, and aryl/vinyl inertia warnings.
+    - Mode 2: Zaitsev elimination laboratory with $KOH/C_2H_5OH$ vs $KOH/H_2O$ solvent toggle, major/minor alkene breakdowns, and $\beta$-carbon analysis.
+    - Mode 3: $S_N1/S_N2/E1/E2$ mechanism decision matrix with kinetic rate law and stereochemical outputs, alongside Freon CFC stratospheric ozone destruction simulation.
+  - Integrated `HalogenDerivativesVisualizer` into `PeriodicCodexTab.tsx` under `'HALOGEN_DERIVATIVES'`.
+  - Created and passed Test Suite 189 (`test-halogen-derivatives-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 16.02s with entry chunk size preserved at 682.96 kB (134.30 kB gzip).
+  - Total test suites expanded to 189 / 189 with 100% pass rate.
