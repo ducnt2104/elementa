@@ -4,21 +4,21 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T02:30:00+07:00`  
-**Elapsed Real Time:** `3h 41m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T02:39:00+07:00`  
+**Elapsed Real Time:** `3h 50m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 3h 41m)
+## 1. CURRENT AUDIT SUMMARY (T = 3h 50m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 205 / 205 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 207 / 207 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 17.19s with 0 warnings |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.87s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
@@ -486,3 +486,30 @@
   - Created and passed Test Suite 205 (`test-salt-hydrolysis-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 17.19s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 205 / 205 with 100% pass rate.
+- **2026-10-25 02:39 (Iteration 29 Checkpoint)**:
+  - Implemented comprehensive Forensic Chemistry, Toxicology & Luminol Chemiluminescence Engine in `src/domain/forensicChemistryEngine.ts` strictly conforming to GDPT 2018 Chemistry Specialty Modules (Chuyên đề Hóa học Kỹ thuật Hình sự & Y tế) & IUPAC Standards:
+    - Breathalyzer alcohol redox determination ($3C_2H_5OH + 2K_2Cr_2O_7 + 8H_2SO_4 \to 3CH_3COOH + 2Cr_2(SO_4)_3 + 2K_2SO_4 + 11H_2O$):
+      - Models Henry's Law alveolar partition coefficient ($2100:1$) converting BrAC (mg/L breath) to BAC (mg/100mL blood).
+      - Strict mapping to Vietnam Decree 100/2019/ND-CP penalty brackets (Tier 0 Sober, Tier 1 $\le 0.25$, Tier 2 $0.25 - 0.40$, Tier 3 $> 0.40\text{ mg/L}$ max penalty).
+      - Beer-Lambert colorimetric optical density simulation at $\lambda = 440\text{ nm}$ ($Cr_2O_7^{2-}$ orange reduction) and $\lambda = 600\text{ nm}$ ($Cr^{3+}$ emerald green formation).
+    - Luminol bloodstain chemiluminescence ($C_8H_7N_3O_2$):
+      - Models catalytic decomposition of $H_2O_2$ by iron heme ($Fe^{2+}/Fe^{3+}$ in hemoglobin), exciting 3-aminophthalate to release blue-cyan photons ($\lambda_{max} = 425\text{ nm}$).
+      - Demonstrates ultra-trace sensitivity down to $1:100,000$ dilution.
+      - Differentiates true blood positives from false positives: bleach ($NaClO$) instant short flash decay ($< 4\text{ s}$) and rust ($Fe_2O_3$).
+    - Historical Marsh Test for Arsenic ($As$):
+      - Models nascent hydrogen generation ($As_2O_3 + 6Zn + 6H_2SO_4 \to 2AsH_3 \uparrow + 6ZnSO_4 + 3H_2O$) and thermal decomposition into shiny metallic arsenic mirror ($2AsH_3 \to 2As \downarrow + 3H_2 \uparrow$).
+      - Differentiation from Antimony ($Sb$): Arsenic mirror dissolves completely in Sodium Hypochlorite ($NaOCl$), whereas Antimony mirror ($Sb$) remains insoluble.
+    - Marquis Reagent Drug Identification Catalog:
+      - Formalin + conc $H_2SO_4$ spot reactions for Opiates (Morphine/Heroin $\to$ Violet/Purple), ATS (Amphetamine/Methamphetamine $\to$ Orange), MDMA/Ecstasy (Jet Black), and Aspirin/Sugar negative controls.
+    - Cyanide Poisoning & Antidote Therapy:
+      - Simulates lethal inhibition of Cytochrome c Oxidase (Complex IV) in mitochondrial cellular respiration.
+      - Antidote rescue mechanics: Sodium Thiosulfate ($CN^- + S_2O_3^{2-} \xrightarrow{rhodanese} SCN^- + SO_3^{2-}$) and Hydroxocobalamin ($CN^-$ chelation into nontoxic Vitamin $B_{12}$).
+  - Created and passed Test Suite 206 (`test-forensic-chemistry.mjs`, 13/13 passed).
+  - Implemented `ForensicChemistryVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Breathalyzer photometer cuvette SVG with live alcohol slider, Decree 100 fine cards, and optical density meters.
+    - Mode 2: Interactive Crime Scene Darkroom with lights toggle, 6 test samples, spray trigger, and pulsating $425\text{ nm}$ chemiluminescent footprint SVG.
+    - Mode 3: Marsh arsenic mirror lab, 5-substance Marquis reagent color spot plate, and Cyanide mitochondrial rescue slider.
+  - Integrated `ForensicChemistryVisualizer` into `PeriodicCodexTab.tsx` under `'FORENSIC_CHEMISTRY'` with `ShieldAlert` icon.
+  - Created and passed Test Suite 207 (`test-forensic-chemistry-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 16.87s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 207 / 207 with 100% pass rate.
