@@ -4,22 +4,22 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T01:32:00+07:00`  
-**Elapsed Real Time:** `2h 43m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T01:44:00+07:00`  
+**Elapsed Real Time:** `2h 55m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 2h 43m)
+## 1. CURRENT AUDIT SUMMARY (T = 2h 55m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 189 / 189 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 191 / 191 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.02s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.54 MB) & advanced (1.53 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.52s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.57 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -351,3 +351,20 @@
   - Created and passed Test Suite 189 (`test-halogen-derivatives-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 16.02s with entry chunk size preserved at 682.96 kB (134.30 kB gzip).
   - Total test suites expanded to 189 / 189 with 100% pass rate.
+- **2026-10-25 01:44 (Iteration 21 Checkpoint)**:
+  - Implemented comprehensive Chemical Energetics, Enthalpy of Formation & Hess's Law Engine in `src/domain/chemicalEnergeticsEngine.ts` strictly conforming to GDPT 2018 Grade 10 (Chủ đề 5: Năng lượng hóa học) & IUPAC Standards:
+    - Standard thermochemical state definition: $T = 298\text{ K } (25^\circ C)$, $P = 1\text{ bar } (10^5\text{ Pa})$.
+    - Catalog of 25 substances with standard formation enthalpies ($\Delta_f H^\circ_{298}$), verifying that elements in their most stable reference state have $\Delta_f H^\circ_{298} \equiv 0\text{ kJ/mol}$ ($O_2(g), N_2(g), H_2(g), C(graphite), Fe(s), Br_2(l)$) while non-reference allotropes have non-zero enthalpies ($C(diamond) = +1.9, O_3(g) = +142.7$).
+    - Reaction enthalpy from formation enthalpies: $\Delta_r H^\circ_{298} = \sum \nu_{prod} \Delta_f H^\circ_{298}(prod) - \sum \nu_{react} \Delta_f H^\circ_{298}(react)$ (Methane combustion $\Delta_r H = -890.3\text{ kJ}$, Limestone thermal decomposition $\Delta_r H = +178.3\text{ kJ}$, Thermite reaction $\Delta_r H = -851.5\text{ kJ}$).
+    - Reaction enthalpy from bond dissociation energies ($E_b$): $\Delta_r H^\circ_{298} = \sum \nu_{react} E_b(react) - \sum \nu_{prod} E_b(prod)$ (Gas phase reactions: $H_2 + Cl_2 \to 2HCl$ yielding $\Delta_r H = -183.0\text{ kJ}$).
+    - Coffee-cup constant-pressure calorimeter simulation: $q = mc\Delta T$, computing temperature shift of water for exothermic ($\Delta T > 0$) and endothermic ($\Delta T < 0$) processes with animated mercury column.
+    - Hess's Law thermochemical cycle solver: thermodynamic state function path independence ($CO$ indirect synthesis from $C + 1/2 O_2 \to CO$ yielding $\Delta_r H = -110.5\text{ kJ/mol}$; $NO_2$ two-step oxidation yielding $+33.2\text{ kJ/mol}$; $C_2H_2$ two-step hydrogenation yielding $-312.1\text{ kJ/mol}$).
+  - Created and passed Test Suite 190 (`test-chemical-energetics.mjs`, 11/11 passed).
+  - Implemented `ChemicalEnergeticsVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Reaction enthalpy from $\Delta_f H^\circ_{298}$, SVG potential energy curve showing reactants, activation energy hill ($E_a$), transition state ($\ddagger$), and products plateau, with animated mercury thermometer and calorimeter temperature shift readout.
+    - Mode 2: Bond energy estimator for gas-phase reactions with broken vs formed bond accounting and IUPAC gas-phase constraint alert.
+    - Mode 3: Hess's Law cycle builder with multi-step thermochemical algebra, step direction reversers, and algebraic path independence verification.
+  - Integrated `ChemicalEnergeticsVisualizer` into `PeriodicCodexTab.tsx` under `'CHEMICAL_ENERGETICS'`.
+  - Created and passed Test Suite 191 (`test-chemical-energetics-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 16.52s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 191 / 191 with 100% pass rate.
