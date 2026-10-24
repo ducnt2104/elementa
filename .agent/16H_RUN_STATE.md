@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T03:19:10+07:00`  
-**Elapsed Real Time:** `4h 30m 20s`  
+**Latest Checkpoint Timestamp:** `2026-10-25T03:25:50+07:00`  
+**Elapsed Real Time:** `4h 37m 00s`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 4h 30m)
+## 1. CURRENT AUDIT SUMMARY (T = 4h 37m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 219 / 219 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 221 / 221 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -661,3 +661,31 @@
   - Created and passed Test Suite 219 (`test-soil-fertilizer-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 15.84s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 219 / 219 with 100% pass rate.
+- **2026-10-25 03:25 (Iteration 36 Checkpoint)**:
+  - Implemented comprehensive Synthetic Dye Chemistry, Azo Coupling, Chromophore Theory & Fenton Decolorization Engine in `src/domain/dyeChemistryEngine.ts` strictly conforming to GDPT 2018 Chemistry Curriculum (Chương 3 Lớp 12: Amin & Muối Diazoni; Chương 8: Hóa học & Môi trường) & IUPAC Colour Index (C.I.) / QCVN 13-MT:2015/BTNMT Standards:
+    - 6-Dye Catalog & Photochemical Invariants:
+      - Sudan I ($C_{16}H_{12}N_2O$, C.I. 12055): 1-(phenyldiazenyl)naphthalen-2-ol, red-orange azo dye with intramolecular H-bonding, strictly banned as food colorant (Thông tư 24/2019/TT-BYT).
+      - Methyl Orange (Helianthin, C.I. 13025): Azo acid-base indicator with quinonoid structure at $pH < 3.1$ (red, $\lambda_{max} = 508\text{ nm}$) shifting to benzenoid azo at $pH > 4.4$ (yellow, $\lambda_{max} = 460\text{ nm}$).
+      - Congo Red (C.I. 22120): Disazo direct dye for cellulose/cotton fibers, diagnostic marker for amyloidosis fibrils in histology.
+      - Indigo Synthetic (C.I. 73000): Insoluble keto vat dye for denim jeans, reduced with $Na_2S_2O_4$ to soluble leuco-indigo, then air-oxidized on fabric.
+      - Malachite Green (C.I. 42000): Triarylmethane cationic dye, prohibited in Vietnamese aquaculture exports due to teratogenicity.
+      - Alizarin (C.I. 58000): 1,2-dihydroxyanthraquinone, forms coordination metal lakes with $Al^{3+} / Ca^{2+}$ mordants on wool.
+      - Invariant: Verified Planck-Einstein relation ($\Delta E \cdot \lambda_{max} \approx 1240\text{ eV}\cdot\text{nm}$) across all catalog dyes.
+    - Diazotization Temperature Constraint:
+      - $0 - 5^\circ\text{C}$ (ice bath): $[C_6H_5-N^+\equiv N]Cl^-$ stable in aqueous solution, yielding $>97\%$ diazonium salt.
+      - $> 10^\circ\text{C}$: Thermally decomposes into phenol and nitrogen gas ($[C_6H_5-N_2^+] + H_2O \to C_6H_5OH + N_2 \uparrow + H^+$), releasing $>2000\text{ mL } N_2$ gas violently.
+    - Azo Coupling pH Selectivity:
+      - Coupling with Phenols (2-Naphthol $\to$ Sudan I): Optimal in alkaline medium ($pH \approx 9 - 10$) where 2-naphthol deprotonates to reactive nucleophilic phenoxide ion ($Ar-O^-$). Acidic medium yields $<15\%$ product.
+      - Coupling with Aromatic Amines (N,N-dimethylaniline $\to$ Methyl Orange): Optimal in mild acid ($pH \approx 4 - 5$). Strong acid ($pH < 3$) protonates amine to $-NH^+(CH_3)_2$, deactivating the ring and blocking coupling.
+    - Advanced Oxidation Process (AOP) Fenton Decolorization:
+      - Generation of hydroxyl radicals ($^\bullet OH$, $E^\circ = +2.8\text{ V}$) via $Fe^{2+} + H_2O_2 \to Fe^{3+} + ^\bullet OH + OH^-$.
+      - Attacks $-N=N-$ azo bonds, achieving $>97\%$ decolorization and $>75\%$ COD removal at optimal $pH = 3.0$, meeting Vietnamese industrial discharge standard QCVN 13-MT:2015/BTNMT. Alkaline $pH > 4.5$ deactivates catalyst via $Fe(OH)_3$ precipitation.
+  - Created and passed Test Suite 220 (`test-dye-chemistry.mjs`, 6/6 passed).
+  - Implemented `DyeChemistryVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Interactive synthesis bench SVG with ice bath beaker (temperature slider $0-30^\circ\text{C}$), $N_2 \uparrow$ effervescence alerts, coupling reagent toggle, and pH slider showing live precipitate formation.
+    - Mode 2: Visible light spectrum bar with absorbed vs complementary observed color cards and HOMO-LUMO energy gap meter ($\Delta E$).
+    - Mode 3: Fenton wastewater treatment tank SVG with active $^\bullet OH$ sparkles, real-time decolorization progression, and QCVN 13 compliance badges.
+  - Integrated `DyeChemistryVisualizer` into `PeriodicCodexTab.tsx` under `'DYES_AZO_CHEMISTRY'` with `Palette` icon.
+  - Created and passed Test Suite 221 (`test-dye-chemistry-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 16.85s with entry chunk size strictly preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 221 / 221 with 100% pass rate.
