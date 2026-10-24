@@ -1,20 +1,37 @@
 // src/App.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { Navbar, ActiveTab } from './components/Navbar';
 import { MainMenuTab } from './components/MainMenuTab';
 import { MobaArenaTab } from './components/moba/MobaArenaTab';
 import { MobaDebriefModal } from './components/moba/MobaDebriefModal';
-import { PeriodicCodexTab } from './components/PeriodicCodexTab';
-import { CreativeWorkshopTab } from './components/CreativeWorkshopTab';
 import { TutorialLabTab } from './components/TutorialLabTab';
-import { UnifiedResourcesModal, UnifiedResourceTab } from './components/resources/UnifiedResourcesModal';
+import type { UnifiedResourceTab } from './components/resources/UnifiedResourcesModal';
 import { SpotlightTour } from './components/onboarding/SpotlightTour';
 import { DebriefModal } from './components/DebriefModal';
 import { SettingsModal } from './components/SettingsModal';
 import { OnlineMultiplayerLobbyModal } from './components/duel/OnlineMultiplayerLobbyModal';
 import { JudgeDemoModal } from './components/JudgeDemoModal';
 import { FirebaseAuthModal } from './components/auth/FirebaseAuthModal';
-import { TeacherDashboardTab } from './components/TeacherDashboardTab';
+
+// Code-split heavy visualizer and analytical tabs for fast landing page startup
+const PeriodicCodexTab = React.lazy(() => import('./components/PeriodicCodexTab').then(m => ({ default: m.PeriodicCodexTab })));
+const CreativeWorkshopTab = React.lazy(() => import('./components/CreativeWorkshopTab').then(m => ({ default: m.CreativeWorkshopTab })));
+const TeacherDashboardTab = React.lazy(() => import('./components/TeacherDashboardTab').then(m => ({ default: m.TeacherDashboardTab })));
+const UnifiedResourcesModal = React.lazy(() => import('./components/resources/UnifiedResourcesModal').then(m => ({ default: m.UnifiedResourcesModal })));
+
+const ViewLoadingFallback: React.FC = () => (
+  <div className="flex-1 w-full min-h-[400px] flex flex-col items-center justify-center p-8 space-y-4 animate-fadeIn">
+    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-indigo-600 p-0.5 animate-pulse shadow-lg shadow-cyan-500/20">
+      <div className="w-full h-full bg-obsidian rounded-[14px] flex items-center justify-center">
+        <span className="font-serif font-black text-cyan-300 text-lg">E</span>
+      </div>
+    </div>
+    <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-cyan-300 uppercase">
+      <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+      <span>Đang Khởi Tạo Phân Hệ...</span>
+    </div>
+  </div>
+);
 
 import { TacticalDuelArenaTab } from './components/duel/TacticalDuelArenaTab';
 import { TacticalCollectionTab } from './components/collection/TacticalCollectionTab';
@@ -472,6 +489,7 @@ export const App: React.FC = () => {
             }}
             openTutorial={() => setActiveTab('TUTORIAL')}
             onOpenDeckBuilder={() => setActiveTab('DECK')}
+            onGoToSrs={() => handleOpenUnifiedResources('SRS')}
             onReturnToLobby={() => {
               if (systemMode === 'TCG') setActiveTab('TCG_MENU');
               else setActiveTab('MENU');
@@ -580,18 +598,22 @@ export const App: React.FC = () => {
         {/* CODEX TAB: Periodic Table & Chemical Lore */}
         {activeTab === 'CODEX' && (
           <div className="max-w-7xl w-full mx-auto p-4 sm:p-6 flex-1">
-            <PeriodicCodexTab />
+            <Suspense fallback={<ViewLoadingFallback />}>
+              <PeriodicCodexTab />
+            </Suspense>
           </div>
         )}
 
         {/* WORKSHOP TAB: Crafting Studio, Reaction Lab & Custom Cards */}
         {activeTab === 'WORKSHOP' && (
           <div className="max-w-7xl w-full mx-auto p-4 sm:p-6 flex-1">
-            <CreativeWorkshopTab
-              profile={profile}
-              onSaveSkill={handleSaveCustomSkill}
-              savedSkills={savedSkills}
-            />
+            <Suspense fallback={<ViewLoadingFallback />}>
+              <CreativeWorkshopTab
+                profile={profile}
+                onSaveSkill={handleSaveCustomSkill}
+                savedSkills={savedSkills}
+              />
+            </Suspense>
           </div>
         )}
 
@@ -624,7 +646,9 @@ export const App: React.FC = () => {
         {/* TEACHER DASHBOARD TAB (Section VI.1 - Bảng Điều Khiển Sư Phạm) */}
         {activeTab === 'TEACHER' && (
           <div className="max-w-7xl w-full mx-auto p-4 sm:p-6 flex-1">
-            <TeacherDashboardTab profile={profile} />
+            <Suspense fallback={<ViewLoadingFallback />}>
+              <TeacherDashboardTab profile={profile} />
+            </Suspense>
           </div>
         )}
       </main>
@@ -716,13 +740,15 @@ export const App: React.FC = () => {
       )}
 
       {showUnifiedResources && (
-        <UnifiedResourcesModal
-          isOpen={showUnifiedResources}
-          onClose={() => setShowUnifiedResources(false)}
-          initialTab={unifiedResourceTab}
-          profile={profile}
-          onUpdateProfile={updateProfile}
-        />
+        <Suspense fallback={null}>
+          <UnifiedResourcesModal
+            isOpen={showUnifiedResources}
+            onClose={() => setShowUnifiedResources(false)}
+            initialTab={unifiedResourceTab}
+            profile={profile}
+            onUpdateProfile={updateProfile}
+          />
+        </Suspense>
       )}
 
       {activeMobaDebrief && (

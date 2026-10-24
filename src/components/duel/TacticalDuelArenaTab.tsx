@@ -63,6 +63,7 @@ export interface TacticalDuelArenaTabProps {
   openTutorial?: () => void;
   onOpenDeckBuilder?: () => void;
   onReturnToLobby?: () => void;
+  onGoToSrs?: () => void;
 }
 
 export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
@@ -75,7 +76,8 @@ export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
   onExitCampaignDuel,
   openTutorial,
   onOpenDeckBuilder,
-  onReturnToLobby
+  onReturnToLobby,
+  onGoToSrs
 }) => {
   const [aiLevel, setAiLevel] = useState<AiLevel>(initialAiLevel || 'ADEPT');
   const [matchLpSetting, setMatchLpSetting] = useState<number>(8000);
@@ -4540,6 +4542,21 @@ export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
                 <RotateCcw className="w-4 h-4 fill-obsidian" />
                 <span>TÁI ĐẤU NGAY (REMATCH)</span>
               </button>
+
+              {/* Review Misconceptions CTA (CA-SRS) */}
+              {onGoToSrs && (
+                <button
+                  onClick={() => {
+                    sound.playUiClick();
+                    onGoToSrs();
+                  }}
+                  className="py-3 px-3.5 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-500/50 hover:border-purple-400 text-purple-200 hover:text-white font-mono font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md"
+                  title="Mở Thẻ Ôn Tập Khoa Học Spaced Repetition (CA-SRS) để củng cố bẫy nhận thức"
+                >
+                  <BookOpen className="w-4 h-4 text-purple-400" />
+                  <span className="hidden sm:inline">Ôn Tập</span> CA-SRS
+                </button>
+              )}
 
               {/* Edit Deck CTA */}
               {onOpenDeckBuilder && (

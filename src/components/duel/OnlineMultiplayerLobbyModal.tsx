@@ -18,7 +18,7 @@ import {
   X,
   Swords
 } from 'lucide-react';
-import { apiClient, MultiplayerRoomDTO, UserSession, PlayerProfileDTO } from '../../services/apiClient';
+import { apiClient, MultiplayerRoomDTO, UserSession, PlayerProfileDTO, ConnectionStatus } from '../../services/apiClient';
 import { sound } from '../../audio/soundEngine';
 
 interface OnlineMultiplayerLobbyModalProps {
@@ -44,6 +44,8 @@ export const OnlineMultiplayerLobbyModal: React.FC<OnlineMultiplayerLobbyModalPr
   const [joinCodeInput, setJoinCodeInput] = useState<string>('');
   const [copiedCode, setCopiedCode] = useState<boolean>(false);
   const [isReady, setIsReady] = useState<boolean>(false);
+  const [connStatus, setConnStatus] = useState<ConnectionStatus>('CONNECTING');
+  const [connRetryCount, setConnRetryCount] = useState<number>(0);
 
   // Upgrade guest modal inside lobby
   const [showUpgradeForm, setShowUpgradeForm] = useState<boolean>(false);
@@ -77,21 +79,27 @@ export const OnlineMultiplayerLobbyModal: React.FC<OnlineMultiplayerLobbyModalPr
     handleInitSession();
   }, [isOpen]);
 
-  // Subscribe to real-time SSE updates when inside a room
+  // Subscribe to real-time SSE updates when inside a room with backoff & fallback
   useEffect(() => {
     if (!currentRoom) return;
 
     const unsubscribe = apiClient.subscribeToRoom(
       currentRoom.code,
-      (updatedRoom) => {
-        setCurrentRoom(updatedRoom);
-        if (updatedRoom.status === 'IN_PROGRESS') {
-          sound.playReactionSuccess();
-          onStartOnlineMatch(updatedRoom);
+      {
+        onUpdate: (updatedRoom) => {
+          setCurrentRoom(updatedRoom);
+          if (updatedRoom.status === 'IN_PROGRESS') {
+            sound.playReactionSuccess();
+            onStartOnlineMatch(updatedRoom);
+          }
+        },
+        onError: (err) => {
+          console.warn('[Multiplayer SSE] Stream warning:', err);
+        },
+        onStatusChange: (status, retry) => {
+          setConnStatus(status);
+          setConnRetryCount(retry);
         }
-      },
-      (err) => {
-        console.warn('[Multiplayer SSE] Stream warning:', err);
       }
     );
 
@@ -364,8 +372,32 @@ export const OnlineMultiplayerLobbyModal: React.FC<OnlineMultiplayerLobbyModalPr
               {/* Room Code Header */}
               <div className="p-4 rounded-2xl bg-gradient-to-r from-navy via-navy-light/60 to-navy border border-cyan-ion/40 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                  <div className="text-[11px] font-mono text-cyan-ion uppercase tracking-widest">
-                    Mã Phòng Thi Đấu Trực Tuyến
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-mono text-cyan-ion uppercase tracking-widest">
+                      Mã Phòng Thi Đấu Trực Tuyến
+                    </span>
+                    {/* Real-time Connection Health Badge */}
+                    {connStatus === 'CONNECTED' ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-[10px] font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        SSE Trực Tuyến
+                      </span>
+                    ) : connStatus === 'RECONNECTING' ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-spin" />
+                        Đang kết nối lại ({connRetryCount})...
+                      </span>
+                    ) : connStatus === 'FALLBACK_POLLING' ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-[10px] font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                        Dự Phòng (Polling 2s)
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-[10px] font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                        Đang kết nối...
+                      </span>
+                    )}
                   </div>
                   <div className="text-3xl font-black font-mono text-ivory tracking-wider mt-0.5">
                     {currentRoom.code}

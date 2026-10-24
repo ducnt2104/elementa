@@ -9084,5 +9084,119 @@ export const REACTION_RULES_DATABASE: ReactionDetail[] = [
       "generalizationVI": "Hợp chất hữu cơ có nhóm -CHO (andehit, glucozơ, mantozơ, axit fomic) đều có phản ứng tráng bạc đặc trưng."
     },
     "curriculumStandard": "GDPT_2018_HOA_12"
+  },
+  {
+    "id": "rx_org_polymerization_ethene",
+    "code": "RX_ORG_007",
+    "name_vi": "Phản ứng Trùng hợp Etilen tạo Nhựa Polyetylen (PE)",
+    "groupCategory": "GROUP_G_ORGANIC",
+    "reactants": [
+      "C", "H"
+    ],
+    "requiredConditions": [
+      "HIGH_TEMP"
+    ],
+    "isTrap": false,
+    "equation": "n CH₂=CH₂(g) → (-CH₂-CH₂-)ₙ(s)",
+    "balancedEquationPlain": "n C2H4 -> (-C2H4-)n",
+    "thermodynamics": "EXOTHERMIC",
+    "effectArchetype": "INERT_SHIELD",
+    "basePower": 92,
+    "durationTurns": 3,
+    "pedagogicalExplanation": "Dưới áp suất cao, nhiệt độ và chất xúc tác thích hợp, các liên kết pi (π) kém bền trong phân tử ethylene đứt ra để kết hợp hàng nghìn mắt xích lại với nhau tạo đại phân tử polymer PE dẻo dai.",
+    "observablePhenomenaVI": "Từ chất khí không màu chuyển hóa thành màng nhựa hoặc khối chất rắn màu trắng đục, không thấm nước, cách điện tuyệt đối.",
+    "chemicalExplanationLayers": {
+      "resultVI": "Tổng hợp polymer dẻo Polyethylene (nhựa PE nhiệt dẻo).",
+      "evidenceVI": "n CH₂=CH₂ → (-CH₂-CH₂-)ₙ (áp suất cao, nhiệt độ, xúc tác Ziegler-Natta)",
+      "mechanismVI": "Mở liên kết đôi C=C qua cơ chế gốc tự do hoặc ion để nối dài mạch hydrocarbon vô tận.",
+      "generalizationVI": "Các hợp chất chứa liên kết đôi C=C mạch hở đều có khả năng tham gia phản ứng trùng hợp tạo polymer."
+    },
+    "safetyNoticeVI": "Quá trình trùng hợp cần kiểm soát nhiệt độ nghiêm ngặt để tránh quá nhiệt bùng nổ áp suất.",
+    "curriculumStandard": "GDPT_2018_HOA_11"
+  },
+  {
+    "id": "rx_org_bromine_addition_ethene",
+    "code": "RX_ORG_008",
+    "name_vi": "Phản ứng Cộng Nước Brom của Etilen (Thuốc thử liên kết bội)",
+    "groupCategory": "GROUP_G_ORGANIC",
+    "reactants": [
+      "C", "H", "Br"
+    ],
+    "requiredConditions": [
+      "MOISTURE_H2O"
+    ],
+    "isTrap": false,
+    "equation": "CH₂=CH₂(g) + Br₂(aq) → CH₂Br-CH₂Br(l)",
+    "balancedEquationPlain": "C2H4 + Br2 -> C2H4Br2",
+    "thermodynamics": "EXOTHERMIC",
+    "effectArchetype": "CLEANSE_DISPEL",
+    "basePower": 78,
+    "durationTurns": 1,
+    "pedagogicalExplanation": "Khí ethylene làm mất màu hoàn toàn dung dịch nước brom ở nhiệt độ phòng do liên kết pi (π) kém bền bị bẻ gãy để cộng 2 nguyên tử brom tạo 1,2-dibromoethane không màu.",
+    "observablePhenomenaVI": "Dung dịch nước Brom có màu nâu đỏ cam chuyển sang hoàn toàn không màu và trong suốt ngay tức thì.",
+    "chemicalExplanationLayers": {
+      "resultVI": "Tạo 1,2-dibromoethane (chất lỏng không màu) và làm mất màu dung dịch Brom.",
+      "evidenceVI": "CH₂=CH₂ + Br₂ → CH₂Br-CH₂Br",
+      "mechanismVI": "Cộng electrophile vào liên kết đôi C=C qua chất trung gian ion bromonium vòng tam giác.",
+      "generalizationVI": "Dung dịch nước Brom là thuốc thử kinh điển dùng để nhận biết các hợp chất hữu cơ chứa liên kết bội (anken, ankin)."
+    },
+    "curriculumStandard": "GDPT_2018_HOA_11"
+  },
+  {
+    "id": "rx_org_combustion_methane",
+    "code": "RX_ORG_009",
+    "name_vi": "Đốt cháy Khí Mêtan (Nhiên liệu Khí Tự Nhiên Sạch)",
+    "groupCategory": "GROUP_G_ORGANIC",
+    "reactants": [
+      "C", "H", "O"
+    ],
+    "requiredConditions": [
+      "HIGH_TEMP"
+    ],
+    "isTrap": false,
+    "equation": "CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(g)",
+    "balancedEquationPlain": "CH4 + 2O2 -> CO2 + 2H2O",
+    "thermodynamics": "EXOTHERMIC",
+    "effectArchetype": "BURST_DAMAGE",
+    "basePower": 85,
+    "durationTurns": 1,
+    "pedagogicalExplanation": "Metan cháy với ngọn lửa màu xanh lam nhạt tỏa nhiệt lượng khổng lồ ΔᵣH° = -890.3 kJ/mol, tạo carbon dioxide và hơi nước sạch, là nguồn năng lượng hóa thạch sạch nhất.",
+    "observablePhenomenaVI": "Ngọn lửa màu xanh lam sáng ấm, tỏa lượng nhiệt rất lớn, không sinh khói đen hay muội than; làm đục nước vôi trong Ca(OH)₂.",
+    "chemicalExplanationLayers": {
+      "resultVI": "Oxi hóa hoàn toàn carbon thành CO₂ và hydro thành H₂O.",
+      "evidenceVI": "CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(g) với biến thiên enthalpy chuẩn ΔᵣH° = -890.3 kJ/mol.",
+      "mechanismVI": "Phản ứng dây chuyền gốc tự do tỏa nhiệt mãnh liệt ở nhiệt độ cao.",
+      "generalizationVI": "Đốt cháy hoàn toàn hidrocacbon mạch no luôn cho số mol H₂O lớn hơn số mol CO₂ (n H₂O > n CO₂)."
+    },
+    "curriculumStandard": "GDPT_2018_HOA_11"
+  },
+  {
+    "id": "rx_org_cellulose_hydrolysis",
+    "code": "RX_ORG_010",
+    "name_vi": "Thủy phân Tinh bột và Xenlulozơ tạo Glucozơ",
+    "groupCategory": "GROUP_G_ORGANIC",
+    "reactants": [
+      "C", "H", "O"
+    ],
+    "requiredConditions": [
+      "ACID_DILUTE",
+      "HIGH_TEMP"
+    ],
+    "isTrap": false,
+    "equation": "(C₆H₁₀O₅)ₙ(s) + n H₂O(l) → n C₆H₁₂O₆(aq)",
+    "balancedEquationPlain": "(C6H10O5)n + n H2O -> n C6H12O6",
+    "thermodynamics": "ENDOTHERMIC",
+    "effectArchetype": "INERT_SHIELD",
+    "basePower": 80,
+    "durationTurns": 2,
+    "pedagogicalExplanation": "Đun nóng tinh bột hoặc cellulose trong dung dịch acid vô cơ loãng (H₂SO₄) làm các liên kết glycosidic bị bẻ gãy hoàn toàn tạo các phân tử monosaccharide glucose tinh khiết.",
+    "observablePhenomenaVI": "Hồ tinh bột đục chuyển thành dung dịch trong suốt; dung dịch sau phản ứng trung hòa acid có khả năng tráng gương với AgNO₃/NH₃.",
+    "chemicalExplanationLayers": {
+      "resultVI": "Cắt đứt chuỗi polysaccharide thành các mắt xích Glucose tự do.",
+      "evidenceVI": "(C₆H₁₀O₅)ₙ + n H₂O → n C₆H₁₂O₆ (xúc tác H⁺, đun nóng)",
+      "mechanismVI": "Ion H⁺ proton hóa cầu nối oxy glycosidic tạo carbocation trung gian mở vòng thủy phân.",
+      "generalizationVI": "Cả tinh bột (dự trữ năng lượng) và xenlulozơ (thành tế bào thực vật) khi thủy phân triệt để đều cho sản phẩm duy nhất là D-glucose."
+    },
+    "curriculumStandard": "GDPT_2018_HOA_12"
   }
 ];

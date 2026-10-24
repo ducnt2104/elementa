@@ -95,6 +95,14 @@ export interface MultiplayerRoomDTO {
   createdAt: string;
 }
 
+export type ConnectionStatus = 'CONNECTING' | 'CONNECTED' | 'RECONNECTING' | 'FALLBACK_POLLING' | 'CLOSED';
+
+export interface RoomSubscriptionOptions {
+  onUpdate: (room: MultiplayerRoomDTO) => void;
+  onError?: (err: any) => void;
+  onStatusChange?: (status: ConnectionStatus, retryCount: number) => void;
+}
+
 const TOKEN_STORAGE_KEY = 'elementa_online_token_v2';
 const API_BASE_URL = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
   ? (window.location.port === '3001' ? '' : 'http://localhost:3001')
@@ -423,19 +431,50 @@ class ApiClient {
   }
 
   /**
-   * Real-time subscription to room state changes via SSE with automatic resilient polling fallback
+   * Real-time subscription to room state changes via SSE with exponential backoff reconnect & resilient polling fallback
    */
   public subscribeToRoom(
     code: string,
-    onUpdate: (room: MultiplayerRoomDTO) => void,
-    onError?: (err: any) => void
+    onUpdateOrOptions: ((room: MultiplayerRoomDTO) => void) | RoomSubscriptionOptions,
+    maybeOnError?: (err: any) => void
   ): () => void {
+    let onUpdate: (room: MultiplayerRoomDTO) => void;
+    let onError: ((err: any) => void) | undefined;
+    let onStatusChange: ((status: ConnectionStatus, retryCount: number) => void) | undefined;
+
+    if (typeof onUpdateOrOptions === 'function') {
+      onUpdate = onUpdateOrOptions;
+      onError = maybeOnError;
+    } else {
+      onUpdate = onUpdateOrOptions.onUpdate;
+      onError = onUpdateOrOptions.onError;
+      onStatusChange = onUpdateOrOptions.onStatusChange;
+    }
+
     let isClosed = false;
     let fallbackInterval: ReturnType<typeof setInterval> | null = null;
+    let reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
     let eventSource: EventSource | null = null;
+    let retryCount = 0;
+    const MAX_BACKOFF_MS = 16000;
+    const INITIAL_BACKOFF_MS = 1000;
+
+    const setStatus = (status: ConnectionStatus) => {
+      if (onStatusChange && !isClosed) {
+        onStatusChange(status, retryCount);
+      }
+    };
+
+    const stopPollingFallback = () => {
+      if (fallbackInterval) {
+        clearInterval(fallbackInterval);
+        fallbackInterval = null;
+      }
+    };
 
     const startPollingFallback = () => {
       if (fallbackInterval || isClosed) return;
+      setStatus('FALLBACK_POLLING');
       fallbackInterval = setInterval(async () => {
         if (isClosed) return;
         try {
@@ -444,50 +483,110 @@ class ApiClient {
         } catch (e) {
           if (onError && !isClosed) onError(e);
         }
-      }, 1800);
+      }, 2000);
+    };
+
+    const reconcileState = async () => {
+      try {
+        const room = await this.getRoom(code);
+        if (!isClosed) {
+          onUpdate(room);
+        }
+      } catch (err) {
+        if (onError && !isClosed) onError(err);
+      }
+    };
+
+    const connectSSE = () => {
+      if (isClosed) return;
+
+      if (eventSource) {
+        eventSource.close();
+        eventSource = null;
+      }
+
+      setStatus(retryCount === 0 ? 'CONNECTING' : 'RECONNECTING');
+
+      try {
+        const sseUrl = `${API_BASE_URL}/api/rooms/${code}/events`;
+        eventSource = new EventSource(sseUrl);
+
+        eventSource.onopen = () => {
+          if (isClosed) return;
+          retryCount = 0;
+          setStatus('CONNECTED');
+          stopPollingFallback();
+          // Immediately reconcile room state upon reconnection
+          reconcileState();
+        };
+
+        eventSource.onmessage = (event) => {
+          if (isClosed) return;
+          try {
+            const payload = JSON.parse(event.data);
+            if (payload.room) {
+              onUpdate(payload.room);
+            }
+          } catch (err) {
+            if (onError && !isClosed) onError(err);
+          }
+        };
+
+        eventSource.onerror = (err) => {
+          if (isClosed) return;
+          if (onError) onError(err);
+
+          // Engage polling fallback immediately while waiting for SSE reconnect
+          startPollingFallback();
+
+          if (eventSource) {
+            eventSource.close();
+            eventSource = null;
+          }
+
+          retryCount++;
+          // Exponential backoff: 1s, 2s, 4s, 8s, max 16s with 10% jitter
+          const baseDelay = Math.min(INITIAL_BACKOFF_MS * Math.pow(2, retryCount - 1), MAX_BACKOFF_MS);
+          const jitter = Math.random() * 0.1 * baseDelay;
+          const delay = Math.round(baseDelay + jitter);
+
+          setStatus('RECONNECTING');
+
+          if (reconnectTimeout) clearTimeout(reconnectTimeout);
+          reconnectTimeout = setTimeout(() => {
+            if (!isClosed) {
+              connectSSE();
+            }
+          }, delay);
+        };
+      } catch (e) {
+        startPollingFallback();
+      }
     };
 
     if (typeof window === 'undefined' || typeof EventSource === 'undefined') {
       startPollingFallback();
       return () => {
         isClosed = true;
-        if (fallbackInterval) clearInterval(fallbackInterval);
+        stopPollingFallback();
       };
     }
 
-    try {
-      const sseUrl = `${API_BASE_URL}/api/rooms/${code}/events`;
-      eventSource = new EventSource(sseUrl);
-
-      eventSource.onmessage = (event) => {
-        if (isClosed) return;
-        try {
-          const payload = JSON.parse(event.data);
-          if (payload.room) {
-            onUpdate(payload.room);
-          }
-        } catch (err) {
-          if (onError && !isClosed) onError(err);
-        }
-      };
-
-      eventSource.onerror = (err) => {
-        if (onError && !isClosed) onError(err);
-        // Seamlessly engage background polling fallback on stream error or disconnect
-        startPollingFallback();
-      };
-    } catch {
-      startPollingFallback();
-    }
+    // Initial connection attempt
+    connectSSE();
 
     return () => {
       isClosed = true;
+      setStatus('CLOSED');
+      if (reconnectTimeout) {
+        clearTimeout(reconnectTimeout);
+        reconnectTimeout = null;
+      }
       if (eventSource) {
         eventSource.close();
+        eventSource = null;
       }
-      if (fallbackInterval) {
-        clearInterval(fallbackInterval);
-      }
+      stopPollingFallback();
     };
   }
 }

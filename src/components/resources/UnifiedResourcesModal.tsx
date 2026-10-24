@@ -24,13 +24,15 @@ import {
   Layers,
   HelpCircle,
   Sword,
-  BookMarked
+  BookMarked,
+  FlaskConical
 } from 'lucide-react';
 import { VERIFIED_REDOX_DATABASE } from '../../domain/redoxEngine';
 import { CANONICAL_BONDING_DATABASE, CanonicalBondingModel } from '../../domain/bondingEngine';
 import { PlayerProfile } from '../../domain/types';
 import { DailySrsTab } from '../DailySrsTab';
 import { BondingVisualizerModal } from '../visualizations/BondingVisualizerModal';
+import { apiClient } from '../../services/apiClient';
 import { Maximize2 } from 'lucide-react';
 
 export type UnifiedResourceTab = 'REACTIONS' | 'BONDING' | 'CALCULATOR' | 'RULES' | 'REFERENCES' | 'SRS';
@@ -237,6 +239,16 @@ export const UnifiedResourcesModal: React.FC<UnifiedResourcesModalProps> = ({
   const [solutionVolume, setSolutionVolume] = useState<number>(500); // mL
   const [acidHPlus, setAcidHPlus] = useState<number>(0.01); // M
 
+  // Nernst Equation State (Pin Điện Hóa)
+  const [e0Cell, setE0Cell] = useState<number>(1.10); // Daniell Cell Zn-Cu
+  const [electronCount, setElectronCount] = useState<number>(2); // n
+  const [reactionQuotientQ, setReactionQuotientQ] = useState<number>(0.01); // [Zn2+]/[Cu2+]
+
+  // Henderson-Hasselbalch Buffer State (Dung Dịch Đệm)
+  const [pKa, setPKa] = useState<number>(4.76); // CH3COOH
+  const [concAcid, setConcAcid] = useState<number>(0.1); // [HA]
+  const [concConjugateBase, setConcConjugateBase] = useState<number>(0.1); // [A-]
+
   // Sync initial tab when modal opens
   React.useEffect(() => {
     if (isOpen) {
@@ -269,6 +281,16 @@ export const UnifiedResourcesModal: React.FC<UnifiedResourcesModalProps> = ({
     if (acidHPlus <= 0) return 7;
     return -Math.log10(acidHPlus);
   }, [acidHPlus]);
+
+  const calculatedNernstE = useMemo(() => {
+    if (electronCount <= 0 || reactionQuotientQ <= 0) return e0Cell;
+    return e0Cell - (0.0592 / electronCount) * Math.log10(reactionQuotientQ);
+  }, [e0Cell, electronCount, reactionQuotientQ]);
+
+  const calculatedBufferPH = useMemo(() => {
+    if (concAcid <= 0 || concConjugateBase <= 0) return pKa;
+    return pKa + Math.log10(concConjugateBase / concAcid);
+  }, [pKa, concAcid, concConjugateBase]);
 
   if (!isOpen) return null;
 
@@ -697,6 +719,123 @@ export const UnifiedResourcesModal: React.FC<UnifiedResourcesModalProps> = ({
                     </div>
                   </div>
                 </div>
+
+                {/* Nernst Equation Electrochemical Calculator */}
+                <div className="p-5 rounded-xl bg-navy/70 border border-navy-light/60 space-y-4">
+                  <div className="flex items-center gap-2 border-b border-navy-light/40 pb-2.5">
+                    <Zap className="w-5 h-5 text-amber-400" />
+                    <h3 className="font-serif font-black text-sm text-ivory">
+                      Phương Trình Nernst — Thế Pin Điện Hóa (E_pin)
+                    </h3>
+                  </div>
+
+                  <div className="space-y-3 text-xs">
+                    <div className="grid grid-cols-3 gap-2">
+                      <div>
+                        <label className="text-ivory-muted block mb-1">E° pin (V):</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={e0Cell}
+                          onChange={(e) => setE0Cell(parseFloat(e.target.value) || 0)}
+                          className="w-full bg-obsidian border border-navy-light rounded-lg px-2.5 py-1.5 text-ivory font-mono focus:border-amber-400 focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-ivory-muted block mb-1">Số e trao đổi n:</label>
+                        <input
+                          type="number"
+                          min="1"
+                          max="10"
+                          value={electronCount}
+                          onChange={(e) => setElectronCount(parseInt(e.target.value) || 1)}
+                          className="w-full bg-obsidian border border-navy-light rounded-lg px-2.5 py-1.5 text-ivory font-mono focus:border-amber-400 focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-ivory-muted block mb-1">Thương số Q:</label>
+                        <input
+                          type="number"
+                          step="0.001"
+                          value={reactionQuotientQ}
+                          onChange={(e) => setReactionQuotientQ(parseFloat(e.target.value) || 0.001)}
+                          className="w-full bg-obsidian border border-navy-light rounded-lg px-2.5 py-1.5 text-ivory font-mono focus:border-amber-400 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 rounded-lg bg-amber-950/40 border border-amber-500/30 text-center">
+                      <span className="text-[11px] text-ivory-muted font-mono block">Sức Điện Động Thực Tế E_pin:</span>
+                      <span className="text-2xl font-black text-amber-300 font-mono">
+                        {calculatedNernstE.toFixed(4)} V
+                      </span>
+                      <div className="text-xs text-ivory-muted mt-1">
+                        {calculatedNernstE > 0 ? (
+                          <span className="text-emerald-400 font-bold">Phản ứng tự diễn biến phát điện (ΔG &lt; 0)</span>
+                        ) : calculatedNernstE === 0 ? (
+                          <span className="text-amber-400 font-bold">Pin đạt trạng thái cân bằng (Hết điện)</span>
+                        ) : (
+                          <span className="text-coral-reaction font-bold">Cần đặt thế điện phân bên ngoài</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Henderson-Hasselbalch Buffer Calculator */}
+                <div className="p-5 rounded-xl bg-navy/70 border border-navy-light/60 space-y-4">
+                  <div className="flex items-center gap-2 border-b border-navy-light/40 pb-2.5">
+                    <FlaskConical className="w-5 h-5 text-purple-400" />
+                    <h3 className="font-serif font-black text-sm text-ivory">
+                      Dung Dịch Đệm — Henderson-Hasselbalch
+                    </h3>
+                  </div>
+
+                  <div className="space-y-3 text-xs">
+                    <div className="grid grid-cols-3 gap-2">
+                      <div>
+                        <label className="text-ivory-muted block mb-1">Hằng số pKa:</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={pKa}
+                          onChange={(e) => setPKa(parseFloat(e.target.value) || 0)}
+                          className="w-full bg-obsidian border border-navy-light rounded-lg px-2.5 py-1.5 text-ivory font-mono focus:border-purple-400 focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-ivory-muted block mb-1">[HA] Axit (M):</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={concAcid}
+                          onChange={(e) => setConcAcid(parseFloat(e.target.value) || 0.01)}
+                          className="w-full bg-obsidian border border-navy-light rounded-lg px-2.5 py-1.5 text-ivory font-mono focus:border-purple-400 focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-ivory-muted block mb-1">[A⁻] Muối (M):</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={concConjugateBase}
+                          onChange={(e) => setConcConjugateBase(parseFloat(e.target.value) || 0.01)}
+                          className="w-full bg-obsidian border border-navy-light rounded-lg px-2.5 py-1.5 text-ivory font-mono focus:border-purple-400 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 rounded-lg bg-purple-950/40 border border-purple-500/30 text-center">
+                      <span className="text-[11px] text-ivory-muted font-mono block">Chỉ Số pH Dung Dịch Đệm:</span>
+                      <span className="text-2xl font-black text-purple-300 font-mono">
+                        {calculatedBufferPH.toFixed(2)}
+                      </span>
+                      <div className="text-xs text-ivory-muted mt-1">
+                        Dung lượng đệm: [A⁻]/[HA] = {(concConjugateBase / concAcid).toFixed(2)} (Kháng sốc pH tối ưu)
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -828,8 +967,16 @@ export const UnifiedResourcesModal: React.FC<UnifiedResourcesModalProps> = ({
                     onUpdateProfile((prev) => ({
                       ...prev,
                       srsItems: newItems,
-                      xp: prev.xp + (xpEarned || 0)
+                      xp: prev.xp + (xpEarned || 0),
+                      stats: {
+                        ...prev.stats,
+                        srsReviewsCompleted: (prev.stats?.srsReviewsCompleted || 0) + 1
+                      }
                     }));
+                  }
+                  // Seamlessly sync progression with authoritative online backend if connected
+                  if (apiClient.getToken()) {
+                    apiClient.syncProgression(xpEarned || 0).catch(() => {});
                   }
                 }}
               />
