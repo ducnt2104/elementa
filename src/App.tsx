@@ -13,6 +13,7 @@ import { DebriefModal } from './components/DebriefModal';
 import { SettingsModal } from './components/SettingsModal';
 import { OnlineMultiplayerLobbyModal } from './components/duel/OnlineMultiplayerLobbyModal';
 import { JudgeDemoModal } from './components/JudgeDemoModal';
+import { FirebaseAuthModal } from './components/auth/FirebaseAuthModal';
 import { TeacherDashboardTab } from './components/TeacherDashboardTab';
 
 import { TacticalDuelArenaTab } from './components/duel/TacticalDuelArenaTab';
@@ -54,6 +55,7 @@ export const App: React.FC = () => {
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [showMultiplayerLobby, setShowMultiplayerLobby] = useState<boolean>(false);
   const [showJudgeDemo, setShowJudgeDemo] = useState<boolean>(false);
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
   const [activeDebrief, setActiveDebrief] = useState<BattleDebriefData | null>(null);
   const [activeMobaDebrief, setActiveMobaDebrief] = useState<MobaMatchDebrief | null>(null);
   const [currentCampaignStage, setCurrentCampaignStage] = useState<CampaignStage | null>(null);
@@ -293,6 +295,7 @@ export const App: React.FC = () => {
         openUnifiedResources={handleOpenUnifiedResources}
         openMultiplayerLobby={() => setShowMultiplayerLobby(true)}
         openJudgeDemo={() => setShowJudgeDemo(true)}
+        openAuthModal={() => setShowAuthModal(true)}
       />
 
       {/* Main Screen Views */}
@@ -769,6 +772,17 @@ export const App: React.FC = () => {
         onClose={() => setShowHeroShop(false)}
         profile={profile}
         onUpdateProfile={updateProfile}
+      />
+
+      {/* Firebase Authentication & Cloud Sync Modal */}
+      <FirebaseAuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        profile={profile}
+        onProfileSynced={(updatedProfile) => {
+          setProfile(updatedProfile);
+          GameStorage.saveProfile(updatedProfile);
+        }}
       />
     </div>
   );

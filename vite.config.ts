@@ -18,14 +18,31 @@ export default defineConfig({
           if (id.includes('node_modules/lucide-react')) {
             return 'vendor-icons';
           }
+          if (id.includes('node_modules/firebase') || id.includes('node_modules/@firebase')) {
+            return 'vendor-firebase';
+          }
           if (
             id.includes('src/data/reactionsData') ||
             id.includes('src/data/elementsData') ||
-            id.includes('src/data/playableCardsData') ||
-            id.includes('src/data/extraDeckCardsData') ||
-            id.includes('src/data/diagnosticQuestionsData')
+            id.includes('src/data/substancesData') ||
+            id.includes('src/data/curriculumDiagnosticData')
           ) {
-            return 'chemistry-compendium-data';
+            return 'chemistry-reference-data';
+          }
+          if (id.includes('batch_') || id.includes('cards/batches') || id.includes('src/data/cards/')) {
+            if (id.includes('monsters')) {
+              return 'cards-monsters';
+            }
+            if (id.includes('spells')) {
+              return 'cards-spells';
+            }
+            if (id.includes('traps')) {
+              return 'cards-traps';
+            }
+            if (id.includes('extra_deck')) {
+              return 'cards-extra-deck';
+            }
+            return 'cards-expansion-data';
           }
           if (id.includes('src/components/visualizations/')) {
             return 'chemistry-visualizers';

@@ -179,6 +179,7 @@ export interface DuelDeckConfig {
   mainDeck: string[];
   extraDeck: string[];
   sideDeck?: string[];
+  archetype?: string;
 }
 
 export interface DuelMatchRecord {
@@ -201,6 +202,11 @@ export interface DuelMatchRecord {
 
 export interface PlayerProfile {
   name: string;
+  username?: string;
+  isGuest?: boolean;
+  battlesPlayed?: number;
+  battlesWon?: number;
+  reactionsTriggered?: number;
   level: number;
   xp: number;
   knowledgeTokens: number;
@@ -209,6 +215,7 @@ export interface PlayerProfile {
   activeDeck: string[]; // Card identifiers (up to 10 slots legacy)
   savedDecks: { id: string; name: string; cards: string[] }[];
   cardCollection?: Record<string, number>; // Card ID -> count owned
+  collection?: Record<string, number>; // Alias for cardCollection in online sync
   activeDuelDeck?: DuelDeckConfig; // Standard 40-60 card TCG Deck
   savedDuelDecks?: DuelDeckConfig[];
   srsItems: SrsItem[];

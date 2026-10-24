@@ -16,7 +16,8 @@ import {
   Flame,
   Coins,
   Shield,
-  Home
+  Home,
+  Cloud
 } from 'lucide-react';
 import { UnifiedResourceTab } from './resources/UnifiedResourcesModal';
 
@@ -57,6 +58,7 @@ interface NavbarProps {
   openUnifiedResources?: (tab?: UnifiedResourceTab) => void;
   openMultiplayerLobby?: () => void;
   openJudgeDemo?: () => void;
+  openAuthModal?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -70,7 +72,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   isMuted,
   toggleMute,
   openTutorial,
-  openUnifiedResources
+  openUnifiedResources,
+  openAuthModal
 }) => {
   const isTcgActive =
     activeTab === 'TCG_MENU' ||
@@ -266,6 +269,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               />
             </div>
           </div>
+
+          {/* Cloud Auth & Sync Portal Button */}
+          {openAuthModal && (
+            <button
+              onClick={() => {
+                sound.playUiClick();
+                openAuthModal();
+              }}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-navy hover:bg-navy-light text-cyan-300 border border-cyan-500/40 text-xs font-semibold transition-all shadow-sm focus-visible:ring-2 focus-visible:ring-cyan-ion focus-visible:outline-none"
+              title="Đăng nhập & Đồng bộ Cloud Firestore"
+              aria-label="Cổng tài khoản và đồng bộ Cloud"
+            >
+              <Cloud className="w-4 h-4 text-cyan-400" />
+              <span className="hidden md:inline">Cloud</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+            </button>
+          )}
 
           {/* Spotlight Tour Guided Help Button */}
           <button

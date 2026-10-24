@@ -108,5 +108,44 @@ npm run preview
 
 ---
 
-## 5. BẢN QUYỀN & MÃ NGUỒN MỞ
+## 5. KIẾN TRÚC FIREBASE CLOUD & BẢO MẬT (FIREBASE ARCHITECTURE & SECURITY)
+
+ELEMENTA tích hợp trực tiếp với hệ sinh thái Firebase (Google Cloud Platform) theo nguyên tắc **Zero-Trust, Strict Owner Isolation & Offline-First**:
+
+### 5.1. Mô hình dữ liệu Cloud Firestore:
+- `users/{userId}`: Hồ sơ học sinh / người chơi (level, XP, tokens, shards, thành tựu, vai trò).
+- `decks/{deckId}`: Quản lý 9 ô bộ bài trực tuyến (giới hạn nghiêm ngặt 30-60 lá bài chính, tối đa 15 Extra Deck).
+- `collections/{userId}`: Kho thẻ bài sở hữu cá nhân (tối đa 3 bản sao mỗi loại thẻ).
+- `matches/{matchId}`: Trạng thái và nhật ký trận đấu nhiều người chơi (P2P / Room-based).
+- `match_events/{eventId}`: Luồng sự kiện trận đấu bất biến (Append-Only Audit Stream).
+- `public_cards/{cardId}`: Danh mục 7.330 lá bài chuẩn quốc gia & IUPAC (Chỉ đọc - Read-Only).
+- `leaderboards/{userId}`: Bảng xếp hạng học thuật & MMR Elo trực tuyến.
+
+### 5.2. Quy tắc bảo mật Cloud Firestore (`firestore.rules`):
+- Toàn bộ cơ sở dữ liệu tuân thủ **Default Deny**: Mọi truy vấn không thỏa mãn điều kiện tường minh đều bị từ chối truy cập.
+- Chống gian lận kinh tế: `knowledgeTokens` và `elementalShards` không bao giờ được âm; `battlesWon <= battlesPlayed`.
+- Chống leo thang đặc quyền (Privilege Escalation Defense): Người dùng không thể tự nâng cấp vai trò thành Admin hoặc can thiệp dữ liệu tài khoản khác (`isOwner(userId)`).
+
+### 5.3. Khởi chạy Firebase Local Emulator Suite:
+```bash
+# Khởi động bộ giả lập Firebase cục bộ (Auth: 9099, Firestore: 8080, Hosting: 5000, UI: 4000)
+npx firebase-tools emulators:start
+```
+
+---
+
+## 6. HẠ TẦNG & TRIỂN KHAI TRỰC TUYẾN MIỄN PHÍ (DYNAMIC DEPLOYMENT)
+
+- **Trực tiếp trên Netlify Global CDN (Miễn phí):**
+  - **Địa chỉ truy cập chính thức:** `https://resonant-shortbread-5179a3.netlify.app/`
+  - **Mật khẩu bảo vệ bản phát hành (Drop Gate):** `My-Drop-Site`
+- **Dự phòng trên Cloudflare Workers:**
+  - `https://elementa-tactical-chemistry.equal-bangle.workers.dev`
+- **Hạn ngạch miễn phí (Free Tier Limits):**
+  - Firebase Spark Plan: 50,000 lượt đọc / 20,000 lượt ghi mỗi ngày (hoàn toàn đủ cho hàng ngàn trận đấu đồng thời).
+  - Netlify / Cloudflare: Băng thông 100GB/tháng, SSL TLS 1.3 tự động, độ trễ toàn cầu < 50ms.
+
+---
+
+## 7. BẢN QUYỀN & MÃ NGUỒN MỞ
 Dự án được xây dựng phục vụ giáo dục, đổi mới phương pháp giảng dạy Khoa Học Tự Nhiên & Hóa Học tại Việt Nam theo chương trình GDPT 2018. Toàn bộ mã nguồn phát hành dưới giấy phép MIT.

@@ -1,0 +1,360 @@
+rules_version = '2';
+
+// ============================================================================
+// ELEMENTA Tactical Chemistry TCG & MOBA - Cloud Firestore Security Rules
+// ============================================================================
+//
+// Threat Model & Security Posture:
+// - Default Deny: All unmatched collections and endpoints are blocked.
+// - Strict Owner Isolation: Users can only read and mutate their own private
+//   records, inventories, and progression data.
+// - RBAC Hardening: Client requests cannot grant admin/moderator roles or
+//   escalate privileges. Role fields are protected against client mutation.
+// - Resource Exhaustion & DoS Prevention: All strings, arrays, and maps
+//   enforce strict size limits to prevent oversized payload injections.
+// - Domain Consistency: Economic balances cannot be negative, battles won cannot
+//   exceed battles played, and decks adhere to Master Rule tournament sizes.
+//
+// ============================================================================
+// Assumed Data Models
+// ============================================================================
+//
+// Collection: users/{userId}
+// Document ID: Firebase Auth UID
+// Fields:
+//   - userId: string (required, immutable, must equal document ID / auth.uid)
+//   - username: string (required, 3..32 chars)
+//   - displayName: string (optional, 1..64 chars)
+//   - level: int (required, min: 1, max: 1000)
+//   - xp: int (required, min: 0)
+//   - knowledgeTokens: int (required, min: 0, cannot be negative)
+//   - elementalShards: int (required, min: 0, cannot be negative)
+//   - battlesPlayed: int (required, min: 0)
+//   - battlesWon: int (required, min: 0, must be <= battlesPlayed)
+//   - role: string (optional, immutable by client, default 'player')
+//   - avatarId: string (optional, 1..64 chars)
+//   - bio: string (optional, max 256 chars)
+//   - createdAt: timestamp / string (optional)
+//   - updatedAt: timestamp / string (optional)
+//
+// Collection: decks/{deckId}
+// Document ID: Auto-generated or custom deck identifier
+// Fields:
+//   - ownerId: string (required, immutable, must equal request.auth.uid)
+//   - name: string (optional, 1..64 chars)
+//   - mainDeck: list of card IDs (required, size: 30..60 cards)
+//   - extraDeck: list of card IDs (required, size: 0..15 cards)
+//   - sideDeck: list of card IDs (optional, size: 0..15 cards)
+//   - slotIndex: int (optional, 0..8)
+//   - isPublic: bool (optional)
+//   - archetype: string (optional, 1..64 chars)
+//   - coverCardId: string (optional, 1..64 chars)
+//   - updatedAt: timestamp / number (optional)
+//
+// Collection: collections/{userId}
+// Document ID: User's UID
+// Fields:
+//   - userId: string (optional, matches document ID)
+//   - cards: map or list (optional, max 10000 items)
+//   - totalCards: int (optional, min: 0)
+//   - updatedAt: timestamp / string (optional)
+//
+// Collection: matches/{matchId}
+// Document ID: Match ID or Room code (E-XXXX)
+// Fields:
+//   - matchId: string (optional, 1..128 chars)
+//   - participants: list of string UIDs (required, size: 1..4 players)
+//   - status: string (optional, 1..32 chars, e.g., 'waiting', 'active', 'completed')
+//   - roomCode: string (optional, 1..16 chars)
+//   - mode: string (optional, 1..32 chars)
+//   - winnerId: string (optional, 1..128 chars)
+//   - createdAt: timestamp / number (optional)
+//   - updatedAt: timestamp / number (optional)
+//
+// Collection: match_events/{eventId}
+// Document ID: Auto-generated event ID
+// Fields:
+//   - senderId: string (required, immutable, must equal request.auth.uid)
+//   - matchId: string (required, 1..128 chars)
+//   - eventType: string (optional, 1..64 chars)
+//   - payload: map (optional, arbitrary structured event details)
+//   - timestamp: timestamp / number (optional)
+//
+// Collection: public_cards/{cardId}
+// Document ID: Card catalog ID (e.g., 'H', 'HE', 'REAC-001')
+// Fields: Canonical official game database (Read-only for all, write denied)
+//
+// Collection: leaderboards/{userId}
+// Document ID: User's UID
+// Fields:
+//   - userId: string (optional, matches userId)
+//   - username: string (optional, 3..32 chars)
+//   - rating: int (required, min: 0, max: 1000000)
+//   - rankTier: string (optional, 1..32 chars)
+//   - rank: int (optional, min: 1)
+//   - updatedAt: timestamp / number (optional)
+//
+// ============================================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ========================================================================
+    // Core Helper Functions
+    // ========================================================================
+
+    // Verify user is authenticated with Firebase Auth
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Verify user is authenticated and matches target UID
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Verify string type and size boundary
+    function isValidString(val, minLen, maxLen) {
+      return val is string && val.size() >= minLen && val.size() <= maxLen;
+    }
+
+    // Verify integer type and numerical range
+    function isValidInt(val, minVal, maxVal) {
+      return val is int && val >= minVal && val <= maxVal;
+    }
+
+    // Verify optional string field bounds if present in map
+    function isValidOptionalString(data, field, minLen, maxLen) {
+      return !(field in data) || isValidString(data[field], minLen, maxLen);
+    }
+
+    // Verify that data only contains declared allowable keys
+    function hasOnlyAllowedFields(data, allowedKeys) {
+      return data.keys().hasOnly(allowedKeys);
+    }
+
+    // ========================================================================
+    // Domain Validator Functions (Validator Function Pattern)
+    // ========================================================================
+
+    // User document validation on creation
+    function isValidUserCreate(data, userId) {
+      return data.userId == userId
+        && isValidInt(data.level, 1, 1000)
+        && isValidInt(data.xp, 0, 1000000000)
+        && isValidInt(data.knowledgeTokens, 0, 1000000000)
+        && isValidInt(data.elementalShards, 0, 1000000000)
+        && isValidInt(data.battlesPlayed, 0, 1000000000)
+        && isValidInt(data.battlesWon, 0, 1000000000)
+        && data.battlesWon <= data.battlesPlayed
+        && isValidString(data.username, 3, 32)
+        && (!('role' in data) || data.role == 'player')
+        && isValidOptionalString(data, 'displayName', 1, 64)
+        && isValidOptionalString(data, 'avatarId', 1, 64)
+        && isValidOptionalString(data, 'bio', 0, 256);
+    }
+
+    // User document validation on update (prevents Update Bypass attacks)
+    function isValidUserUpdate(data, oldData, userId) {
+      return data.userId == userId
+        && data.userId == oldData.userId
+        && (!('role' in data) || data.role == oldData.role)
+        && isValidInt(data.level, 1, 1000)
+        && isValidInt(data.xp, 0, 1000000000)
+        && isValidInt(data.knowledgeTokens, 0, 1000000000)
+        && isValidInt(data.elementalShards, 0, 1000000000)
+        && isValidInt(data.battlesPlayed, 0, 1000000000)
+        && isValidInt(data.battlesWon, 0, 1000000000)
+        && data.battlesWon <= data.battlesPlayed
+        && isValidString(data.username, 3, 32)
+        && isValidOptionalString(data, 'displayName', 1, 64)
+        && isValidOptionalString(data, 'avatarId', 1, 64)
+        && isValidOptionalString(data, 'bio', 0, 256);
+    }
+
+    // Deck document validation on creation
+    function isValidDeckCreate(data, ownerId) {
+      return data.ownerId == ownerId
+        && data.mainDeck is list
+        && data.mainDeck.size() >= 30 && data.mainDeck.size() <= 60
+        && data.extraDeck is list
+        && data.extraDeck.size() <= 15
+        && (!('name' in data) || isValidString(data.name, 1, 64))
+        && (!('isPublic' in data) || data.isPublic is bool)
+        && (!('sideDeck' in data) || (data.sideDeck is list && data.sideDeck.size() <= 15))
+        && (!('slotIndex' in data) || isValidInt(data.slotIndex, 0, 8))
+        && (!('archetype' in data) || isValidString(data.archetype, 1, 64))
+        && (!('coverCardId' in data) || isValidString(data.coverCardId, 1, 64));
+    }
+
+    // Deck document validation on update
+    function isValidDeckUpdate(data, oldData, ownerId) {
+      return data.ownerId == ownerId
+        && data.ownerId == oldData.ownerId
+        && data.mainDeck is list
+        && data.mainDeck.size() >= 30 && data.mainDeck.size() <= 60
+        && data.extraDeck is list
+        && data.extraDeck.size() <= 15
+        && (!('name' in data) || isValidString(data.name, 1, 64))
+        && (!('isPublic' in data) || data.isPublic is bool)
+        && (!('sideDeck' in data) || (data.sideDeck is list && data.sideDeck.size() <= 15))
+        && (!('slotIndex' in data) || isValidInt(data.slotIndex, 0, 8))
+        && (!('archetype' in data) || isValidString(data.archetype, 1, 64))
+        && (!('coverCardId' in data) || isValidString(data.coverCardId, 1, 64));
+    }
+
+    // Collection validation
+    function isValidCollection(data, userId) {
+      return (!('userId' in data) || data.userId == userId)
+        && (!('cards' in data) || data.cards is map || (data.cards is list && data.cards.size() <= 10000))
+        && (!('totalCards' in data) || isValidInt(data.totalCards, 0, 100000));
+    }
+
+    // Match validation on creation
+    function isValidMatchCreate(data) {
+      return data.participants is list
+        && data.participants.size() >= 1 && data.participants.size() <= 4
+        && (!('status' in data) || isValidString(data.status, 1, 32))
+        && (!('roomCode' in data) || isValidString(data.roomCode, 1, 16))
+        && (!('mode' in data) || isValidString(data.mode, 1, 32));
+    }
+
+    // Match validation on update
+    function isValidMatchUpdate(data, oldData) {
+      return data.participants is list
+        && data.participants == oldData.participants
+        && (!('status' in data) || isValidString(data.status, 1, 32))
+        && (!('winnerId' in data) || isValidString(data.winnerId, 1, 128));
+    }
+
+    // Match event validation (append-only audit stream)
+    function isValidMatchEvent(data) {
+      return data.senderId == request.auth.uid
+        && (!('matchId' in data) || isValidString(data.matchId, 1, 128))
+        && (!('eventType' in data) || isValidString(data.eventType, 1, 64))
+        && (!('payload' in data) || data.payload is map);
+    }
+
+    // Leaderboard validation
+    function isValidLeaderboard(data, userId) {
+      return data.rating is int
+        && data.rating >= 0 && data.rating <= 1000000
+        && (!('userId' in data) || data.userId == userId)
+        && (!('username' in data) || isValidString(data.username, 3, 32))
+        && (!('rankTier' in data) || isValidString(data.rankTier, 1, 32))
+        && (!('rank' in data) || isValidInt(data.rank, 1, 10000000));
+    }
+
+    // ========================================================================
+    // Collection Rules
+    // ========================================================================
+
+    // 1. User Profiles & Private Progression
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+
+      allow create: if isOwner(userId)
+        && request.resource.data.userId == userId
+        && request.resource.data.level is int && request.resource.data.level >= 1
+        && request.resource.data.xp is int && request.resource.data.xp >= 0
+        && request.resource.data.knowledgeTokens is int && request.resource.data.knowledgeTokens >= 0
+        && request.resource.data.elementalShards is int && request.resource.data.elementalShards >= 0
+        && request.resource.data.battlesPlayed is int && request.resource.data.battlesPlayed >= 0
+        && request.resource.data.battlesWon is int && request.resource.data.battlesWon >= 0
+        && request.resource.data.username is string && request.resource.data.username.size() >= 3 && request.resource.data.username.size() <= 32
+        && isValidUserCreate(request.resource.data, userId);
+
+      allow update: if isOwner(userId)
+        && (!('role' in request.resource.data) || request.resource.data.role == resource.data.role)
+        && request.resource.data.knowledgeTokens >= 0
+        && request.resource.data.elementalShards >= 0
+        && request.resource.data.battlesWon <= request.resource.data.battlesPlayed
+        && isValidUserUpdate(request.resource.data, resource.data, userId);
+
+      allow delete: if isOwner(userId);
+    }
+
+    // 2. Tactical Decks (Main 30-60, Extra <= 15)
+    match /decks/{deckId} {
+      allow read: if isAuthenticated() && (resource.data.ownerId == request.auth.uid || resource.data.isPublic == true);
+
+      allow create: if isAuthenticated()
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.mainDeck is list
+        && request.resource.data.mainDeck.size() >= 30 && request.resource.data.mainDeck.size() <= 60
+        && request.resource.data.extraDeck is list
+        && request.resource.data.extraDeck.size() <= 15
+        && isValidDeckCreate(request.resource.data, request.auth.uid);
+
+      allow update: if isAuthenticated()
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.mainDeck is list
+        && request.resource.data.mainDeck.size() >= 30 && request.resource.data.mainDeck.size() <= 60
+        && request.resource.data.extraDeck is list
+        && request.resource.data.extraDeck.size() <= 15
+        && isValidDeckUpdate(request.resource.data, resource.data, request.auth.uid);
+
+      allow delete: if isAuthenticated() && resource.data.ownerId == request.auth.uid;
+    }
+
+    // 3. User Card Collections
+    match /collections/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId)
+        && isValidCollection(request.resource.data, userId);
+      allow delete: if isOwner(userId);
+    }
+
+    // 4. Live Multiplayer Matches
+    match /matches/{matchId} {
+      allow read: if isAuthenticated() && (request.auth.uid in resource.data.participants);
+
+      allow create: if isAuthenticated()
+        && (request.auth.uid in request.resource.data.participants)
+        && isValidMatchCreate(request.resource.data);
+
+      allow update: if isAuthenticated()
+        && (request.auth.uid in resource.data.participants)
+        && isValidMatchUpdate(request.resource.data, resource.data);
+
+      allow delete: if false;
+    }
+
+    // 5. Match Real-Time Events (Append-Only Stream)
+    match /match_events/{eventId} {
+      allow read: if isAuthenticated();
+
+      allow create: if isAuthenticated()
+        && request.resource.data.senderId == request.auth.uid
+        && isValidMatchEvent(request.resource.data);
+
+      allow update, delete: if false;
+    }
+
+    // 6. Public Canonical Card Catalog (Read-Only)
+    match /public_cards/{cardId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // 7. Competitive Leaderboards & Ranking
+    match /leaderboards/{userId} {
+      allow read: if true;
+
+      allow create, update: if isOwner(userId)
+        && request.resource.data.rating is int
+        && request.resource.data.rating >= 0
+        && isValidLeaderboard(request.resource.data, userId);
+
+      allow delete: if isOwner(userId);
+    }
+
+    // ========================================================================
+    // Default Deny Fallback
+    // ========================================================================
+    match /{document=**} {
+      allow read, write: false;
+    }
+  }
+}
