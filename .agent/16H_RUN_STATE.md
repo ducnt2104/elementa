@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T01:04:00+07:00`  
-**Elapsed Real Time:** `2h 15m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T01:10:00+07:00`  
+**Elapsed Real Time:** `2h 21m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 2h 15m)
+## 1. CURRENT AUDIT SUMMARY (T = 2h 21m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 181 / 181 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 183 / 183 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
@@ -262,3 +262,24 @@
   - Created and passed Test Suite 181 (`test-alcohol-phenol-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 15.97s with entry chunk size optimized at 682.87 kB (134.29 kB gzip).
   - Total test suites expanded to 181 / 181 with 100% pass rate.
+- **2026-10-25 01:10 (Iteration 17 Checkpoint)**:
+  - Implemented comprehensive Carbonyl Compounds & Carboxylic Acids Engine in `src/domain/carbonylCarboxylicEngine.ts` strictly conforming to GDPT 2018 Grade 11 (Chủ đề 6: Hợp chất carbonyl - Axit cacboxylic) & IUPAC Standards:
+    - Catalog of 6 core carbonyl compounds (Formaldehyde, Acetaldehyde, Benzaldehyde, Acetone, Acetophenone, Benzophenone) and 7 carboxylic acids (Formic, Acetic, Chloroacetic, Trichloroacetic, Acrylic, Oxalic, Benzoic) with boiling points, pKa acidity values, and functional groups.
+    - Formaldehyde special Tollens silver mirror rule: 1 mol $HCHO \to 4\text{ mol } Ag \downarrow$ ($4.315\text{ g Ag}$ per 0.01 mol) via sequential aldehyde and formate oxidation.
+    - Formic acid dual functional group ($H-C(=O)-OH$): only carboxylic acid that undergoes silver mirror reaction ($1\text{ mol } \to 2\text{ mol } Ag \downarrow$) and reduces alkaline $Cu(OH)_2$ to red-brick $Cu_2O \downarrow$.
+    - Fehling test: aldehydes and formic acid reduce $Cu(OH)_2$ at $>80^\circ C$ to red-brick $Cu_2O \downarrow$ precipitate; ketones are completely inert.
+    - Iodoform / Haloform test ($I_2 / NaOH$): specific identification of methyl carbonyl groups ($CH_3-C=O$) in acetaldehyde, acetone, and acetophenone producing bright yellow crystalline precipitate of iodoform ($CHI_3 \downarrow$, $393.7\text{ g/mol}$) with characteristic antiseptic aroma.
+    - Carboxylic acid reactivity and acidity scale:
+      - Effervescence of $CO_2 \uparrow$ with $Na_2CO_3$ definitively distinguishes carboxylic acids from alcohols and phenols.
+      - Dissolution of black $CuO$ into deep blue $Cu^{2+}$ solution.
+      - Inductive effect ($-I$) ordering: $CCl_3COOH (pK_a = 0.65) > CH_2ClCOOH (2.86) > HCOOH (3.75) > CH_3COOH (4.76)$.
+  - Created and passed Test Suite 182 (`test-carbonyl-carboxylic-reactions.mjs`, 34/34 passed).
+  - Implemented `CarbonylCarboxylicVisualizer.tsx` with 3 interactive modes:
+    - Tollens silver mirror flask with dynamic metallic gradient, mass calculator, and Fehling $Cu_2O$ test tube.
+    - Iodoform reaction simulator with yellow $CHI_3 \downarrow$ yield meter and methyl carbonyl group diagnostic rules.
+    - Carboxylic acid lab with animated $CO_2$ effervescence bubbles, pKa comparison chart, and $CuO$ dissolution.
+  - Integrated `CarbonylCarboxylicVisualizer` into `PeriodicCodexTab.tsx` under `'CARBONYL_CARBOXYLIC_ACID'`.
+  - Created and passed Test Suite 183 (`test-carbonyl-carboxylic-visualizer-ui.mjs`, 12/12 passed).
+  - Executed master test matrix across 181 suites in 305.09s with 100% pass rate; total suites now 183.
+  - Production build compiled in 15.51s with entry chunk size preserved at 682.87 kB (134.30 kB gzip).
+  - Total test suites expanded to 183 / 183 with 100% pass rate.
