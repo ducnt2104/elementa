@@ -1,0 +1,144 @@
+# ELEMENTA — Night Shift 10H: Chronological Changelog
+**Mission:** `ELEMENTA-NIGHT-SHIFT-10H`  
+**Start:** 2026-10-21T23:04:03+07:00  
+
+---
+
+## 2026-10-21
+- **23:04:03**: Mission initialized. Timestamp logged. Target set to >= 10 real-time hours.
+- **23:04:17**: Daemon schedule watchdog registered (`f1271328-f7ac-492f-ab09-d9c0405781e8/task-1212`, `*/15 * * * *`, 40 max iterations).
+- **23:04:30**: Night shift directory initialized (`docs/overnight-run/` with `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, `DECISIONS.md`, `ISSUES.md`, `CHANGELOG.md`).
+- **23:05:00**: Phase 1 launched: Independent audit of client-side `localStorage` resilience and Web Audio API initialization.
+- **23:07:30**: Added safeguards to `GameStorage` and `soundEngine` (safe `typeof localStorage/window !== 'undefined'` checks, enhanced master backup bundle in `SettingsModal.tsx` exporting 9 deck slots & ranked profile).
+- **23:09:00**: Phase 2 launched: Built Monte Carlo combat simulation suite `test-moba-sim.mjs` (66 round-robin 1v1 duels, tower dive aggro, minion boundary kinematics).
+- **23:14:00**: Discovered ranged champion suicide-dash bug in bot AI; fixed tactical combos for Chlorine, Oxygen, Copper, and Hydrogen; added ally healing execution for `h_w` Proton Mist.
+- **23:17:00**: Fixed uppercase `MAP_CONFIG.WIDTH/HEIGHT` boundary check; verified 35/35 assertions in `test-moba-sim.mjs`; integrated into `package.json` `npm test` (all 11 suites pass, 460 assertions, 0 failures, 0 TS errors).
+- **23:19:00**: Phase 3 launched: Deep tactical card duel & complex chain resolution stress testing.
+- **23:25:00**: Implemented Deck-Out loss condition in `src/domain/duelEngine.ts` (`checkWinConditions(deckOutDuelistId)`), instant surrender governance (`surrender(duelistId)`), and Spell Speed validation (Speed 1 cannot chain to existing links, lower speed cannot chain to higher speed).
+- **23:26:00**: Added Counter Trap negation logic in `executeCardEffect` for `TRAP_COGNITIVE_CU_HCL`, successfully negating preceding chain links and correctly routing cards to graveyards.
+- **23:28:00**: Created `test-duel-chains-deep.mjs` (17 deep assertions covering deck-out, surrender, spell speed rules, counter trap negation, full turn cycle, and 4-tier AI execution). All 17/17 tests passing (100%).
+- **23:29:00**: Integrated `test-duel-chains-deep.mjs` into `package.json` test script. Ran all 12 test suites: 477 assertions passing, 0 failures. `tsc && vite build` clean in 6.4s.
+- **23:30:00**: Phase 4 launched: Chemistry Data Integrity & Reaction Library Expansion.
+- **23:32:00**: Discovered `GROUP_G_ORGANIC` reaction catalog vacancy in `reactionsData.ts`; implemented 6 flagship GDPT 2018 organic reactions (Esterification, Saponification of ester, Saponification of fat tristearin, Glucose fermentation, Ethanol dehydration, Glucose silver mirror).
+- **23:34:00**: Enhanced `src/domain/equationBalancer.ts`: added full Unicode subscript/superscript normalization (`normalizeChemicalFormula`), hydrate/adduct stoichiometry decomposition (`·` and `*`), robust ion charge disambiguation distinguishing formula subscripts from charges, and reversible equilibrium arrow balancing (`⇌`, `<=>`, `<->`).
+- **23:38:00**: Created `test-chemistry-fuzz.mjs` (16 exhaustive fuzzing assertions covering token splitting, irregular whitespace, LaTeX brackets, hydrates, and 118 periodic elements). All 16/16 tests passing (100%).
+- **23:41:00**: Integrated `test-chemistry-fuzz.mjs` into `package.json` test script. All 13 test suites passing: **493 assertions passing, 0 failures**. Production build clean in 6.06s.
+- **23:42:00**: Phase 5 launched: Graphics, UI, Canvas 2D & WebGL Performance Audit.
+- **23:44:00**: Implemented viewport culling in `MobaArenaTab.tsx` (`canvas.offsetParent === null` skips 100% of 60 FPS draw operations when tab is hidden, eliminating background GPU thrashing).
+- **23:45:00**: Added `getActiveCount()` method to `ParticleEngine` to query active pool usage; verified 350-particle pre-allocated zero-allocation pool and quality budget bounds (`PERFORMANCE`: 80, `BALANCED`: 200, `ULTRA`: 350).
+- **23:46:00**: Created `test-graphics-perf.mjs` (7 assertions covering object-pooled particle lifecycle, camera clamping within map bounds, and DOM listener symmetrical teardown). All 7/7 tests passing (100%).
+- **23:47:00**: Integrated `test-graphics-perf.mjs` into `package.json` test script. All 14 test suites passing: **500 assertions passing, 0 failures**. Production build clean in 6.07s.
+- **23:48:00**: Phase 6 launched: AI Matchups, Economy & Progression Tuning.
+- **23:50:00**: Safeguarded `DeckManagementService` with safe `typeof localStorage === 'undefined'` fallback guards.
+- **23:51:00**: Created `test-tournament-sim.mjs` (7 assertions executing multi-turn Monte Carlo AI vs AI duels across 3 starter archetypes and 4 AI tiers, and validating free-to-play token/shard progression balance). All 7/7 tests passing (100%). Integrated into `package.json` (15 test suites, 507 assertions).
+- **23:53:00**: Phase 7 launched: Regression & Multi-Cycle Stress Testing.
+- **23:54:00**: Created `test-regression-stress.mjs` (4 comprehensive stress assertions covering full composite state backup/reset/restore roundtrip, 10-cycle automated card duels, 5-match MOBA 60Hz physics endurance, and 30-run rapid-fire stoichiometry conservation checks).
+- **23:57:00**: Resolved card retrieval robustness in `test-duel-engine.mjs` (fallback to `instantiateCard` if cards drawn to hand during setup). All 87/87 assertions passing in `test-duel-engine.mjs`.
+- **23:58:00**: Integrated `test-regression-stress.mjs` into `package.json` test script. Ran `npm test`: **All 16 test suites passing cleanly, 511 / 511 assertions passing, 0 failures**.
+- **23:58:40**: Ran production build `npm run build`: `tsc && vite build` clean in 7.81s (`dist/assets/index-Cq8J4VcG.js` 1,554.31 kB, 0 TypeScript compilation errors).
+- **23:59:00**: Phase 8 initiated: Final Acceptance, Evidence Verification, and System Readiness.
+- **00:05:00**: Identified card definition ID mismatches in `PREBUILT_DECKS` (`card_elem_7_n`, `card_elem_16_s`, `card_comp_nh4cl_smoke`, `card_spell_contact_process`, etc.); corrected all IDs to match canonical `PLAYABLE_CARDS`.
+- **00:06:00**: Designed and implemented `DeckManagementService.analyzeDeckSynergy` calculating elemental synergy scores (0-100), dominant archetype detection, redox balance, available chemical combos, and pedagogical recommendations.
+- **00:07:00**: Embedded real-time Elemental Synergy Analyzer Panel into `TacticalDeckBuilderTab.tsx` providing students instant visual feedback on deck composition and chemical compatibility.
+- **00:08:00**: Created `test-deck-synergy.mjs` (5 assertions covering Nitro Legion, Sulfur Forge, Alkali-Halogen, Organic Synthesis, and empty deck recommendations). 100% PASS.
+- **00:10:00**: Integrated `test-deck-synergy.mjs` into `package.json`. Ran `npm test`: **All 17 test suites passing cleanly, 516 / 516 assertions passing, 0 failures**.
+- **00:10:50**: Ran production build `npm run build`: `tsc && vite build` clean in 5.37s (`dist/assets/index-DS1W0RQY.js` 1,560.42 kB, 0 TypeScript compilation errors).
+- **00:15:00**: Watchdog Trigger 5 fired. Audited Campaign Story integration with Tactical Duel Arena.
+- **00:17:00**: Connected Campaign Story mode with Tactical Duel Arena: `CampaignStoryTab` -> `App.tsx` -> `TacticalDuelArenaTab`. Environmental hazards (pH 2.8 Acid Rain, 900K Volcano Thermite, 240K Cryo Lab, 200 atm Haber Chamber, pH 7.4 Buffer Sanctuary) now feed directly into `DuelEngine.setEnvironment`.
+- **00:18:00**: Added dedicated Campaign Boss Encounter banner in duel arena, integrated boss defeat rewards (200 tokens, 100 shards, 250 XP, exclusive field spell unlock), and added stage progression tracking in `PlayerProfile.completedCampaignStages`.
+- **00:20:00**: Created `test-campaign-boss.mjs` (6 assertions verifying all 5 campaign stage specs, reward card types, hazard environmental parameters, and stage victory distribution). 100% PASS.
+- **00:21:00**: Integrated `test-campaign-boss.mjs` into `package.json`. Ran `npm test`: **All 18 test suites passing cleanly, 522 / 522 assertions passing, 0 failures**.
+- **00:21:40**: Ran production build `npm run build`: `tsc && vite build` clean in 5.26s (`dist/assets/index-Bn0w0Dec.js` 1,564.75 kB, 0 TypeScript compilation errors).
+- **00:24:00**: Designed and developed `FlameTestVisualizer.tsx` implementing interactive Bunsen burner flame emission simulation for 12 key elements (Li, Na, K, Rb, Cs, Ca, Sr, Ba, Cu, B, Mg, Fe) with real-time cobalt glass filtering and visible spectrum emission markers ($380\text{ nm} - 750\text{ nm}$).
+- **00:25:00**: Integrated `FlameTestVisualizer` directly into `PeriodicCodexTab.tsx` element inspector (under Science Ground Truth profile).
+- **00:26:00**: Created `test-flame-test.mjs` (10 assertions verifying wavelength values, hex codes, cobalt glass rules, and catalog cross-references). 100% PASS.
+- **00:26:30**: Integrated `test-flame-test.mjs` into `package.json`. Ran `npm test`: **All 19 test suites passing cleanly, 532 / 532 assertions passing, 0 failures**.
+- **00:27:00**: Ran production build `npm run build`: `tsc && vite build` clean in 7.00s (`dist/assets/index-Du2cuBDP.js` 1,577.93 kB, 0 TypeScript compilation errors).
+- **00:30:00**: Watchdog Trigger 6 fired. Audited Reaction Sandbox & Laboratory thermodynamics.
+- **00:31:00**: Expanded `ReactionSandboxTab.tsx` with 4 new organic & analytical chemistry reactants: Acetic acid (`CH3COOH`), Ethanol (`C2H5OH`), Glucose (`C6H12O6`), and Silver nitrate (`AgNO3`), bringing total available laboratory reagents to 19.
+- **00:32:00**: Added specialized catalysts to reaction laboratory: concentrated $H_2SO_4$ (acid catalyst & dehydrating agent) and ammonia $NH_3$ (Tollens diamminesilver complex).
+- **00:33:00**: Implemented realistic chemical reaction kinetics for Fischer esterification (fragrant ethyl acetate fruit ester), Tollens silver mirror test ($2Ag\downarrow$ coating), and carbonate effervescence ($CaCO_3 + 2HCl \to CaCl_2 + CO_2\uparrow + H_2O$).
+- **00:33:30**: Created `test-reaction-sandbox.mjs` (6 assertions verifying esterification activation, Tollens silver mirror, carbonate gas release, and thermite activation threshold). 100% PASS.
+- **00:34:00**: Integrated `test-reaction-sandbox.mjs` into `package.json`. Ran `npm test`: **All 20 test suites passing cleanly, 538 / 538 assertions passing, 0 failures**.
+- **00:34:10**: Ran production build `npm run build`: `tsc && vite build` clean in 5.32s (`dist/assets/index-DxFPtDAy.js` 1,582.72 kB, 0 TypeScript compilation errors).
+- **00:37:00**: Built `test-srs-adaptive.mjs` verifying cognitive Bloom error weighting ($\omega_{\text{err}} \in \{1.00, 0.85, 0.70\}$), SuperMemo SM-2 interval scheduling, due queue filtering, and scientific invariance governance.
+- **00:39:00**: Integrated `test-srs-adaptive.mjs` into `package.json`. Ran `npm test`: **All 21 test suites passing cleanly, 546 / 546 assertions passing, 0 failures**.
+- **00:40:00**: Audited Molecular Geometry & Chemical Bonding engine (`src/domain/bondingEngine.ts`). Added structured `VseprData` metadata to `CanonicalBondingModel` and introduced Boron Trifluoride ($BF_3$, Trigonal Planar $120^\circ$, $sp^2$, incomplete octet 6e).
+- **00:43:00**: Overhauled `BondingVisualizerModal.tsx` with dedicated 2D/3D SVG spatial representations for Bent ($104.5^\circ$), Linear ($180^\circ$), Trigonal Planar ($120^\circ$), Trigonal Pyramidal ($107^\circ$), Tetrahedral ($109.5^\circ$), and Ionic Crystal Lattice with Pauling electronegativity scale and interactive VSEPR parameter inspection.
+- **00:44:00**: Created `test-bonding-vsepr.mjs` (12 assertions verifying 11 canonical models, GDPT 2018 geometries, Pauling classification bounds, and formula normalization). 100% PASS.
+- **00:45:00**: Watchdog Trigger 7 fired (iteration 7). Verified repository status: **22 / 22 test suites passing cleanly, 558 / 558 assertions, 0 failures**.
+- **00:46:00**: Ran production build `npm run build`: `tsc && vite build` clean in 6.25s (`dist/assets/index-CSHavpAk.js` 1,600.89 kB, 0 TypeScript compilation errors). Recorded checkpoint in `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, and `CHANGELOG.md`.
+- **00:50:00**: Built dynamic Custom Crafted Cards architecture: implemented `convertSubmissionToPlayableCard` in `aiGuardrails.ts`, registered dynamic custom card catalog in `playableCardsData.ts` (`registerCustomCard`, `registerCustomCards`, `getPlayableCardById`, `getAllPlayableCards`).
+- **00:52:00**: Integrated custom cards into `App.tsx` (auto-registration of approved creations, awarding 3-copy playsets into `profile.cardCollection`) and into `TacticalDeckBuilderTab.tsx` and `TacticalCollectionTab.tsx` via `getAllPlayableCards()`.
+- **00:54:00**: Implemented live in-duel custom card resolution in `DuelEngine.executeCardEffect` (`CUSTOM_` effect code) with dynamic scaling damage and chemical lore logging.
+- **00:55:00**: Created `test-custom-cards-integration.mjs` (5 assertions verifying submission conversion, registry lookup, live in-duel effect execution, and inert shield monster conversion). 100% PASS.
+- **00:55:30**: Integrated `test-custom-cards-integration.mjs` into `package.json`. Ran `npm test`: **All 23 test suites passing cleanly, 563 / 563 assertions passing, 0 failures**.
+- **00:56:30**: Ran production build `npm run build`: `tsc && vite build` clean in 6.10s (`dist/assets/index-BpUIV7tU.js` 1,602.95 kB, 0 TypeScript compilation errors). Recorded checkpoint.
+- **00:58:00**: Audited Quantum Orbital & Electron Configuration Engine (`src/domain/orbitalEngine.ts`). Tested Auf-bau Madelung filling order, Hund's rule orbital box filling, and transition metal stability anomalies (Cr, Cu, Mo, Pd, Au).
+- **00:59:30**: Created `test-orbital-engine.mjs` (13 assertions verifying Aufbau principle, Hund's rule, anomalies, and electron conservation across all 118 periodic elements). 100% PASS.
+- **01:00:00**: Watchdog Trigger 8 fired (iteration 8). Verified repository status: **24 / 24 test suites passing cleanly, 576 / 576 assertions, 0 failures**.
+- **01:01:30**: Ran production build `npm run build`: `tsc && vite build` clean in 6.22s (`dist/assets/index-BpUIV7tU.js` 1,602.95 kB, 0 TypeScript compilation errors). Recorded checkpoint in `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, and `CHANGELOG.md`.
+- **01:05:00**: Extracted `src/data/puzzlesData.ts` with 5 canonical real-world crisis challenges ($CaCO_3$ Acid lake, Haber 200 atm, Thermite $2500^\circ\text{C}$, Bicarbonate $pH=7.4$, Selective Redox Fe+Cu).
+- **01:07:00**: Overhauled `EnvironmentPuzzleTab.tsx` and wired into `App.tsx` (`activeTab === 'PUZZLE'`) with reward claiming and anti-farming protection. Added `solvedPuzzleIds` tracking in `PlayerProfile`.
+- **01:10:00**: Created `test-environment-puzzles.mjs` (7 assertions verifying puzzle specifications, solution evaluation, and anti-farming protection). 100% PASS.
+- **01:10:30**: Integrated `test-environment-puzzles.mjs` into `package.json`.
+- **01:12:00**: Connected `TeacherDashboardTab.tsx` into `Navbar.tsx`, `MainMenuTab.tsx`, and `App.tsx` (`activeTab === 'TEACHER'`) with Pre/Post-Test metrics and CSV/JSON export.
+- **01:14:00**: Enhanced `TutorialLabTab.tsx` with Step 6 (TCG rules) and dual launch buttons (MOBA 60 FPS & TCG 8000 LP).
+- **01:15:00**: Watchdog Trigger 9 fired (iteration 9). Verified repository status: **25 / 25 test suites passing cleanly, 583 / 583 assertions, 0 failures**.
+- **01:16:00**: Ran production build `npm run build`: `tsc && vite build` clean in 6.34s (`dist/assets/index-C2j7YKl0.js` 1,639.56 kB, 0 TypeScript compilation errors). Recorded checkpoint in `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, and `CHANGELOG.md`.
+- **01:18:00**: Built `src/domain/redoxEngine.ts` with 10 flagship high-school redox reactions, half-reactions, and electron conservation; integrated into `ReactionCompendiumModal.tsx` and `ChemicalCalculatorModal.tsx`.
+- **01:20:00**: Created `test-redox-engine.mjs` (5 assertions). 100% PASS. Integrated into `package.json`. Ran `npm test`: **All 26 test suites passing cleanly, 588 / 588 assertions, 0 failures**.
+- **01:21:00**: Completed 100% duel Spell/Trap card effect runtime coverage in `DuelEngine.ts` (`SPELL_LE_CHATELIER`, `SPELL_PLATINUM_MATRIX`, `TRAP_PASSIVATION`, `TRAP_PRECIPITATION`). Added `test-cards-effects-completion.mjs` (4 assertions). 100% PASS. All 27 test suites passing (592 assertions).
+- **01:28:00**: Ran production build `npm run build`: `tsc && vite build` clean in 6.44s (`dist/assets/index-CuG_9NOh.js` 1,649.44 kB, 0 TypeScript compilation errors).
+- **01:30:00**: Watchdog Trigger 10 fired (iteration 10). Continuous execution milestone reached.
+- **01:32:00**: Audited chemical kinetics & Arrhenius equations in `src/domain/thermochemistryEngine.ts`. Added structured `ReactionKineticsProfile` catalog for 8 canonical curriculum reactions with uncatalyzed and catalyzed activation energies ($E_a$).
+- **01:33:00**: Enhanced Van 't Hoff reaction rate calculation ($v_T / v_{25^\circ\text{C}} = \gamma^{(T-25)/10}$) and Arrhenius catalyst speedup ($k = A e^{-E_a/RT}$) with numeric overflow safeguards and exponential notation.
+- **01:34:00**: Overhauled `ReactionSandboxTab.tsx` with interactive Van 't Hoff temperature coefficient slider ($\gamma = 2.0 - 4.0$) and a Reaction Coordinate Energy Diagram SVG featuring live activation barrier dropping ($E_a \to E_a'$) when catalysts are applied.
+- **01:35:00**: Created `test-kinetics-arrhenius.mjs` (15 assertions across 5 test groups). 100% PASS.
+- **01:36:00**: Integrated `test-kinetics-arrhenius.mjs` into `package.json`. Ran full test suite runner: **All 28 test suites passing cleanly, 607 / 607 assertions passing, 0 failures**.
+- **01:37:15**: Ran production build `npm run build`: `tsc && vite build` clean in 6.56s (`dist/assets/index-BxCMp6Sv.js` 1,660.52 kB, 0 TypeScript compilation errors). Recorded checkpoint in `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, and `CHANGELOG.md`.
+- **01:41:00**: Designed and implemented `playAnnouncerChime` in `src/audio/soundEngine.ts` synthesizing procedural Web Audio fanfare chords for 12 kill announcement types (First Blood, Double Kill, Triple Kill, Quadra Kill, Penta Kill, Killing Spree, Rampage, Unstoppable, Shutdown, Hero Kill, Turret Destroyed, Monster Slain).
+- **01:42:00**: Created `test-sound-resilience.mjs` (11 assertions across 5 test groups). 100% PASS. All 29 test suites passing (618 assertions).
+- **01:43:00**: Ran production build `npm run build`: `tsc && vite build` clean in 6.43s (`dist/assets/index-CHDsJz-L.js` 1,662.54 kB, 0 TypeScript compilation errors).
+- **01:45:00**: Watchdog Trigger 11 fired (iteration 11).
+- **01:46:00**: Enhanced MOBA 5v5 teamfight systems in `src/game/engine/mobaEngine.ts`: implemented proximity-based assist distribution within 800 units awarding assist count (`kda.assists++`), assist gold, and XP to nearby alive teammates.
+- **01:47:00**: Implemented `ACE` (Quét Sạch) team wipeout detection when the 5th and final living enemy hero is eliminated, broadcasting arena-wide announcement with 5-note brass fanfare.
+- **01:48:00**: Created `test-moba-teamfight-cascade.mjs` (20 assertions across 5 test groups). 100% PASS.
+- **01:48:30**: Integrated `test-moba-teamfight-cascade.mjs` into `package.json`. Ran full test suite runner: **All 30 test suites passing cleanly, 638 / 638 assertions passing, 0 failures**.
+- **01:48:40**: Ran production build `npm run build`: `tsc && vite build` clean in 6.58s (`dist/assets/index-od64KSJM.js` 1,663.24 kB, 0 TypeScript compilation errors). Recorded checkpoint in `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, and `CHANGELOG.md`.
+- **02:00:00**: Watchdog Trigger 12 fired (iteration 12). Expanded GDPT 2018 organic chemistry arsenal with 7 new cards (Ethanol, Acetic acid, Ethyl acetate, Glucose, Fischer esterification, Tollens silver mirror, Saponification trap). Added 4th canonical starter archetype (`deck_slot_organic_synthesis`, score 75), updated `test-deck-management.mjs` (22/22) and built `test-archetype-tournament-sim.mjs` (18/18). All 31 test suites passing (657 assertions). Production build clean in 6.42s.
+- **02:15:00**: Watchdog Trigger 13 fired (iteration 13). Unified pointer and touch input handling in `MobaArenaTab.tsx` with mobile touch support (`onTouchStart`, `onTouchMove`, `touch-none`), idempotent high-DPI canvas scaling via `setTransform(dpr, 0, 0, dpr, 0, 0)`, and tribute duplicate slot exploit defense in `DuelEngine.ts`. Built `test-canvas-touch-resolution.mjs` (10/10) and `test-tribute-endurance-deep.mjs` (10/10). All 33 test suites passing (677 assertions). Production build clean in 6.38s.
+- **02:30:00**: Watchdog Trigger 14 fired (iteration 14). Continuous Night Shift checkpoint.
+- **02:31:00**: Implemented authentic chemical behavior triggers in `DuelEngine.ts`:
+  - Potassium (K) on-attack 400 LP burn + 300 ATK boost (`ELEM_K_SUPER_BURST`).
+  - Sulfur (S) direct attack 300 LP thermal effect damage (`ELEM_S_BURN`).
+  - Fluorine (F) absolute electronegativity direct attack piercing through defense-only fields (`ELEM_F_MAX_OX`).
+  - Neon (Ne) plasma blinding glow imposing 500 ATK debuff on attackers (`ELEM_NE_GLOW`).
+  - Aluminum (Al) Al2O3 passivation shield surviving first destruction per turn (`ELEM_AL_PASSIVATION`).
+  - Helium (He) 1s2 closed-octet inert shield surviving first destruction in defense per turn (`ELEM_HE_INERT`).
+  - Chlorine (Cl) oxidation cascade reducing another enemy monster's ATK by 400 upon destroying an enemy monster (`ELEM_CL_OXIDIZE`).
+  - Lithium (Li) battery next-turn Mana recharge +1 Mana on destruction (`ELEM_LI_BATTERY`).
+  - Barium (Ba) BaSO4 precipitation trap lockout upon summon (`ELEM_BA_PRECIP`).
+  - Iron (Fe) multivalent redox state transition ATK/DEF swap method (`swapMonsterAtkDef`).
+  - Multi-Element Reaction Field Combo Engine (`evaluateFieldChemicalCombos`) evaluating active field elements and awarding tactical bonuses (S+O2 combustion, Na+Cl salt formation, H2+O2 fuel cell recharge, Al+Fe thermite synergy).
+- **02:32:00**: Created `test-element-combat-combos.mjs` (18 assertions across 6 test groups). 100% PASS.
+- **02:32:30**: Integrated `test-element-combat-combos.mjs` into `package.json` test script. Ran all 34 test suites: **All 34 test suites passing cleanly, 695 / 695 assertions passing, 0 failures**.
+- **02:33:00**: Ran production build `npm run build`: `tsc && vite build` clean in 6.44s (`dist/assets/index-_9-F5nVA.js` 1,018.29 kB, 0 TypeScript compilation errors). Recorded checkpoint in `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, and `CHANGELOG.md`.
+- **02:35:00**: Enhanced `TutorialLabTab.tsx`: built progress tracking (x/6 steps), interactive 6-reaction testing chamber, 3-question graduation quiz checking high-school curriculum knowledge, and wired graduation welfare (+200 Knowledge Tokens, +50 Elemental Shards, +150 EXP) into `App.tsx` and `PlayerProfile`.
+- **02:36:00**: Created `test-tutorial-onboarding.mjs` (16 assertions across 4 test groups). 100% PASS.
+- **02:36:30**: Integrated `test-tutorial-onboarding.mjs` into `package.json` test script. Ran all 35 test suites: **All 35 test suites passing cleanly, 711 / 711 assertions passing, 0 failures**.
+- **02:37:00**: Ran production build `npm run build`: `tsc && vite build` clean in 6.60s (`dist/assets/index-C40Lzx-F.js` 1,024.70 kB, 0 TypeScript compilation errors). Recorded checkpoint in `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, and `CHANGELOG.md`.
+- **02:42:00**: Overhauled `TeacherDashboardTab.tsx` with `EducatorAnalyticsService` from `src/domain/educatorAnalytics.ts`: connected dynamic metric cards (Pre-test 52.4, Post-test 88.4, Delayed 85.6, +36.0 score gain, 96.8% retention rate), dynamic Misconception Heatmap with pedagogical advice badges, grade filtering, and one-click CSV/JSON export.
+- **02:44:00**: Created `test-teacher-analytics.mjs` (52 assertions across 6 test groups) testing student cohort integrity, grade filtering, score growth, heatmap aggregation with GDPT 2018 context, and export roundtrip serialization. 100% PASS.
+- **02:44:30**: Integrated `test-teacher-analytics.mjs` into `package.json` test script (Suite 36).
+- **02:45:00**: Watchdog Trigger 15 fired (iteration 15). Continuous Night Shift checkpoint.
+- **02:46:00**: Audited Booster Pack Shop & Card Collection (`BoosterShopTab.tsx`, `TacticalCollectionTab.tsx`). Corrected featured card IDs across all 4 boxes and 8 sub-packs to align with canonical `PLAYABLE_CARDS`. Exported `rollBoosterPack` and `SHARDS_PER_DUPLICATE_RARITY` for Clean Architecture decoupled testing.
+- **02:47:00**: Created `test-booster-pack-economy.mjs` (147 assertions across 6 test groups) verifying catalog integrity, 500-pack Monte Carlo probability simulation (2,500 card rolls), guaranteed foil slot 4 non-common invariant, 10% 10x bulk discount, 3-copy playset capping, and Table 3 duplicate shard recycling table. 100% PASS.
+- **02:48:00**: Integrated `test-booster-pack-economy.mjs` into `package.json` test script (Suite 37).
+- **02:49:15**: Ran all 37 test suites: **All 37 test suites passing cleanly, 910 / 910 assertions passing, 0 failures**.
+- **02:50:00**: Ran production build `npm run build`: `tsc && vite build` clean in 6.45s (`dist/assets/index-GyYbWCaz.js` 1,026.88 kB, 0 TypeScript compilation errors). Recorded checkpoint in `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, and `CHANGELOG.md`. Trigger 16 pending at 03:00.
+- **02:53:00**: Connected `onRewardClaimed` callback from `RankedDashboardSection.tsx` through `MainMenuTab.tsx` into `App.tsx` (`updateProfile`), directly bridging quest rewards (+XP, +Elemental Shards) with the central student profile.
+- **02:54:00**: Created `test-ranked-ladder-deep.mjs` (145 assertions across 7 test groups) testing 6-tier progression topology, 4-division quartiles, performance bonuses (+45 max win MMR), Bronze loss protection, streak escalation, 20-record ring buffer, and 100-match Monte Carlo season simulation. 100% PASS.
+- **02:54:30**: Integrated `test-ranked-ladder-deep.mjs` into `package.json` test script (Suite 38).
+- **02:55:40**: Ran production build `npm run build`: `tsc && vite build` clean in 6.61s (`dist/assets/index-DDxJC2Zd.js` 1,027.05 kB, 0 TypeScript compilation errors).
+- **02:55:54**: Ran all 38 test suites: **All 38 test suites passing cleanly, 1,055 / 1,055 assertions passing, 0 failures**. Recorded checkpoint in `SESSION_STATE.md`, `SCHEDULE_STATE.md`, `MASTER_BACKLOG.md`, `TEST_EVIDENCE.md`, and `CHANGELOG.md`.

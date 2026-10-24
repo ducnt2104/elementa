@@ -1,0 +1,404 @@
+{
+  "manifestVersion": "3.0.0",
+  "project": "ELEMENTA Tactical TCG Mega Card Catalog",
+  "targetMinCards": 7000,
+  "plannedTotalCards": 7200,
+  "coreExistingCards": 130,
+  "grandTotalCards": 7330,
+  "lastUpdated": "2026-10-23T07:36:44.350Z",
+  "status": "VALIDATED",
+  "batches": [
+    {
+      "batchIndex": 1,
+      "batchId": "BATCH_01",
+      "fileName": "batch_01_monsters_main_alkali_earth.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 2,
+      "batchId": "BATCH_02",
+      "fileName": "batch_02_monsters_main_transition_metals.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 3,
+      "batchId": "BATCH_03",
+      "fileName": "batch_03_monsters_main_halogens_chalcogens.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 4,
+      "batchId": "BATCH_04",
+      "fileName": "batch_04_monsters_main_noble_pnictogens.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 5,
+      "batchId": "BATCH_05",
+      "fileName": "batch_05_monsters_main_organic_hydrocarbons.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 6,
+      "batchId": "BATCH_06",
+      "fileName": "batch_06_monsters_main_biomolecules_polymers.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 7,
+      "batchId": "BATCH_07",
+      "fileName": "batch_07_monsters_main_acids_bases_salts.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 8,
+      "batchId": "BATCH_08",
+      "fileName": "batch_08_monsters_main_catalysts_allotropes.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 9,
+      "batchId": "BATCH_09",
+      "fileName": "batch_09_monsters_main_scientific_entities.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 10,
+      "batchId": "BATCH_10",
+      "fileName": "batch_10_monsters_main_elemental_guardians.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 11,
+      "batchId": "BATCH_11",
+      "fileName": "batch_11_extra_deck_fusion_compounds.ts",
+      "category": "EXTRA_DECK_MONSTER",
+      "actualCount": 75,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 12,
+      "batchId": "BATCH_12",
+      "fileName": "batch_12_extra_deck_synchro_catalysis.ts",
+      "category": "EXTRA_DECK_MONSTER",
+      "actualCount": 75,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 13,
+      "batchId": "BATCH_13",
+      "fileName": "batch_13_extra_deck_xyz_coordination.ts",
+      "category": "EXTRA_DECK_MONSTER",
+      "actualCount": 75,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 14,
+      "batchId": "BATCH_14",
+      "fileName": "batch_14_extra_deck_link_valences.ts",
+      "category": "EXTRA_DECK_MONSTER",
+      "actualCount": 75,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 15,
+      "batchId": "BATCH_15",
+      "fileName": "batch_15_spells_normal_reactions.ts",
+      "category": "SPELL",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 16,
+      "batchId": "BATCH_16",
+      "fileName": "batch_16_spells_continuous_kinetics.ts",
+      "category": "SPELL",
+      "actualCount": 80,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 17,
+      "batchId": "BATCH_17",
+      "fileName": "batch_17_spells_equip_catalysts.ts",
+      "category": "SPELL",
+      "actualCount": 80,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 18,
+      "batchId": "BATCH_18",
+      "fileName": "batch_18_spells_field_environments.ts",
+      "category": "SPELL",
+      "actualCount": 80,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 19,
+      "batchId": "BATCH_19",
+      "fileName": "batch_19_spells_quickplay_lechatelier.ts",
+      "category": "SPELL",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 20,
+      "batchId": "BATCH_20",
+      "fileName": "batch_20_spells_ritual_crystallization.ts",
+      "category": "SPELL",
+      "actualCount": 60,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 21,
+      "batchId": "BATCH_21",
+      "fileName": "batch_21_traps_normal_countermeasures.ts",
+      "category": "TRAP",
+      "actualCount": 120,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 22,
+      "batchId": "BATCH_22",
+      "fileName": "batch_22_traps_continuous_corrosion.ts",
+      "category": "TRAP",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 23,
+      "batchId": "BATCH_23",
+      "fileName": "batch_23_traps_counter_equilibrium.ts",
+      "category": "TRAP",
+      "actualCount": 100,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 24,
+      "batchId": "BATCH_24",
+      "fileName": "batch_24_traps_titration_passivation.ts",
+      "category": "TRAP",
+      "actualCount": 80,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 25,
+      "batchId": "BATCH_25",
+      "fileName": "batch_25_monsters_main_lanthanides_rare_earths.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 26,
+      "batchId": "BATCH_26",
+      "fileName": "batch_26_monsters_main_actinides_nuclear.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 27,
+      "batchId": "BATCH_27",
+      "fileName": "batch_27_monsters_main_superheavy_transactinides.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 28,
+      "batchId": "BATCH_28",
+      "fileName": "batch_28_monsters_main_covalent_hydrides.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 29,
+      "batchId": "BATCH_29",
+      "fileName": "batch_29_monsters_main_metal_halides.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 30,
+      "batchId": "BATCH_30",
+      "fileName": "batch_30_monsters_main_interhalogens.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 31,
+      "batchId": "BATCH_31",
+      "fileName": "batch_31_monsters_main_silicates_zeolites.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 32,
+      "batchId": "BATCH_32",
+      "fileName": "batch_32_monsters_main_chalcogenides_pyrites.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 33,
+      "batchId": "BATCH_33",
+      "fileName": "batch_33_monsters_main_carbon_nano_allotropes.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 34,
+      "batchId": "BATCH_34",
+      "fileName": "batch_34_monsters_main_organic_radicals.ts",
+      "category": "MAIN_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 35,
+      "batchId": "BATCH_35",
+      "fileName": "batch_35_extra_deck_fusion_metalloenzymes.ts",
+      "category": "EXTRA_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 36,
+      "batchId": "BATCH_36",
+      "fileName": "batch_36_extra_deck_xyz_chelates.ts",
+      "category": "EXTRA_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 37,
+      "batchId": "BATCH_37",
+      "fileName": "batch_37_extra_deck_synchro_metallocenes.ts",
+      "category": "EXTRA_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 38,
+      "batchId": "BATCH_38",
+      "fileName": "batch_38_extra_deck_link_polymers.ts",
+      "category": "EXTRA_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 39,
+      "batchId": "BATCH_39",
+      "fileName": "batch_39_extra_deck_supramolecular_mofs.ts",
+      "category": "EXTRA_DECK_MONSTER",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 40,
+      "batchId": "BATCH_40",
+      "fileName": "batch_40_spells_normal_redox_titration.ts",
+      "category": "SPELL",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 41,
+      "batchId": "BATCH_41",
+      "fileName": "batch_41_spells_equip_catalysts.ts",
+      "category": "SPELL",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 42,
+      "batchId": "BATCH_42",
+      "fileName": "batch_42_spells_quickplay_photochemistry.ts",
+      "category": "SPELL",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 43,
+      "batchId": "BATCH_43",
+      "fileName": "batch_43_spells_field_environments.ts",
+      "category": "SPELL",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 44,
+      "batchId": "BATCH_44",
+      "fileName": "batch_44_spells_continuous_electrochemistry.ts",
+      "category": "SPELL",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 45,
+      "batchId": "BATCH_45",
+      "fileName": "batch_45_spells_quickplay_buffer_solutions.ts",
+      "category": "SPELL",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 46,
+      "batchId": "BATCH_46",
+      "fileName": "batch_46_traps_normal_colloidal_coagulation.ts",
+      "category": "TRAP",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 47,
+      "batchId": "BATCH_47",
+      "fileName": "batch_47_traps_continuous_passivation_armor.ts",
+      "category": "TRAP",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 48,
+      "batchId": "BATCH_48",
+      "fileName": "batch_48_traps_normal_gravimetric_precipitation.ts",
+      "category": "TRAP",
+      "actualCount": 200,
+      "status": "validated"
+    },
+    {
+      "batchIndex": 49,
+      "batchId": "BATCH_49",
+      "fileName": "batch_49_traps_counter_equilibrium_lechatelier.ts",
+      "category": "TRAP",
+      "actualCount": 200,
+      "status": "validated"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "ELEMENTA: Trận Chiến Nguyên Tố",
+  "short_name": "ELEMENTA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#10131B",
+  "theme_color": "#172231",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

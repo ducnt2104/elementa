@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Local databases and SQLite WAL
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Environment files & Secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+serviceAccountKey.json
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# Editor & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
