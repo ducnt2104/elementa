@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T05:58:00+07:00`  
-**Elapsed Real Time:** `7h 09m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T06:04:00+07:00`  
+**Elapsed Real Time:** `7h 15m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -22,11 +22,11 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 7h 09m)
+## 1. CURRENT AUDIT SUMMARY (T = 7h 15m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 255 / 255 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 257 / 257 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1126,3 +1126,28 @@
   - TypeScript validation: 0 errors across entire workspace.
   - Production build: `dist/assets/index-CMkC_K3e.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 255 / 255 with 100% pass rate.
+- **2026-10-25 06:04 (Iteration 54 Checkpoint — PHASE C EXTENSION)**:
+  - Implemented comprehensive Perovskite Solar Cells, Goldschmidt Tolerance Factor ($ABX_3$) & 2-Terminal Tandem Perovskite/Silicon Record Engine in `src/domain/perovskiteSolarEngine.ts` strictly conforming to IUPAC Photovoltaics, NREL Best Research-Cell Efficiency Chart & Vietnam GDPT 2018 Chemistry 10 & 11 (Liên kết ion, Mạng tinh thể lập phương & Năng lượng mặt trời thế hệ mới):
+    - $ABX_3$ Perovskite Compositions & Goldschmidt Tolerance Law:
+      - Formula: $t = \frac{r_A + r_X}{\sqrt{2}(r_B + r_X)}$ with octahedral factor $\mu = \frac{r_B}{r_X}$.
+      - $CH_3NH_3PbI_3$ (MAPI, $t = 0.912$, $\mu = 0.541$): Classical perovskite benchmark with $E_g = 1.55\text{ eV}$, $V_{oc} = 1.15\text{ V}$.
+      - $Cs_{0.05}FA_{0.95}PbI_3$ (Cs-stabilized FAPI, $t = 0.981$, $E_g = 1.48\text{ eV}$): Single-junction record holder ($24.6\%\text{ - }26.1\%$ PCE) with 5% Cesium cation preventing yellow $\delta$-non-perovskite phase transition.
+      - $Cs_{0.17}FA_{0.83}Pb(I_{0.77}Br_{0.23})_3$ (Mixed-Halide Wide-Gap, $t = 0.970$, $E_g = 1.68\text{ eV}$): High-voltage top cell designed for monolithic 2-terminal tandem solar cells.
+      - $CH_3NH_3SnI_3$ (Lead-Free MASnI3, $t = 0.937$, $E_g = 1.30\text{ eV}$): Eco-friendly non-toxic tin halide perovskite.
+    - 2-Terminal Monolithic Perovskite/Silicon Tandem Architecture:
+      - Top cell absorbs high-energy photons ($300 - 750\text{ nm}$) with high $V_{oc,top} = 1.25\text{ V}$.
+      - Bottom Silicon Heterojunction absorbs infrared photons ($750 - 1200\text{ nm}$) with $V_{oc,bottom} = 0.74\text{ V}$.
+      - Series-connected current matching: $J_{sc} = 20.2\text{ mA/cm}^2$, $V_{oc} = 1.99\text{ V}$, $FF = 82.5\%$, delivering **$33.16\%$ PCE**, breaking the fundamental single-junction Shockley-Queisser limit ($33.7\%$) towards $44.5\%$ thermodynamic tandem maximum!
+    - ISOS Long-Term Operational Stability Protocols:
+      - Unpassivated MAPI suffers rapid moisture hydrolysis ($CH_3NH_3PbI_3 + H_2O \to PbI_2 + CH_3NH_3I$) and iodide ion migration ($E_a \approx 0.58\text{ eV}$), degrading $> 50\%$ in 300 hours.
+      - Hydrophobic 2D/3D heterostructure capping with fluorinated organic cations locks halide ions and repels humidity, retaining **$> 95\%$ PCE after 1,000 hours** under continuous 1-Sun illumination (ISOS-L-1 compliant).
+  - Created and passed Test Suite 256 (`test-perovskite-solar-cells.mjs`, 4/4 passed).
+  - Implemented `PerovskiteSolarVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: 3D perspective SVG unit cell showing central $B^{2+}$ cation, corner $A^+$ cations, and edge-centered $X^-$ halides forming $[BX_6]^{4-}$ corner-sharing octahedra, with dynamic Goldschmidt tolerance calculation.
+    - Mode 2: Photovoltaic I-V polarization curve under 1-Sun AM1.5G radiation, comparing Single-Junction Silicon, Single-Junction Perovskite, and 2-Terminal Tandem ($33.2\%$ PCE, $1.99\text{ V}$), with irradiance ($0.2 - 1.5\text{ Suns}$) and temperature ($10 - 65^\circ\text{C}$) sliders.
+    - Mode 3: ISOS operational stability degradation curves ($0 - 1,500\text{ hours}$) illustrating 2D/3D hydrophobic passivation vs moisture hydrolysis.
+  - Integrated `PerovskiteSolarVisualizer` into `PeriodicCodexTab.tsx` under `'PEROVSKITE_SOLAR_CELL'` with `Sun` icon.
+  - Created and passed Test Suite 257 (`test-perovskite-solar-visualizer-ui.mjs`, 7/7 passed).
+  - TypeScript validation: 0 errors across entire workspace.
+  - Production build: `dist/assets/index-B1BLLgRh.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 257 / 257 with 100% pass rate.
