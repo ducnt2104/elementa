@@ -4,22 +4,22 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T01:58:00+07:00`  
-**Elapsed Real Time:** `3h 09m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T02:06:00+07:00`  
+**Elapsed Real Time:** `3h 17m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 3h 09m)
+## 1. CURRENT AUDIT SUMMARY (T = 3h 17m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 195 / 195 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 197 / 197 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.24s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.61 MB) & advanced (1.53 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 17.84s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.65 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -401,3 +401,19 @@
   - Created and passed Test Suite 195 (`test-halogens-redox-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 15.24s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 195 / 195 with 100% pass rate.
+- **2026-10-25 02:06 (Iteration 24 Checkpoint)**:
+  - Implemented comprehensive Redox Reactions & Electron Balancing Engine in `src/domain/redoxReactionsEngine.ts` strictly conforming to GDPT 2018 Grade 10 (Chủ đề 4: Phản ứng oxi hóa - khử) & IUPAC Standards:
+    - Compound and polyatomic ion oxidation state catalog: 10 representative substances/ions ($KMnO_4: Mn = +7$, $K_2Cr_2O_7: Cr = +6$, $H_2O_2: O = -1$ peroxo bridge, $OF_2: O = +2$ due to fluorine's superior 3.98 electronegativity, $NaH: H = -1$ hydride anion, $Fe_3O_4: Fe = +8/3$ fractional mixture of $FeO \cdot Fe_2O_3$, $FeS_2: S = -1$ in persulfide $[S-S]^{2-}$, and polyatomic ions $MnO_4^-, Cr_2O_7^{2-}, NH_4^+$ satisfying $\sum = \text{charge}$).
+    - 4 classic redox reaction classifications (Intermolecular, Intramolecular thermal decomposition of $KMnO_4$, Disproportionation of $Cl_2$ in $NaOH$, Comproportionation of $H_2S + SO_2$).
+    - Strict electron conservation verification ($\sum n_e\text{ donated} = \sum n_e\text{ accepted} = \text{total } e^-$ transferred).
+    - Permanganate medium-dependent reduction: Acidic ($MnO_4^- + 5e + 8H^+ \to Mn^{2+} + 4H_2O$, colorless), Neutral ($MnO_4^- + 3e + 2H_2O \to MnO_2 \downarrow + 4OH^-$, brown-black precipitate), Basic ($MnO_4^- + 1e \to MnO_4^{2-}$, emerald green manganate).
+    - Permanganate redox titration simulator ($5Fe^{2+} + MnO_4^- + 8H^+ \to 5Fe^{3+} + Mn^{2+} + 4H_2O$): $V_{eq} = 20.0\text{ mL}$, self-indicating color transition (pale green $\to$ pale yellow $\to$ permanent faint pink endpoint $\to$ purple overshoot).
+  - Created and passed Test Suite 196 (`test-redox-reactions.mjs`, 16/16 passed).
+  - Implemented `RedoxReactionsVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Substance oxidation state catalog with overset oxidation number badges and rule breakdown.
+    - Mode 2: Electron balance laboratory with 4 reaction types, half reactions, and electron multipliers.
+    - Mode 3: Medium-dependent Permanganate reduction beaker SVG and interactive titration Erlenmeyer flask SVG with volume slider.
+  - Integrated `RedoxReactionsVisualizer` into `PeriodicCodexTab.tsx` under `'REDOX_REACTIONS'`.
+  - Created and passed Test Suite 197 (`test-redox-reactions-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 17.84s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 197 / 197 with 100% pass rate.
