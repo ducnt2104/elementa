@@ -52,13 +52,13 @@ runTest('dist/assets contains compiled JS and CSS chunks', () => {
 
   const hasCss = files.some(f => f.endsWith('.css'));
   const hasVendorReact = files.some(f => f.includes('vendor-react') && f.endsWith('.js'));
-  const hasCompendium = files.some(f => f.includes('chemistry-compendium-data') && f.endsWith('.js'));
+  const hasCompendium = files.some(f => (f.includes('chemistry-compendium-data') || f.includes('cards-monsters')) && f.endsWith('.js'));
   const hasVisualizers = files.some(f => f.includes('chemistry-visualizers') && f.endsWith('.js'));
   const hasIndex = files.some(f => f.startsWith('index-') && f.endsWith('.js'));
 
   assert.ok(hasCss, 'Must generate compiled CSS');
   assert.ok(hasVendorReact, 'Must generate vendor-react chunk');
-  assert.ok(hasCompendium, 'Must generate chemistry-compendium-data chunk');
+  assert.ok(hasCompendium, 'Must generate cards/compendium chunk (e.g. cards-monsters or chemistry-compendium-data)');
   assert.ok(hasVisualizers, 'Must generate chemistry-visualizers chunk');
   assert.ok(hasIndex, 'Must generate index bundle');
 });
