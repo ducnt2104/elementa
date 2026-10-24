@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T05:25:00+07:00`  
-**Elapsed Real Time:** `6h 36m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T05:35:00+07:00`  
+**Elapsed Real Time:** `6h 46m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -22,11 +22,11 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 6h 36m)
+## 1. CURRENT AUDIT SUMMARY (T = 6h 46m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 245 / 245 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 247 / 247 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -999,3 +999,33 @@
   - TypeScript validation: 0 errors across entire workspace.
   - Production build: `dist/assets/index-CMvYdyb0.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 245 / 245 with 100% pass rate.
+- **2026-10-25 05:35 (Iteration 49 Checkpoint — PHASE C EXTENSION)**:
+  - Implemented comprehensive Redox Flow Batteries (VRFB & AORFB), Nernst Reversible Potential & Grid-Scale Long-Duration Energy Storage (LDES) Simulator in `src/domain/redoxFlowBatteryEngine.ts` strictly conforming to IUPAC Electrochemistry Recommendations, Grid LDES Benchmarks & Vietnam GDPT 2018 Chemistry 10 & 12 (Phản ứng Oxi hóa khử, Điện thế chuẩn, Năng lượng tái tạo & Lưu trữ quy mô lưới điện):
+    - Flow Battery Chemistries Catalog:
+      - All-Vanadium Redox Flow Battery (VRFB - Maria Skyllas-Kazacos 1985): Decoupled power ($MW$) and energy ($MWh$), 4 oxidation states of vanadium ($V^{2+}/V^{3+}$ and $VO^{2+}/VO_2^+$), nominal cell potential $E^\circ = 1.26\text{ V}$, active concentration $2.0\text{ M}$ in $H_2SO_4$, Nafion/SPEEK proton-selective membrane, carbon felt electrodes, round-trip efficiency $78.5\%$, calendar life $> 25$ years, cycle life $> 20,000$ cycles. Complete cross-contamination immunity: inter-chamber vanadium migration is fully restored by simple electrolyte re-balancing with zero permanent degradation.
+      - All-Iron Flow Battery (ESS Inc): $Fe^0 \rightleftharpoons Fe^{2+}$ and $Fe^{2+} \rightleftharpoons Fe^{3+}$, $E^\circ = 1.21\text{ V}$, earth-abundant non-toxic salts with ultra-low active material cost ($<\$25/\text{kWh}$, $LCOS = \$0.038/\text{kWh}$).
+      - Aqueous Organic Redox Flow Battery (AORFB - Michael Aziz, Harvard 2014 Nature): Fast 2-electron quinone redox ($AQDS + 2H^+ + 2e^- \rightleftharpoons H_2AQDS$) paired with food-grade potassium ferrocyanide ($K_4[Fe(CN)_6]$), metal-free, non-flammable, biodegradable and zero-hazard for urban buildings.
+      - Zinc-Bromine Hybrid Flow Battery: $Zn/Br_2$, highest cell voltage ($E^\circ = 1.85\text{ V}$), high energy density ($70\text{ Wh/L}$).
+    - State of Charge (SOC) & Optical Color Transitions:
+      - Nernst equation: $V_{ocv}(SOC) = E^\circ + \frac{2RT}{F} \ln\left(\frac{SOC}{1 - SOC}\right)$.
+      - Dynamic visual color tracking across vanadium oxidation states:
+        - At $SOC = 10\%$: Anolyte is forest green ($V^{3+}$) and catholyte is royal blue ($VO^{2+}$), $V_{ocv} = 1.147\text{ V}$.
+        - At $SOC = 50\%$: Anolyte is purple-green and catholyte is emerald green, $V_{ocv} = 1.260\text{ V}$.
+        - At $SOC = 90\%$: Anolyte is deep royal purple ($V^{2+}$) and catholyte is bright lemon yellow ($VO_2^+$), $V_{ocv} = 1.373\text{ V}$.
+    - Grid-Scale Long-Duration Energy Storage (LDES) Station Simulator:
+      - $10\text{ MW}$ rated power, $8\text{ h}$ discharge duration yields exactly **$80\text{ MWh}$ stored energy**.
+      - Electrolyte tanks: $1,333\text{ m}^3$ each for anolyte and catholyte ($2,666,667\text{ L}$ total).
+      - Stack module sizing: $1,450$ stacks ($57,971$ total cells, $1,000\text{ cm}^2$ per cell).
+      - Hydraulic flow & parasitic loss: $338\text{ L/min}$ pump flow rate through porous felt electrodes requires only $1\text{ kW}$ pump power, delivering **$78.5\%$ net round-trip efficiency (RTE)**.
+      - Decoupled Power-Energy Scaling verified: Extending duration from $8\text{h}$ to $24\text{h}$ ($240\text{ MWh}$) scales tank volume $3\times$ while stack count remains exactly identical ($1,450$ stacks), validating the superior economics of flow batteries for long-duration grid stabilization.
+  - Created and passed Test Suite 246 (`test-redox-flow-battery.mjs`, 4/4 passed).
+  - Implemented `RedoxFlowBatteryVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Interactive SVG Hydraulic Flow Schematic featuring live anolyte & catholyte liquid levels, circulating pump loops, central Nafion membrane stack with carbon felt electrodes, and charge/discharge mode toggle.
+    - Mode 2: SOC & Nernst Reversible Potential analyzer with real-time SOC slider ($5 - 95\%$), live $V_{ocv}$ gauge, color swatches of vanadium ions ($V^{2+}, V^{3+}, VO^{2+}, VO_2^+$), and Lithium-ion vs VRFB 20,000-cycle durability comparison.
+    - Mode 3: Grid-scale LDES station simulator with power rating slider ($1 - 50\text{ MW}$), discharge duration slider ($4 - 24\text{ h}$), tank volume output ($m^3$), stack count, pump parasitic loss, footprint meter ($m^2$), Capex estimator, and non-flammable aqueous safety certificate.
+  - Integrated `RedoxFlowBatteryVisualizer` into `PeriodicCodexTab.tsx` under `'REDOX_FLOW_BATTERY'` with `Database` icon.
+  - Created and passed Test Suite 247 (`test-redox-flow-battery-visualizer-ui.mjs`, 7/7 passed).
+  - Full regression test matrix runner (`node run-all-tests.mjs`) executed all 245 historical test suites with **100% pass rate** in 379.34s.
+  - TypeScript validation: 0 errors across entire workspace.
+  - Production build: `dist/assets/index-arBK7ckh.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 247 / 247 with 100% pass rate.
