@@ -1,5 +1,5 @@
 // run-all-tests.mjs
-// Comprehensive test runner executing all 171 test suites in ELEMENTA
+// Comprehensive test runner executing all 173 test suites in ELEMENTA
 import fs from 'fs';
 import { execSync } from 'child_process';
 import path from 'path';
@@ -24,15 +24,16 @@ for (let i = 0; i < testFiles.length; i++) {
   
   const suiteStart = Date.now();
   try {
-    execSync(`npx tsx tests/${file}`, { stdio: 'pipe' });
+    execSync(`npx tsx tests/${file}`, { stdio: 'pipe', maxBuffer: 10 * 1024 * 1024 });
     const duration = ((Date.now() - suiteStart) / 1000).toFixed(2);
     console.log(`\x1b[32mPASSED\x1b[0m (${duration}s)`);
     passed++;
   } catch (err) {
     const duration = ((Date.now() - suiteStart) / 1000).toFixed(2);
     console.log(`\x1b[31mFAILED\x1b[0m (${duration}s)`);
+    const errorDetails = err.stderr ? err.stderr.toString() : (err.stdout ? err.stdout.toString() : err.message);
     failed++;
-    failedSuites.push(file);
+    failedSuites.push({ file, error: errorDetails.slice(-300) });
   }
 }
 
@@ -41,7 +42,7 @@ console.log('\n=================================================================
 console.log(` AUDIT SUMMARY: ${passed} / ${testFiles.length} SUITES PASSED (${totalDuration}s)`);
 if (failed > 0) {
   console.log(` \x1b[31mFAILURE REPORT: ${failed} SUITE(S) FAILED:\x1b[0m`);
-  failedSuites.forEach(s => console.log(`   - ${s}`));
+  failedSuites.forEach(s => console.log(`   - ${s.file}\n     ${s.error}`));
   console.log('======================================================================\n');
   process.exit(1);
 } else {

@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T00:28:00+07:00`  
-**Elapsed Real Time:** `1h 39m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T00:35:00+07:00`  
+**Elapsed Real Time:** `1h 46m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 1h 39m)
+## 1. CURRENT AUDIT SUMMARY (T = 1h 46m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 171 / 171 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 173 / 173 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
@@ -170,3 +170,21 @@
   - Created and passed Test Suite 171 (`test-carbohydrate-visualizer-ui.mjs`, 11/11 passed).
   - Maintained 0 TypeScript errors across the entire codebase and built production bundles in 14.62s.
   - Total test suites expanded to 171 / 171 with 100% pass rate.
+- **2026-10-25 00:35 (Iteration 12 Checkpoint - 30-Minute Daemon Milestone 4)**:
+  - Implemented comprehensive Amines, Amino Acids, Peptides & Protein Reactions Engine in `src/domain/amineAminoAcidPeptideEngine.ts` strictly conforming to GDPT 2018 Grade 12 (Chủ đề 3: Hợp chất chứa Nitơ) & IUPAC Standards:
+    - 4 core amines catalog with basicity ranking ($(CH_3)_2NH > CH_3NH_2 > NH_3 > C_6H_5NH_2$) and litmus behavior verification.
+    - Aniline bromination reaction ($C_6H_5NH_2 + 3 Br_2 \to C_6H_2Br_3NH_2 \downarrow + 3 HBr$) calculating mass of white precipitate and bromine decolorization.
+    - 5 GDPT 2018 amino acids (Gly, Ala, Val, Glu, Lys) with isoelectric points ($pI$) and litmus indications (Glu turns red, Lys turns blue, Gly/Ala/Val neutral).
+    - Electrophoresis migration physics model calculating net charge $z$ and directional movement toward Cathode (-) or Anode (+).
+    - Biuret color test evaluator enforcing the mandatory $\ge 2$ peptide bonds rule (tripeptide or higher), identifying dipeptide exception.
+    - Xanthoproteic test with concentrated $HNO_3$ and ammonia neutralization.
+  - Created and passed Test Suite 172 (`test-amines-aminoacids-peptides.mjs`, 32/32 passed).
+  - Implemented `AmineAminoAcidVisualizer.tsx` with 3 interactive modes:
+    - Amines basicity comparison and aniline bromination calculator.
+    - Amino acids isoelectric electrophoresis chamber with animated molecule migration.
+    - Peptide builder with dynamic peptide bond counting and Biuret color test with pedagogical warnings.
+  - Integrated `AmineAminoAcidVisualizer` into `PeriodicCodexTab.tsx` under `'AMINES_AMINO_ACIDS_PEPTIDES'`.
+  - Created and passed Test Suite 173 (`test-amine-aminoacid-visualizer-ui.mjs`, 11/11 passed).
+  - Hardened `run-all-tests.mjs` with 10MB `maxBuffer` to prevent buffer overflow.
+  - Maintained 0 TypeScript errors across the entire codebase and built production bundles in 19.16s (entry chunk: 682.87 kB).
+  - Total test suites expanded to 173 / 173 with 100% pass rate.
