@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T00:50:00+07:00`  
-**Elapsed Real Time:** `2h 01m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T00:58:00+07:00`  
+**Elapsed Real Time:** `2h 09m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 2h 01m)
+## 1. CURRENT AUDIT SUMMARY (T = 2h 09m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 177 / 177 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 179 / 179 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
@@ -225,3 +225,20 @@
   - Created and passed Test Suite 177 (`test-alkali-hardwater-visualizer-ui.mjs`, 11/11 passed).
   - Production build compiled in 15.72s with entry chunk size optimized at 682.87 kB (134.29 kB gzip).
   - Total test suites expanded to 177 / 177 with 100% pass rate.
+- **2026-10-25 00:58 (Iteration 15 Checkpoint)**:
+  - Implemented comprehensive First-Row Transition Metals & Coordination Chemistry Engine in `src/domain/transitionMetalsEngine.ts` strictly conforming to GDPT 2018 Grade 12 (Chủ đề 8: Kim loại chuyển tiếp dãy thứ nhất & Phức chất) & IUPAC Standards:
+    - Complete catalog of 10 first-row transition elements (Sc to Zn, Z=21 to 30) with valence electron configurations, anomalous configurations of Cr ($[Ar]3d^54s^1$) and Cu ($[Ar]3d^{10}4s^1$) with thermodynamic subshell half-fill and full-fill explanations, and variable aqueous oxidation state colors.
+    - 12-ligand Spectrochemical Series ($I^- < Br^- < Cl^- < F^- < OH^- < H_2O < SCN^- < NH_3 < en < NO_2^- < CN^- < CO$) ranking ligand field strength.
+    - 11 canonical coordination complexes catalog ($[Cu(H_2O)_6]^{2+}$, $[Cu(NH_3)_4(H_2O)_2]^{2+}$ Schweizer reagent, $[Ag(NH_3)_2]^+$ Tollens, $[Fe(H_2O)_6]^{3+}$, $[Fe(CN)_6]^{3-}$, $[Fe(CN)_6]^{4-}$, $[Fe(SCN)]^{2+}$ blood red, $[Co(H_2O)_6]^{2+}$, $[CoCl_4]^{2-}$, Cisplatin $[Pt(NH_3)_2Cl_2]$, $[Zn(OH)_4]^{2-}$).
+    - Chromate - Dichromate Le Chatelier equilibrium model ($2CrO_4^{2-} + 2H^+ \rightleftharpoons Cr_2O_7^{2-} + H_2O$) calculating species percentages and transition color across pH 0 to 14.
+    - Cobalt chloride octahedral-tetrahedral thermal and chloride switch ($[Co(H_2O)_6]^{2+} + 4Cl^- + Q \rightleftharpoons [CoCl_4]^{2-} + 6H_2O$) modeling endothermic color flipping between pink and deep blue.
+    - Crystal Field Splitting ($\Delta_o$) engine calculating $e_g$ and $t_{2g}$ electron distribution, high-spin vs low-spin states, unpaired electrons, magnetic classification (paramagnetic vs diamagnetic), and magnetic dipole moment $\mu = \sqrt{n(n+2)}$ Bohr Magnetons.
+  - Created and passed Test Suite 178 (`test-transition-metals-coordination.mjs`, 46/46 passed).
+  - Implemented `TransitionMetalsVisualizer.tsx` with 3 interactive modes:
+    - 3d Transition metals interactive grid with orbital box diagrams ($3d^5 4s^1$), anomaly alerts, and aqueous ion color galleries.
+    - Dual solution equilibrium switch: Chromate pH flask and Cobalt chloride thermal/chloride test tube with dynamic color interpolation.
+    - Coordination complexes and interactive Crystal Field Theory energy splitting diagram ($e_g$ raised $+0.6\Delta_o$, $t_{2g}$ lowered $-0.4\Delta_o$) with live electron spin arrows ($\uparrow, \downarrow$) and magnetic property meters.
+  - Integrated `TransitionMetalsVisualizer` into `PeriodicCodexTab.tsx` under `'TRANSITION_METALS_COMPLEXES'`.
+  - Created and passed Test Suite 179 (`test-transition-metals-ui.mjs`, 11/11 passed).
+  - Production build compiled in 15.47s with entry chunk size optimized at 682.87 kB (134.30 kB gzip).
+  - Total test suites expanded to 179 / 179 with 100% pass rate.
