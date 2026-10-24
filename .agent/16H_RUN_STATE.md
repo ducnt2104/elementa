@@ -6,7 +6,7 @@
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
 **Latest Checkpoint Timestamp:** `2026-10-24T23:05:00+07:00`  
 **Elapsed Real Time:** `0h 17m`  
-**Live Production URL:** `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
+**Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 

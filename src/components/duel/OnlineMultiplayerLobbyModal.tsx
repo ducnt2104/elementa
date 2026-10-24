@@ -77,7 +77,17 @@ export const OnlineMultiplayerLobbyModal: React.FC<OnlineMultiplayerLobbyModalPr
     }
 
     handleInitSession();
-  }, [isOpen]);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   // Subscribe to real-time SSE updates when inside a room with backoff & fallback
   useEffect(() => {
@@ -219,7 +229,12 @@ export const OnlineMultiplayerLobbyModal: React.FC<OnlineMultiplayerLobbyModalPr
   const canStart = isHost && currentRoom?.status === 'READY';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian/85 backdrop-blur-md animate-fadeIn">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="multiplayer-lobby-title"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian/85 backdrop-blur-md animate-fadeIn"
+    >
       <div className="relative w-full max-w-2xl bg-navy-dark border border-cyan-ion/40 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 bg-navy border-b border-navy-light/60">
@@ -229,7 +244,10 @@ export const OnlineMultiplayerLobbyModal: React.FC<OnlineMultiplayerLobbyModalPr
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-serif font-black text-lg text-ivory tracking-wide">
+                <h3
+                  id="multiplayer-lobby-title"
+                  className="font-serif font-black text-lg text-ivory tracking-wide"
+                >
                   ĐẤU TRƯỜNG TRỰC TUYẾN 1v1
                 </h3>
                 <span className="px-2 py-0.5 rounded-full bg-cyan-ion/10 border border-cyan-ion/30 text-cyan-ion text-[10px] font-mono">
@@ -244,6 +262,7 @@ export const OnlineMultiplayerLobbyModal: React.FC<OnlineMultiplayerLobbyModalPr
 
           <button
             onClick={onClose}
+            aria-label="Đóng cửa sổ phòng thi đấu (Escape)"
             className="p-1.5 rounded-lg text-ivory-muted hover:text-ivory hover:bg-navy-light/60 transition-colors"
           >
             <X className="w-5 h-5" />
