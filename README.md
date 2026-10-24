@@ -62,10 +62,10 @@ npm run dev
 npm run test:all
 
 # Chạy riêng kiểm thử bảo mật Firestore Security Rules
-node test-firebase-security-rules.mjs
+node tests/test-firebase-security-rules.mjs
 
 # Chạy riêng kiểm thử Backend Database & Multiplayer
-npx tsx test-backend-database-multiplayer.mjs
+npx tsx tests/test-backend-database-multiplayer.mjs
 
 # 4. Kiểm tra TypeScript và đóng gói bản phát hành Production
 npm run build

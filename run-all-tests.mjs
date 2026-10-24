@@ -4,7 +4,7 @@ import fs from 'fs';
 import { execSync } from 'child_process';
 import path from 'path';
 
-const testFiles = fs.readdirSync('.')
+const testFiles = fs.readdirSync('tests')
   .filter(f => f.startsWith('test-') && f.endsWith('.mjs'))
   .sort();
 
@@ -24,7 +24,7 @@ for (let i = 0; i < testFiles.length; i++) {
   
   const suiteStart = Date.now();
   try {
-    execSync(`npx tsx ${file}`, { stdio: 'pipe' });
+    execSync(`npx tsx tests/${file}`, { stdio: 'pipe' });
     const duration = ((Date.now() - suiteStart) / 1000).toFixed(2);
     console.log(`\x1b[32mPASSED\x1b[0m (${duration}s)`);
     passed++;

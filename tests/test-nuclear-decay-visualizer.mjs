@@ -1,4 +1,4 @@
-// tests/test-nuclear-decay-visualizer.mjs
+// test-nuclear-decay-visualizer.mjs
 // Test Suite 82: Nuclear Chemistry, Radioactivity & Half-Life Decay
 // Conforming to Vietnam GDPT 2018 (Hóa 10 Chương 1, Vật lý 12 Chương Hạt Nhân) & IUPAC Standards
 
