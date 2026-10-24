@@ -58,8 +58,14 @@ npm install
 # 2. Khởi chạy máy chủ phát triển (Development Server)
 npm run dev
 
-# 3. Chạy toàn bộ 10 bộ kiểm thử tự động (425 Assertions, 100% Pass)
-npm test
+# 3. Chạy toàn bộ 148 bộ kiểm thử tự động (148 Suites, 100% Pass)
+npm run test:all
+
+# Chạy riêng kiểm thử bảo mật Firestore Security Rules
+node test-firebase-security-rules.mjs
+
+# Chạy riêng kiểm thử Backend Database & Multiplayer
+npx tsx test-backend-database-multiplayer.mjs
 
 # 4. Kiểm tra TypeScript và đóng gói bản phát hành Production
 npm run build
