@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T01:10:00+07:00`  
-**Elapsed Real Time:** `2h 21m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T01:17:00+07:00`  
+**Elapsed Real Time:** `2h 28m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
@@ -16,7 +16,7 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 183 / 183 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 185 / 185 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
@@ -283,3 +283,26 @@
   - Executed master test matrix across 181 suites in 305.09s with 100% pass rate; total suites now 183.
   - Production build compiled in 15.51s with entry chunk size preserved at 682.87 kB (134.30 kB gzip).
   - Total test suites expanded to 183 / 183 with 100% pass rate.
+- **2026-10-25 01:17 (Iteration 18 Checkpoint)**:
+  - Implemented comprehensive Nitrogen & Sulfur Chemistry Engine in `src/domain/nitrogenSulfurEngine.ts` strictly conforming to GDPT 2018 Grade 11 (Chủ đề 2: Nitrogen - Sulfur) & IUPAC Standards:
+    - Complete catalog of Nitrogen species ($N_2, NH_3, NO, NO_2, N_2O, HNO_3$) and Sulfur species ($S, H_2S, SO_2, H_2SO_4$) with molecular formulas, oxidation states, and environmental/chemical roles.
+    - Nitrogen triple bond inertia ($N \equiv N$, bond dissociation energy $946\text{ kJ/mol}$) and high-temperature/lightning activation ($>3000^\circ C$).
+    - Ammonia fountain physics model: extreme water solubility (~800:1 volume ratio at $20^\circ C$), rapid dissolution creating an internal vacuum ($\Delta P \approx 0.95\text{ atm}$), siphoning water into the flask where alkaline hydrolysis ($NH_3 + H_2O \rightleftharpoons NH_4^+ + OH^-$) turns phenolphthalein brilliant pink ($pH > 8.2$).
+    - Nitric acid ($HNO_3$) oxidation & passivation:
+      - Passivation phenomenon: cold concentrated $HNO_3$ (and cold conc $H_2SO_4$) passivates $Fe, Al, Cr$ by building a dense, self-healing oxide passivation layer that renders the metals impervious to subsequent acid attack.
+      - Hot concentrated $HNO_3$ vigorously oxidizes $Cu \to Cu(NO_3)_2 + 2NO_2 \uparrow + 2H_2O$ (pungent brown-red gas).
+      - Dilute $HNO_3$ oxidizes $Cu \to 3Cu(NO_3)_2 + 2NO \uparrow + 4H_2O$ (colorless $NO$ gas that spontaneously turns brown $NO_2$ in contact with atmospheric $O_2$).
+      - Highly dilute $HNO_3$ with strong reducing metals ($Mg, Al, Zn$) reduces nitrogen completely to ammonium nitrate ($NH_4NO_3$) without any gaseous bubbling.
+      - Aqua Regia ($1\text{ vol } HNO_3 : 3\text{ vol } HCl$): generation of nascent nitrosyl chloride ($NOCl$) and chlorine ($Cl_2$), dissolving noble gold ($Au$) into chloroauric acid ($H[AuCl_4] + NO \uparrow + 2H_2O$).
+    - Concentrated Sulfuric acid ($H_2SO_4$) dehydration:
+      - Sugar charcoal snake experiment: initial violent dehydration ($C_{12}H_{22}O_{11} \to 12C + 11H_2O$) followed by secondary redox gas expansion ($C + 2H_2SO_4 \to CO_2 \uparrow + 2SO_2 \uparrow + 2H_2O$), causing the porous black carbon cylinder to erupt out of the beaker.
+    - Aquatic Eutrophication ecological model: agricultural runoff of nitrogen ($NO_3^-$) and phosphorus ($PO_4^{3-}$) driving algal blooms, light blockage, bacterial decomposition, and critical oxygen depletion ($DO < 3.0\text{ mg/L}$, causing mass fish mortality).
+  - Created and passed Test Suite 184 (`test-nitrogen-sulfur-reactions.mjs`, 29/29 passed).
+  - Implemented `NitrogenSulfurVisualizer.tsx` with 3 interactive modes:
+    - Ammonia fountain inverted SVG flask simulation with animated pink jet, vacuum pressure drop gauge, and fountain height meter.
+    - $HNO_3$ redox reaction lab with cold/hot concentration passivations ($Fe, Al, Cr$), gaseous bubble animations, and Aqua Regia gold dissolution test.
+    - Sulfuric acid sucrose dehydration snake simulation with mass yields, toxic $SO_2$ warnings, and agricultural Eutrophication water quality DO simulator.
+  - Integrated `NitrogenSulfurVisualizer` into `PeriodicCodexTab.tsx` under `'NITROGEN_SULFUR_COMPOUNDS'`.
+  - Created and passed Test Suite 185 (`test-nitrogen-sulfur-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 15.44s with entry chunk size preserved at 682.87 kB (134.30 kB gzip).
+  - Total test suites expanded to 185 / 185 with 100% pass rate.
