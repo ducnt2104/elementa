@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T03:59:00+07:00`  
-**Elapsed Real Time:** `5h 10m 10s`  
+**Latest Checkpoint Timestamp:** `2026-10-25T04:10:30+07:00`  
+**Elapsed Real Time:** `5h 21m 40s`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 5h 10m)
+## 1. CURRENT AUDIT SUMMARY (T = 5h 21m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 227 / 227 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 229 / 229 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -752,6 +752,31 @@
     - Mode 2: Carbon-14 exponential decay curve SVG with half-life markers, activity slider ($0-100\%$), and archaeological sample presets (Đông Sơn bronze drum, Tutankhamun linen, Tiên Sơn charcoal, Mammoth bone).
     - Mode 3: Wetherill Concordia curved diagram SVG ($^{206}Pb/^{238}U$ vs $^{207}Pb/^{235}U$) with Ga epoch markers, Jack Hills zircon concordant point, and thermal metamorphism discordia warnings.
   - Integrated `RadiometricDatingShellVisualizer` into `PeriodicCodexTab.tsx` under `'RADIOMETRIC_DATING_NUCLEAR'` with `Atom` icon.
-  - Created and passed Test Suite 227 (`test-radiometric-dating-shell-ui.mjs`, 12/12 passed).
-  - Production build compiled in 16.23s with entry chunk size strictly preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
-  - Total test suites expanded to 227 / 227 with 100% pass rate.
+- **2026-10-25 04:10 (Iteration 40 Checkpoint)**:
+  - Implemented comprehensive Quantum Dots, Quantum Confinement (Brus Equation), Size-Tunable Optical Emission, QLED Television Subpixels & Core-Shell (Type-I/Type-II) Heterostructures Engine in `src/domain/quantumDotsEngine.ts` strictly conforming to Nobel Prize in Chemistry 2023 (Moungi Bawendi, Louis Brus, Alexei Ekimov), IUPAC Standards & Vietnam GDPT 2018 Chemistry/Physics 12 (Chuyên đề Vật liệu Nano & Công nghệ Bán dẫn):
+    - Quantum Confinement & Brus Equation (1984):
+      - Analytical 3D spherical potential well model: $E_g(R) = E_{g,\text{bulk}} + \frac{\hbar^2 \pi^2}{2 R^2} \left( \frac{1}{m_e^*} + \frac{1}{m_h^*} \right) - \frac{1.786 e^2}{4 \pi \varepsilon_0 \varepsilon_r R}$.
+      - Validated size-tunable optical emission across all visible spectrum wavelengths for $CdSe$:
+        - $R = 1.5\text{ nm}$ ($D = 3.0\text{ nm}$): $E_g = 3.213\text{ eV} \to \lambda = 386\text{ nm}$ (Tím chàm/Deep Violet).
+        - $R = 2.5\text{ nm}$ ($D = 5.0\text{ nm}$): $E_g = 2.226\text{ eV} \to \lambda = 557\text{ nm}$ (Xanh lá lục/Vibrant Green).
+        - $R = 4.0\text{ nm}$ ($D = 8.0\text{ nm}$): $E_g = 1.904\text{ eV} \to \lambda = 651\text{ nm}$ (Đỏ thẫm/Deep Red).
+      - Strong confinement regime ($R < a_B$, Exciton Bohr radius) scales kinetic confinement energy as $\propto 1/R^2$.
+    - Commercial QLED Television Display Architecture:
+      - Eco-Friendly / EU RoHS compliant $InP / ZnS$ (Cadmium-free) quantum dot subpixels pumped by high-energy blue LED backlight ($\lambda = 450\text{ nm}$):
+        - Subpixel Green: $InP$ ($R = 2.4\text{ nm}$) emitting at $567\text{ nm}$.
+        - Subpixel Red: $InP$ ($R = 3.8\text{ nm}$) emitting at $745\text{ nm}$.
+        - Achieves cinema-grade wide color gamut coverage (DCI-P3 $> 98\%$).
+    - Core-Shell Heterostructures & Type-I Passivation:
+      - Type-I Band Alignment ($CdSe/ZnS$, $InP/ZnSe$): Core conduction and valence band edges nested within wider bandgap shell, confining both electron and hole inside the core, eliminating surface dangling bond traps, and boosting Photoluminescence Quantum Yield ($PLQY$) to $> 92\%$.
+      - Type-II Band Alignment ($CdTe/CdSe$): Staggered band offset separating electron into shell and hole into core, prolonging exciton recombination lifetime for quantum dot solar cells (QDSC).
+    - Biomass Carbon Dots (C-dots):
+      - Green hydrothermal synthesis of non-toxic fluorescent carbon nanoparticles from Vietnamese agricultural biomass (vỏ trấu, bã mía) for medical bio-imaging and heavy metal wastewater sensing.
+  - Created and passed Test Suite 228 (`test-quantum-dots.mjs`, 4/4 passed).
+  - Implemented `QuantumDotsVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Interactive SVG glowing quantum dot nanocrystal with incoming 365 nm UV beam, size-tunable color hex aura, diameter indicator, and Brus 3-term energy breakdown table.
+    - Mode 2: QLED TV RGB subpixel architecture SVG with blue LED backlight pump, InP green/red pixel sliders, and DCI-P3 color gamut indicators.
+    - Mode 3: Core-shell heterostructure energy band diagram SVG (conduction band / valence band offsets) with Type-I carrier confinement vs Type-II charge separation toggles.
+  - Integrated `QuantumDotsVisualizer` into `PeriodicCodexTab.tsx` under `'QUANTUM_DOTS_NANOTECH'` with `Sparkles` icon.
+  - Created and passed Test Suite 229 (`test-quantum-dots-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 15.36s with entry chunk size strictly preserved at 682.96 kB (134.31 kB gzip) and 0 warnings.
+  - Total test suites expanded to 229 / 229 with 100% pass rate.
