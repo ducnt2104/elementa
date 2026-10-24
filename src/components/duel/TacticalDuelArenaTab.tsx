@@ -51,6 +51,7 @@ import { ReactionPreviewModal } from './ReactionPreviewModal';
 import { CharacterQuipEngine, CharacterQuip, ChemistPersona, QuipTriggerEvent, QuipQueueManager } from '../../domain/characterQuips';
 import { rankedEngine } from '../../domain/rankedSystem';
 import { CampaignStage } from '../campaign/CampaignStoryTab';
+import { FirebaseService } from '../../services/firebaseService';
 
 export interface TacticalDuelArenaTabProps {
   playerMainDeckIds: string[];
@@ -235,6 +236,43 @@ export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
         turns: engine.currentTurn,
         reactionsTriggered: engine.logs.filter(l => l.message.includes('Phản ứng') || l.message.includes('Tổng Hợp')).length
       });
+
+      // Synchronize to Cloud Firestore Leaderboard & Match History
+      try {
+        const firebaseService = FirebaseService.getInstance();
+        const user = firebaseService.getUser();
+        if (user) {
+          const ranked = rankedEngine.getProfile();
+          const totalMatches = ranked.wins + ranked.losses;
+          const winRate = totalMatches > 0 ? Math.round((ranked.wins / totalMatches) * 100) : 0;
+          const duelistName = engine.player?.name || user.displayName || 'Nhà Giả Kim';
+
+          firebaseService.updateLeaderboardEntry(user.uid, {
+            userId: user.uid,
+            username: duelistName,
+            displayName: duelistName,
+            rating: ranked.mmr,
+            rankTier: ranked.currentTierId,
+            wins: ranked.wins,
+            losses: ranked.losses,
+            winRate
+          }).catch(err => console.warn('[Ranked Firestore] Leaderboard sync warning:', err));
+
+          firebaseService.recordMatch({
+            matchId: `match_tcg_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+            mode: 'TCG',
+            hostId: user.uid,
+            guestId: null,
+            winnerId: engine.outcome === 'PLAYER_VICTORY' ? user.uid : null,
+            durationSeconds: Math.max(1, engine.currentTurn * 25),
+            roundsPlayed: engine.currentTurn,
+            participants: [user.uid],
+            endedAt: new Date().toISOString()
+          }).catch(err => console.warn('[Ranked Firestore] Match record warning:', err));
+        }
+      } catch (e) {
+        // Safe offline fallback
+      }
 
       if (onDuelFinished) {
         onDuelFinished(engine.outcome);

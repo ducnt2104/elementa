@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-24T23:42:00+07:00`  
-**Elapsed Real Time:** `0h 54m`  
+**Latest Checkpoint Timestamp:** `2026-10-24T23:51:00+07:00`  
+**Elapsed Real Time:** `1h 03m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 0h 54m)
+## 1. CURRENT AUDIT SUMMARY (T = 1h 03m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 160 / 160 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 161 / 161 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.53s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 698 kB (139 kB gzip) |
@@ -31,6 +31,7 @@
 | **Deck Formats & Banlists** | Governed | `STANDARD_GDPT`, `CLASSROOM_SAFE`, `UNLIMITED` rules engine & hazard limits (Suite 157 & 158 passed) |
 | **MOBA Reaction Telemetry** | Synchronized | In-game HUD chemical reaction popups & environmental river/brush detonations (Suite 159 passed) |
 | **PWA Offline Readiness** | Hardened | Base URL cross-domain SW registration & multi-tier cache lifecycle (Suite 160 passed) |
+| **Cloud Leaderboard & Matches** | Synchronized | Live Firestore updates for TCG & MOBA match results, MMR, and win rate (Suite 161 passed) |
 | **Automated CI/CD** | Deployed | GitHub Actions workflow `.github/workflows/deploy.yml` with relative base path |
 | **Firebase Services** | Live | Auth (Guest/Email), Firestore, Security Rules verified |
 | **Gameplay Systems** | Operational | TCG Arena (8000 LP), MOBA Canvas 60FPS, Codices, Workshop, Missions, Events, Shop |
@@ -112,3 +113,8 @@
   - Upgraded `MobaArenaTab.tsx` with ref-based timestamp synchronization (`lastReactionAlertTimestampRef`) ensuring consecutive triggers of the same reaction properly refresh HUD popups.
   - Created and passed Test Suite 159 (`test-moba-reaction-alerts-and-vfx.mjs`, 14/14 passed).
   - Verified full test matrix: 158/158 suites passed cleanly in 311.38s; total test suites now 159.
+- **2026-10-24 23:51 (Iteration 5 Checkpoint)**:
+  - Fixed PWA Service Worker dynamic base URL registration in `src/main.tsx` for subpath hosting; created Test Suite 160 (`test-pwa-service-worker-and-offline-ready.mjs`, 18/18 passed).
+  - Integrated Cloud Firestore Leaderboard (`updateLeaderboardEntry`) and Match Telemetry (`recordMatch`) synchronization upon match completion in both TCG Duels and MOBA Battles.
+  - Created and passed Test Suite 161 (`test-cloud-leaderboard-and-match-sync.mjs`, 19/19 passed).
+  - Total test suites expanded to 161 / 161 with 100% pass rate.

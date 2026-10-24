@@ -10,6 +10,7 @@ import { BotDifficulty } from '../../game/ai/mobaBotAi';
 import { CHEMICAL_ITEMS_CATALOG } from '../../game/data/itemsData';
 import { HeroSelectModal } from './HeroSelectModal';
 import { sound } from '../../audio/soundEngine';
+import { FirebaseService } from '../../services/firebaseService';
 import { UserSettings, GraphicsQuality } from '../../storage/localStore';
 import { ElementalCrest } from '../../assets/svg/ElementalCrests';
 import {
@@ -321,6 +322,28 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
         if ((engine.status === 'VICTORY' || engine.status === 'DEFEAT') && !matchFinishedRef.current) {
           matchFinishedRef.current = true;
           const debrief = engine.generateMatchDebrief();
+
+          // Sync match record to Firestore
+          try {
+            const fb = FirebaseService.getInstance();
+            const user = fb.getUser();
+            if (user) {
+              fb.recordMatch({
+                matchId: `match_moba_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+                mode: 'MOBA',
+                hostId: user.uid,
+                guestId: null,
+                winnerId: engine.status === 'VICTORY' ? user.uid : null,
+                durationSeconds: Math.floor(debrief.matchDurationSeconds),
+                roundsPlayed: 1,
+                participants: [user.uid],
+                endedAt: new Date().toISOString()
+              }).catch(err => console.warn('[MOBA Firestore] Match record warning:', err));
+            }
+          } catch {
+            // Safe offline fallback
+          }
+
           onMatchFinished(debrief);
           return;
         }
