@@ -1,7 +1,11 @@
 // Service Worker for ELEMENTA Offline Gameplay
 // High-Reliability Dynamic Runtime Cache for GDPT 2018 Classroom Environments
-const CACHE_NAME = 'elementa-v1.1';
+const CACHE_NAME = 'elementa-v1.2';
 const PRECACHE_ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon.svg',
   '/',
   '/index.html',
   '/manifest.json',
@@ -10,7 +14,16 @@ const PRECACHE_ASSETS = [
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_ASSETS))
+    caches.open(CACHE_NAME).then((cache) => {
+      // Use map and catch to allow successful install even if relative or root path variant 404s
+      return Promise.all(
+        PRECACHE_ASSETS.map((asset) =>
+          cache.add(asset).catch(() => {
+            // Silently skip variant that does not match host structure
+          })
+        )
+      );
+    })
   );
   self.skipWaiting();
 });
@@ -52,7 +65,7 @@ self.addEventListener('fetch', (e) => {
         .catch(() => {
           // If offline and requesting navigation, return index.html
           if (e.request.mode === 'navigate') {
-            return caches.match('/index.html');
+            return caches.match('./index.html').then((res) => res || caches.match('/index.html'));
           }
           return caches.match(e.request);
         });

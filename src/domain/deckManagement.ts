@@ -18,8 +18,30 @@ export interface DeckSlot {
   updatedAt: number;
 }
 
+export type CardBanStatus = 'FORBIDDEN' | 'LIMITED' | 'SEMI_LIMITED' | 'UNLIMITED';
+
+export type TournamentFormat = 'STANDARD_GDPT' | 'CLASSROOM_SAFE' | 'UNLIMITED';
+
+export interface BanlistRule {
+  cardId: string;
+  cardName: string;
+  status: CardBanStatus;
+  maxCopies: number;
+  reason: string;
+}
+
+export interface BanlistViolation {
+  cardId: string;
+  cardName: string;
+  count: number;
+  allowed: number;
+  status: CardBanStatus;
+  reason: string;
+}
+
 export interface DeckValidationResult {
   isValid: boolean;
+  format?: TournamentFormat;
   errors: string[];
   warnings: string[];
   mainCount: number;
@@ -29,6 +51,7 @@ export interface DeckValidationResult {
   spellCount: number;
   trapCount: number;
   cardCounts: Record<string, number>;
+  banlistViolations?: BanlistViolation[];
   missingOwnedCards?: { id: string; name: string; needed: number; owned: number }[];
 }
 
@@ -301,19 +324,100 @@ export const PREBUILT_DECKS: Omit<DeckSlot, 'slotIndex'>[] = [
   }
 ];
 
+export const FORMAT_BANLISTS: Record<TournamentFormat, Record<string, BanlistRule>> = {
+  STANDARD_GDPT: {
+    card_comp_thermite: {
+      cardId: 'card_comp_thermite',
+      cardName: 'Hỗn Hợp Nhiệt Nhôm (Thermite)',
+      status: 'LIMITED',
+      maxCopies: 1,
+      reason: 'Phản ứng tỏa nhiệt cực hạn (>2500°C), giới hạn 1 bản sao trong chuẩn GDPT 2018.'
+    },
+    card_b10_002_fluoroantimonic_superacid_sovereign_2: {
+      cardId: 'card_b10_002_fluoroantimonic_superacid_sovereign_2',
+      cardName: 'Chúa Tể Siêu Axit Fluoroantimonic',
+      status: 'LIMITED',
+      maxCopies: 1,
+      reason: 'Siêu axit mạnh nhất vũ trụ (H0 = -31.3), giới hạn 1 bản sao để duy trì cân bằng trận đấu.'
+    }
+  },
+  CLASSROOM_SAFE: {
+    card_comp_thermite: {
+      cardId: 'card_comp_thermite',
+      cardName: 'Hỗn Hợp Nhiệt Nhôm (Thermite)',
+      status: 'FORBIDDEN',
+      maxCopies: 0,
+      reason: 'Cấm sử dụng trong phòng thực hành học sinh do nguy cơ cháy nổ cực đoan.'
+    },
+    card_b10_002_fluoroantimonic_superacid_sovereign_2: {
+      cardId: 'card_b10_002_fluoroantimonic_superacid_sovereign_2',
+      cardName: 'Chúa Tể Siêu Axit Fluoroantimonic',
+      status: 'FORBIDDEN',
+      maxCopies: 0,
+      reason: 'Hóa chất nguy hại cấp độ đặc biệt, nghiêm cấm trong định dạng thực hành an toàn.'
+    },
+    card_trap_sodium_explosion: {
+      cardId: 'card_trap_sodium_explosion',
+      cardName: 'Cạm Bẫy Nổ Natri Trong Nước',
+      status: 'LIMITED',
+      maxCopies: 1,
+      reason: 'Chỉ cho phép 1 bản sao thí nghiệm biểu diễn có giáo viên giám sát.'
+    },
+    card_comp_no2_gas: {
+      cardId: 'card_comp_no2_gas',
+      cardName: 'Khí Nitơ Đioxit (NO2)',
+      status: 'LIMITED',
+      maxCopies: 1,
+      reason: 'Khí độc tính cao đường hô hấp, hạn chế 1 bản sao trong tủ hút.'
+    }
+  },
+  UNLIMITED: {}
+};
+
 export class DeckManagementService {
   /**
-   * Validate a deck against strict TCG rules
+   * Retrieves active banlist rules for a specific tournament or classroom format
+   */
+  public static getBanlistForFormat(format: TournamentFormat = 'STANDARD_GDPT'): Record<string, BanlistRule> {
+    return FORMAT_BANLISTS[format] || {};
+  }
+
+  /**
+   * Inspects copy restrictions and ban status for a single card in a format
+   */
+  public static getCardBanStatus(
+    cardId: string,
+    format: TournamentFormat = 'STANDARD_GDPT'
+  ): { status: CardBanStatus; maxCopies: number; reason?: string } {
+    const banlist = this.getBanlistForFormat(format);
+    const rule = banlist[cardId];
+    if (rule) {
+      return {
+        status: rule.status,
+        maxCopies: rule.maxCopies,
+        reason: rule.reason
+      };
+    }
+    return {
+      status: 'UNLIMITED',
+      maxCopies: MAX_COPIES_PER_CARD
+    };
+  }
+
+  /**
+   * Validate a deck against strict TCG rules and format banlist
    */
   public static validateDeck(
     mainDeck: string[],
     extraDeck: string[] = [],
     sideDeck: string[] = [],
-    ownedCollection?: Record<string, number>
+    ownedCollection?: Record<string, number>,
+    format: TournamentFormat = 'STANDARD_GDPT'
   ): DeckValidationResult {
     const errors: string[] = [];
     const warnings: string[] = [];
     const cardCounts: Record<string, number> = {};
+    const banlistViolations: BanlistViolation[] = [];
     const missingOwnedCards: { id: string; name: string; needed: number; owned: number }[] = [];
 
     // Check Main Deck bounds
@@ -367,6 +471,27 @@ export class DeckManagementService {
       }
     }
 
+    // Check Format Banlist Rules
+    const activeBanlist = this.getBanlistForFormat(format);
+    for (const [id, count] of Object.entries(cardCounts)) {
+      const banRule = activeBanlist[id];
+      if (banRule && count > banRule.maxCopies) {
+        const cardDef = getPlayableCardById(id);
+        const name = cardDef ? cardDef.name : banRule.cardName;
+        banlistViolations.push({
+          cardId: id,
+          cardName: name,
+          count,
+          allowed: banRule.maxCopies,
+          status: banRule.status,
+          reason: banRule.reason
+        });
+        errors.push(
+          `[BANLIST: ${banRule.status}] "${name}" vượt quá hạn mức định dạng ${format}: Tối đa ${banRule.maxCopies} lá (đang dùng ${count} lá). ${banRule.reason}`
+        );
+      }
+    }
+
     // Check Player Collection Ownership limit (Section 7.2: Deck Builder must strictly validate owned cards)
     if (ownedCollection) {
       for (const [id, count] of Object.entries(cardCounts)) {
@@ -394,6 +519,7 @@ export class DeckManagementService {
 
     return {
       isValid: errors.length === 0,
+      format,
       errors,
       warnings,
       mainCount,
@@ -403,6 +529,7 @@ export class DeckManagementService {
       spellCount,
       trapCount,
       cardCounts,
+      banlistViolations,
       missingOwnedCards
     };
   }

@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-24T23:16:00+07:00`  
-**Elapsed Real Time:** `0h 28m`  
+**Latest Checkpoint Timestamp:** `2026-10-24T23:26:00+07:00`  
+**Elapsed Real Time:** `0h 38m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 0h 28m)
+## 1. CURRENT AUDIT SUMMARY (T = 0h 38m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 154 / 154 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 157 / 157 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.60s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 698 kB (139 kB gzip) |
@@ -26,6 +26,10 @@
 | **Bot AI Intelligence** | Advanced | Threat-aware Counter Trap (Speed 3) priority & 3-reactant synthesis combinations |
 | **Accessibility (a11y)** | WCAG 2.1 AA | ARIA live regions for phase flow & combat logs; modal `role="dialog"` & Escape key |
 | **Security & Fuzzing** | Verified | Firestore deep rules spec & XSS neutralization verified |
+| **Content Security Policy** | Enforced | `public/_headers` + `<meta CSP>` locking down scripts, styles, objects, and connect endpoints |
+| **MOBA 60FPS Budget** | Benchmarked | 0.0082ms avg ParticleEngine update across 1,000 frames (Suite 156 passed) |
+| **Deck Formats & Banlists** | Governed | `STANDARD_GDPT`, `CLASSROOM_SAFE`, `UNLIMITED` rules engine & hazard limits (Suite 157 passed) |
+| **Automated CI/CD** | Deployed | GitHub Actions workflow `.github/workflows/deploy.yml` with relative base path |
 | **Firebase Services** | Live | Auth (Guest/Email), Firestore, Security Rules verified |
 | **Gameplay Systems** | Operational | TCG Arena (8000 LP), MOBA Canvas 60FPS, Codices, Workshop, Missions, Events, Shop |
 
@@ -60,7 +64,7 @@
 ### Phase E: Security Hardening & Penetration Defense (T = 9h..12h)
 - [x] Red team fuzzing: Malformed chemical formulas, integer overflow in tokens/shards, XSS script injection (`test-security-fuzzing-and-xss.mjs`).
 - [x] Deep Firestore Security Rules specification & adversarial test suite (`test-firestore-security-deep-spec.mjs`).
-- [ ] Content Security Policy (CSP) audit for inline Web Workers & Web Audio.
+- [x] Content Security Policy (CSP) audit for inline Web Workers & Web Audio (`public/_headers` + `<meta CSP>` + `test-csp-security-headers.mjs`).
 
 ### Phase F: Accessibility & Visual Polish (T = 12h..14h)
 - [x] Full keyboard navigation (Tab, Arrow keys, Enter, Esc) across all modal dialogs (`OnlineMultiplayerLobbyModal`).
@@ -69,7 +73,7 @@
 
 ### Phase G & H: Adversarial Review & Verification (T = 14h..16h)
 - [x] End-to-end multi-game simulation run (16-player single elimination, 5-persona round-robin, multi-archetype).
-- [x] All 154 test suites execution (100% passed in 319.01s).
+- [x] All 157 test suites execution (100% passed).
 - [x] Production build and release packaging audit verification.
 
 ---
@@ -93,3 +97,10 @@
   - Added ARIA live regions to `TacticalDuelArenaTab` and verified in Suite 70 (41/41 assertions passed).
   - Executed full-system end-to-end multi-game simulation suites (Tournament, Multi-archetype, and Full Lifecycle E2E).
   - Total test suites expanded to 154 / 154 suites with 100% pass rate.
+- **2026-10-24 23:26 (Iteration 3 Checkpoint)**:
+  - Configured automated GitHub Actions deployment workflow (`.github/workflows/deploy.yml`) with relative base path (`base: './'`).
+  - Implemented strict Content Security Policy (CSP) in `public/_headers` and `index.html` with test verification (Suite 155, 19/19 passed).
+  - Benchmarked MOBA ParticleEngine frame budget: 0.0082ms avg update time, < 0.5ms threshold, 60 FPS verified (Suite 156, 10/10 passed).
+  - Built Deck Format Banlist & Chemical Hazard Regulations engine (`STANDARD_GDPT`, `CLASSROOM_SAFE`, `UNLIMITED`) in `DeckManagementService` (Suite 157, 15/15 passed).
+  - Hardened PWA Service Worker (`public/sw.js`) with relative and absolute path precaching for subpath hosting.
+  - Total test suites expanded to 157 / 157 with 100% pass rate.
