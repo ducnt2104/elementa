@@ -1,5 +1,5 @@
 // run-all-tests.mjs
-// Comprehensive test runner executing all 173 test suites in ELEMENTA
+// Comprehensive test runner executing all 175 test suites in ELEMENTA
 import fs from 'fs';
 import { execSync } from 'child_process';
 import path from 'path';

@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T00:35:00+07:00`  
-**Elapsed Real Time:** `1h 46m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T00:42:00+07:00`  
+**Elapsed Real Time:** `1h 53m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 1h 46m)
+## 1. CURRENT AUDIT SUMMARY (T = 1h 53m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 173 / 173 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 175 / 175 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
@@ -188,3 +188,21 @@
   - Hardened `run-all-tests.mjs` with 10MB `maxBuffer` to prevent buffer overflow.
   - Maintained 0 TypeScript errors across the entire codebase and built production bundles in 19.16s (entry chunk: 682.87 kB).
   - Total test suites expanded to 173 / 173 with 100% pass rate.
+- **2026-10-25 00:42 (Iteration 13 Checkpoint)**:
+  - Implemented comprehensive Metallurgy, Metal Reactivity Series & Corrosion Engine in `src/domain/metallurgyCorrosionEngine.ts` conforming strictly to GDPT 2018 Grade 12 (Chủ đề 6: Đại cương kim loại & Ăn mòn) & IUPAC Standards:
+    - 14-couple standard electrochemical reactivity series ($K \to Au$) with verified reduction potentials $E^\circ$.
+    - Alpha-rule ($\alpha$-rule) redox spontaneity engine calculating cell EMF $E^\circ = E^\circ_{\text{catot}} - E^\circ_{\text{anot}}$ and Gibbs free energy $\Delta G^\circ$.
+    - 3 metallurgical extraction methods: Molten salt electrolysis (Hall-Heroult Al extraction with Cryolite $Na_3AlF_6$, $NaCl$), Pyrometallurgy ($CO/H_2$ reduction of metal oxides behind Al), and Hydrometallurgy ($Fe + CuSO_4$).
+    - Corrosion mechanism predictor: Chemical corrosion vs 3-condition Electrochemical corrosion ($Fe-Cu, Fe-Zn, Fe-Sn, Fe-C$).
+    - Sacrificial anode cathodic protection model ($Zn$ sacrificial block protecting iron ship hull $Fe$ 100%).
+    - Tin-plated iron ($Fe-Sn$) scratch vulnerability model.
+  - Created and passed Test Suite 174 (`test-metallurgy-and-corrosion.mjs`, 32/32 passed).
+  - Implemented `MetallurgyCorrosionVisualizer.tsx` with 3 interactive modes:
+    - Alpha Rule predictor and interactive SVG curve connecting oxidants and reductants with cell EMF.
+    - 3 Metallurgy methods comparison with industrial blast furnace & molten electrolysis details.
+    - Corrosion simulation with sacrificial anode status badge and GDPT 2018 exam warnings.
+  - Integrated `MetallurgyCorrosionVisualizer` into `PeriodicCodexTab.tsx` under `'METALLURGY_CORROSION'`.
+  - Created and passed Test Suite 175 (`test-metallurgy-corrosion-visualizer-ui.mjs`, 11/11 passed).
+  - Executed complete 173-suite master test matrix with 100% pass rate in 294.32s; total test suites now 175.
+  - Built production bundles in 17.41s with entry chunk size optimized to 682.87 kB.
+  - Total test suites expanded to 175 / 175 with 100% pass rate.
