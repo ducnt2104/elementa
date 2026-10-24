@@ -1190,14 +1190,21 @@ export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
           </div>
         </div>
 
-        {/* Center: Phase Flow Indicator */}
-        <div className="flex items-center gap-1 bg-black/60 px-3 py-1.5 rounded-lg border border-white/10 text-xs font-mono font-bold">
+        {/* Center: Phase Flow Indicator with Screen Reader ARIA Live Region */}
+        <div
+          role="region"
+          aria-label="Tiến trình giai đoạn lượt đấu"
+          aria-live="polite"
+          aria-atomic="true"
+          className="flex items-center gap-1 bg-black/60 px-3 py-1.5 rounded-lg border border-white/10 text-xs font-mono font-bold"
+        >
           {(['DRAW_PHASE', 'STANDBY_PHASE', 'MAIN_PHASE_1', 'BATTLE_PHASE', 'MAIN_PHASE_2', 'END_PHASE'] as DuelPhase[]).map((p) => {
             const isCurrent = phase === p;
             const label = p.replace('_PHASE', '').replace('_', ' ');
             return (
               <div
                 key={p}
+                aria-current={isCurrent ? 'step' : undefined}
                 className={`px-2 py-0.5 rounded transition-all ${
                   isCurrent
                     ? 'bg-cyan-ion text-obsidian font-black shadow-md shadow-cyan-ion/40 scale-105'
@@ -2588,6 +2595,10 @@ export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
             </div>
             <div
               ref={logsContainerRef}
+              role="log"
+              aria-live="polite"
+              aria-relevant="additions"
+              aria-label="Nhật ký chiến đấu thời gian thực"
               className="flex-1 overflow-y-auto space-y-1.5 pr-1 font-mono text-[11px] scrollbar-thin scrollbar-thumb-cyan-ion/40"
             >
               {[...logs].reverse().map((log) => (

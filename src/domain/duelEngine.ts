@@ -3860,13 +3860,36 @@ export class DuelEngine {
     }
 
     // Filter out cognitive trap blunders (e.g. Cu + HCl, Au + O2, etc.)
-    const validCard = eligible.find(card => {
+    const validCards = eligible.filter(card => {
       const id = card.def.id;
       if (id.includes('trap_cognitive_cu_hcl') || id.includes('trap_cognitive_au') || id.includes('cognitive_trap')) {
         return false;
       }
       return true;
     });
+
+    if (validCards.length === 0) {
+      const res = this.passPriority('opponent');
+      return { actionTaken: 'PASSED', message: res.message };
+    }
+
+    // Threat-Aware Tactical Prioritization (Yu-Gi-Oh! Rulebook v10 tr. 44-47):
+    // If preceding chain link is player's activation, prioritize Counter Traps (Spell Speed 3) to negate it
+    const lastChainItem = this.chainStack.length > 0 ? this.chainStack[this.chainStack.length - 1] : null;
+    const isPlayerActivating = lastChainItem && lastChainItem.activatorPlayerId === 'player';
+
+    validCards.sort((a, b) => {
+      const speedA = a.def.spellSpeed || (a.def.spellTrapSubtype === 'COUNTER_TRAP' ? 3 : 2);
+      const speedB = b.def.spellSpeed || (b.def.spellTrapSubtype === 'COUNTER_TRAP' ? 3 : 2);
+
+      if (isPlayerActivating) {
+        if (speedA === 3 && speedB !== 3) return -1;
+        if (speedB === 3 && speedA !== 3) return 1;
+      }
+      return speedB - speedA;
+    });
+
+    const validCard = validCards[0];
 
     if (validCard) {
       const duelist = this.opponent;
@@ -9687,7 +9710,37 @@ export class DuelEngine {
       }
     }
 
-    // 3. Pick top scoring reaction
+    // 3. Triplets of cards for High-Level AI (EXPERT, MENDELEEV, RANKED_AI)
+    if (this.aiLevel === 'EXPERT' || this.aiLevel === 'MENDELEEV' || this.aiLevel === 'RANKED_AI') {
+      const topPool = availablePool.slice(0, 7); // bound to top 7 candidates for O(C(7,3)) = 35 evaluations max
+      for (let i = 0; i < topPool.length; i++) {
+        for (let j = i + 1; j < topPool.length; j++) {
+          for (let k = j + 1; k < topPool.length; k++) {
+            const c1 = topPool[i];
+            const c2 = topPool[j];
+            const c3 = topPool[k];
+            const s1 = c1.def.chemicalFormula?.replace(/[^a-zA-Z0-9]/g, '');
+            const s2 = c2.def.chemicalFormula?.replace(/[^a-zA-Z0-9]/g, '');
+            const s3 = c3.def.chemicalFormula?.replace(/[^a-zA-Z0-9]/g, '');
+            if (!s1 || !s2 || !s3 || s1 === s2 || s2 === s3 || s1 === s3) continue;
+
+            const evalRes = this.reactionEngine.evaluateCombination([s1, s2, s3], activeConditions);
+            if (evalRes.status === 'SUCCESS' && evalRes.matchedRule) {
+              const dmg = evalRes.matchedRule.basePower * 10;
+              let score = dmg * 1.5; // Multi-element complex reaction priority bonus
+              if (dmg >= player.lp) score += 15000;
+              candidateCombinations.push({
+                cardUids: [c1.uid, c2.uid, c3.uid],
+                evalResult: evalRes,
+                score
+              });
+            }
+          }
+        }
+      }
+    }
+
+    // 4. Pick top scoring reaction
     if (candidateCombinations.length > 0) {
       candidateCombinations.sort((a, b) => b.score - a.score);
       const best = candidateCombinations[0];

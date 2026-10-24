@@ -98,6 +98,24 @@ for (const pair of colorPairs) {
 }
 
 // -------------------------------------------------------------
+// GROUP 4: DUEL ARENA & MULTIPLAYER LOBBY ARIA LIVE REGIONS
+// -------------------------------------------------------------
+console.log('\n--- 4. Duel Arena & Multiplayer Lobby ARIA Live Regions ---');
+
+const duelSource = fs.readFileSync(path.resolve('./src/components/duel/TacticalDuelArenaTab.tsx'), 'utf-8');
+const lobbySource = fs.readFileSync(path.resolve('./src/components/duel/OnlineMultiplayerLobbyModal.tsx'), 'utf-8');
+
+assert(duelSource.includes('role="region"') && duelSource.includes('aria-label="Tiến trình giai đoạn lượt đấu"'), 'Phase indicator implements role="region" and aria-label');
+assert(duelSource.includes('aria-live="polite"') && duelSource.includes('aria-atomic="true"'), 'Phase flow notifies screen readers via aria-live="polite"');
+assert(duelSource.includes('aria-current={isCurrent ? \'step\' : undefined}'), 'Current phase signals aria-current="step"');
+assert(duelSource.includes('role="log"') && duelSource.includes('aria-relevant="additions"'), 'Combat log implements role="log" with live additions');
+
+assert(lobbySource.includes('role="dialog"') && lobbySource.includes('aria-modal="true"'), 'Multiplayer lobby implements modal role="dialog"');
+assert(lobbySource.includes('aria-labelledby="multiplayer-lobby-title"'), 'Multiplayer lobby links dialog to title heading');
+assert(lobbySource.includes('aria-label="Đóng cửa sổ phòng thi đấu (Escape)"'), 'Close button has descriptive aria-label with keyboard hint');
+assert(lobbySource.includes('e.key === \'Escape\''), 'Multiplayer lobby listens for Escape key');
+
+// -------------------------------------------------------------
 // SUMMARY
 // -------------------------------------------------------------
 console.log('\n======================================================================');
