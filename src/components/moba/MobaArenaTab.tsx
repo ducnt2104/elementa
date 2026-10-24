@@ -200,6 +200,8 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
     phenomena: string;
     note: string;
   } | null>(null);
+  const lastReactionAlertTimestampRef = useRef<number>(-1);
+  const reactionAlertTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Mobile Touch & Virtual Joystick state
   const [joystickThumbOffset, setJoystickThumbOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -289,7 +291,14 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
         renderer.render(engine, dt);
 
         // Sync Reaction Alert
-        if (engine.latestReactionAlert && (!reactionAlert || reactionAlert.equation !== engine.latestReactionAlert.equation)) {
+        if (
+          engine.latestReactionAlert &&
+          engine.latestReactionAlert.timestamp !== lastReactionAlertTimestampRef.current
+        ) {
+          lastReactionAlertTimestampRef.current = engine.latestReactionAlert.timestamp;
+          if (reactionAlertTimeoutRef.current) {
+            clearTimeout(reactionAlertTimeoutRef.current);
+          }
           setReactionAlert({
             equation: engine.latestReactionAlert.equation,
             name: engine.latestReactionAlert.rule.name_vi,
@@ -298,7 +307,7 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
           });
 
           // Auto clear reaction alert after 4.5s
-          setTimeout(() => {
+          reactionAlertTimeoutRef.current = setTimeout(() => {
             setReactionAlert(null);
           }, 4500);
         }
@@ -367,6 +376,7 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
     animFrameIdRef.current = requestAnimationFrame(loop);
     return () => {
       if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
+      if (reactionAlertTimeoutRef.current) clearTimeout(reactionAlertTimeoutRef.current);
     };
   }, [isPaused, onMatchFinished]);
 

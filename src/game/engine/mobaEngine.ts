@@ -1027,25 +1027,35 @@ export class MobaEngine {
           this.spawnFloatingText(aoe.pos, '💨 HƠI NƯỚC BÙNG NỔ!', '#38bdf8', true, true);
           this.spawnFloatingText({ x: aoe.pos.x, y: aoe.pos.y - 24 }, 'H₂O(l) → H₂O(g) [Flash Vaporization]', '#7dd3fc', false, true);
 
+          const steamRule = {
+            ruleCode: 'RX_STEAM_EXPLOSION',
+            name_vi: 'Bùng Nổ Hơi Nước Sông',
+            name_en: 'River Flash Steam Vaporization',
+            equation: 'H₂O(l) → H₂O(g) [ΔH_vap = +40.7 kJ/mol]',
+            reactants: ['H2O(l)'],
+            products: ['H2O(g)'],
+            basePower: 30,
+            thermodynamics: 'ENDOTHERMIC' as const,
+            groupCategory: 'GROUP_F_SPECIAL_REDOX' as const,
+            isTrap: false,
+            observablePhenomenaVI: 'Nhiệt lượng cực đại làm sôi bùng nước sông thành màn sương hơi nước dày đặc làm giảm tầm nhìn và tốc độ di chuyển.',
+            pedagogicalExplanation: 'Nước hóa hơi nhanh chóng tạo áp suất hơi bão hòa cực lớn, sinh khói sương cản trở di chuyển.'
+          };
+
+          this.latestReactionAlert = {
+            rule: steamRule as any,
+            equation: 'H₂O(l) → H₂O(g)',
+            phenomena: 'Nhiệt độ cao bốc hơi nước sông tạo màn sương dày đặc.',
+            timestamp: this.matchTimeSeconds,
+            pos: { x: aoe.pos.x, y: aoe.pos.y }
+          };
+
           this.reactionsTriggered.push({
             id: `rx_steam_${Date.now()}_${Math.random()}`,
             timestampSeconds: this.matchTimeSeconds,
             sourceHeroId: aoe.sourceEntityId,
             targetEntityId: 'river_h2o',
-            reactionRule: {
-              ruleCode: 'RX_STEAM_EXPLOSION',
-              name_vi: 'Bùng Nổ Hơi Nước Sông',
-              name_en: 'River Flash Steam Vaporization',
-              equation: 'H₂O(l) → H₂O(g) [ΔH_vap = +40.7 kJ/mol]',
-              reactants: ['H2O(l)'],
-              products: ['H2O(g)'],
-              basePower: 30,
-              thermodynamics: 'ENDOTHERMIC',
-              groupCategory: 'GROUP_F_SPECIAL_REDOX',
-              isTrap: false,
-              observablePhenomenaVI: 'Nhiệt lượng cực đại làm sôi bùng nước sông thành màn sương hơi nước dày đặc làm giảm tầm nhìn và tốc độ di chuyển.',
-              pedagogicalExplanation: 'Nước hóa hơi nhanh chóng tạo áp suất hơi bão hòa cực lớn, sinh khói sương cản trở di chuyển.'
-            } as any,
+            reactionRule: steamRule as any,
             equation: 'H₂O(l) → H₂O(g)',
             observablePhenomenaVI: 'Nhiệt độ cao bốc hơi nước sông tạo màn sương dày đặc.',
             bonusDamage: 0,
@@ -1090,25 +1100,35 @@ export class MobaEngine {
           this.spawnFloatingText(aoe.pos, '♨️ TÔI VÔI TỎA NHIỆT TRÊN SÔNG (CaO)!', '#f97316', true, true);
           this.spawnFloatingText({ x: aoe.pos.x, y: aoe.pos.y - 24 }, 'CaO + H₂O → Ca(OH)₂ [ΔH° = -65.2 kJ/mol]', '#fb923c', false, true);
 
+          const slakingRule = {
+            ruleCode: 'RX_CaO_RIVER_SLAKING',
+            name_vi: 'Tôi Vôi Tỏa Nhiệt Trên Sông',
+            name_en: 'River Quicklime Slaking Scalding',
+            equation: 'CaO(s) + H₂O(l) → Ca(OH)₂(aq) [ΔH° = -65.2 kJ/mol]',
+            reactants: ['CaO', 'H2O'],
+            products: ['Ca(OH)2'],
+            basePower: 45,
+            thermodynamics: 'EXOTHERMIC' as const,
+            groupCategory: 'GROUP_A_ACID_BASE' as const,
+            isTrap: false,
+            observablePhenomenaVI: 'Vôi sống tiếp xúc nước sông sôi sục dữ dội, tỏa nhiệt lượng lớn gây bỏng sôi và sinh dung dịch nước vôi trong xói mòn kháng phép.',
+            pedagogicalExplanation: 'Quá trình hidrat hóa canxi oxit là phản ứng tỏa nhiệt mạnh mẽ, chuyển canxi oxit thành canxi hidroxit có tính kiềm mạnh.'
+          };
+
+          this.latestReactionAlert = {
+            rule: slakingRule as any,
+            equation: 'CaO + H₂O → Ca(OH)₂',
+            phenomena: 'Nước sông sôi sục vì phản ứng tôi vôi tỏa nhiệt.',
+            timestamp: this.matchTimeSeconds,
+            pos: { x: aoe.pos.x, y: aoe.pos.y }
+          };
+
           this.reactionsTriggered.push({
             id: `rx_slaking_river_${Date.now()}_${Math.random()}`,
             timestampSeconds: this.matchTimeSeconds,
             sourceHeroId: aoe.sourceEntityId,
             targetEntityId: 'river_h2o',
-            reactionRule: {
-              ruleCode: 'RX_CaO_RIVER_SLAKING',
-              name_vi: 'Tôi Vôi Tỏa Nhiệt Trên Sông',
-              name_en: 'River Quicklime Slaking Scalding',
-              equation: 'CaO(s) + H₂O(l) → Ca(OH)₂(aq) [ΔH° = -65.2 kJ/mol]',
-              reactants: ['CaO', 'H2O'],
-              products: ['Ca(OH)2'],
-              basePower: 45,
-              thermodynamics: 'EXOTHERMIC',
-              groupCategory: 'GROUP_A_ACID_BASE',
-              isTrap: false,
-              observablePhenomenaVI: 'Vôi sống tiếp xúc nước sông sôi sục dữ dội, tỏa nhiệt lượng lớn gây bỏng sôi và sinh dung dịch nước vôi trong xói mòn kháng phép.',
-              pedagogicalExplanation: 'Quá trình hidrat hóa canxi oxit là phản ứng tỏa nhiệt mạnh mẽ, chuyển canxi oxit thành canxi hidroxit có tính kiềm mạnh.'
-            } as any,
+            reactionRule: slakingRule as any,
             equation: 'CaO + H₂O → Ca(OH)₂',
             observablePhenomenaVI: 'Nước sông sôi sục vì phản ứng tôi vôi tỏa nhiệt.',
             bonusDamage: 45,
@@ -1153,25 +1173,35 @@ export class MobaEngine {
           this.spawnFloatingText(aoe.pos, '❄️ ĐÓNG BĂNG MẶT SÔNG (N₂)!', '#2dd4bf', true, true);
           this.spawnFloatingText({ x: aoe.pos.x, y: aoe.pos.y - 24 }, 'N₂(l) + H₂O(l) → H₂O(s) [Hóa Rắn Băng]', '#5eead4', false, true);
 
+          const freezeRule = {
+            ruleCode: 'RX_NITROGEN_RIVER_FREEZE',
+            name_vi: 'Hóa Rắn Băng Cầu Nitơ Lỏng Trên Sông',
+            name_en: 'River Liquid Nitrogen Cryogenic Freezing',
+            equation: 'N₂(l) + H₂O(l) → H₂O(s) + N₂(g) [ΔH_fus = -6.01 kJ/mol]',
+            reactants: ['N2(l)', 'H2O(l)'],
+            products: ['H2O(s)', 'N2(g)'],
+            basePower: 35,
+            thermodynamics: 'ENDOTHERMIC' as const,
+            groupCategory: 'GROUP_F_SPECIAL_REDOX' as const,
+            isTrap: false,
+            observablePhenomenaVI: 'Nitơ lỏng hấp thụ nhiệt cực nhanh làm nước sông đông cứng thành cầu băng trong suốt. Đồng minh trượt tăng tốc +30%, kẻ địch kẹt chân bất động.',
+            pedagogicalExplanation: 'Nhiệt độ sôi của nitơ lỏng là -196°C, khi tiếp xúc nước lập tức làm nước hạ nhiệt độ xuống dưới 0°C và đóng băng kết tinh.'
+          };
+
+          this.latestReactionAlert = {
+            rule: freezeRule as any,
+            equation: 'N₂(l) + H₂O(l) → H₂O(s)',
+            phenomena: 'Mặt nước đóng băng cứng tạo cầu băng kiên cố.',
+            timestamp: this.matchTimeSeconds,
+            pos: { x: aoe.pos.x, y: aoe.pos.y }
+          };
+
           this.reactionsTriggered.push({
             id: `rx_freeze_river_${Date.now()}_${Math.random()}`,
             timestampSeconds: this.matchTimeSeconds,
             sourceHeroId: aoe.sourceEntityId,
             targetEntityId: 'river_h2o',
-            reactionRule: {
-              ruleCode: 'RX_NITROGEN_RIVER_FREEZE',
-              name_vi: 'Hóa Rắn Băng Cầu Nitơ Lỏng Trên Sông',
-              name_en: 'River Liquid Nitrogen Cryogenic Freezing',
-              equation: 'N₂(l) + H₂O(l) → H₂O(s) + N₂(g) [ΔH_fus = -6.01 kJ/mol]',
-              reactants: ['N2(l)', 'H2O(l)'],
-              products: ['H2O(s)', 'N2(g)'],
-              basePower: 35,
-              thermodynamics: 'ENDOTHERMIC',
-              groupCategory: 'GROUP_F_SPECIAL_REDOX',
-              isTrap: false,
-              observablePhenomenaVI: 'Nitơ lỏng hấp thụ nhiệt cực nhanh làm nước sông đông cứng thành cầu băng trong suốt. Đồng minh trượt tăng tốc +30%, kẻ địch kẹt chân bất động.',
-              pedagogicalExplanation: 'Nhiệt độ sôi của nitơ lỏng là -196°C, khi tiếp xúc nước lập tức làm nước hạ nhiệt độ xuống dưới 0°C và đóng băng kết tinh.'
-            } as any,
+            reactionRule: freezeRule as any,
             equation: 'N₂(l) + H₂O(l) → H₂O(s)',
             observablePhenomenaVI: 'Mặt nước đóng băng cứng tạo cầu băng kiên cố.',
             bonusDamage: 35,
@@ -1216,25 +1246,35 @@ export class MobaEngine {
           this.spawnFloatingText(aoe.pos, '⚡ SỐC ĐIỆN BỀ MẶT SÔNG (Ion dẫn điện)!', '#facc15', true, true);
           this.spawnFloatingText({ x: aoe.pos.x, y: aoe.pos.y - 24 }, '2H₂O + 2e⁻ → H₂↑ + 2OH⁻ [Dẫn Điện Bề Mặt]', '#fde047', false, true);
 
+          const shockRule = {
+            ruleCode: 'RX_ELECTROLYTIC_RIVER_CONDUCTION',
+            name_vi: 'Sốc Điện Phân Bề Mặt Sông',
+            name_en: 'Electrolytic River Shock Wave Conduction',
+            equation: '2H₂O(l) + 2e⁻ → H₂↑ + 2OH⁻ [Dẫn Điện Bề Mặt]',
+            reactants: ['H2O', 'e-'],
+            products: ['H2', 'OH-'],
+            basePower: 50,
+            thermodynamics: 'EXOTHERMIC' as const,
+            groupCategory: 'GROUP_B_REDOX' as const,
+            isTrap: false,
+            observablePhenomenaVI: 'Dòng điện ion phân ly lan truyền nhanh chóng qua mặt nước sông, tạo xung điện shock làm choáng toàn bộ kẻ địch trong lòng sông.',
+            pedagogicalExplanation: 'Nước sông tự nhiên chứa ion khoáng chất hòa tan có độ dẫn điện cao, cho phép dòng điện truyền đi xa hơn trên cạn.'
+          };
+
+          this.latestReactionAlert = {
+            rule: shockRule as any,
+            equation: '2H₂O + 2e⁻ → H₂↑ + 2OH⁻',
+            phenomena: 'Tia sét điện phân phóng rực sáng trên mặt nước sông.',
+            timestamp: this.matchTimeSeconds,
+            pos: { x: aoe.pos.x, y: aoe.pos.y }
+          };
+
           this.reactionsTriggered.push({
             id: `rx_shock_river_${Date.now()}_${Math.random()}`,
             timestampSeconds: this.matchTimeSeconds,
             sourceHeroId: aoe.sourceEntityId,
             targetEntityId: 'river_h2o',
-            reactionRule: {
-              ruleCode: 'RX_ELECTROLYTIC_RIVER_CONDUCTION',
-              name_vi: 'Sốc Điện Phân Bề Mặt Sông',
-              name_en: 'Electrolytic River Shock Wave Conduction',
-              equation: '2H₂O(l) + 2e⁻ → H₂↑ + 2OH⁻ [Dẫn Điện Bề Mặt]',
-              reactants: ['H2O', 'e-'],
-              products: ['H2', 'OH-'],
-              basePower: 50,
-              thermodynamics: 'EXOTHERMIC',
-              groupCategory: 'GROUP_B_REDOX',
-              isTrap: false,
-              observablePhenomenaVI: 'Dòng điện ion phân ly lan truyền nhanh chóng qua mặt nước sông, tạo xung điện shock làm choáng toàn bộ kẻ địch trong lòng sông.',
-              pedagogicalExplanation: 'Nước sông tự nhiên chứa ion khoáng chất hòa tan có độ dẫn điện cao, cho phép dòng điện truyền đi xa hơn trên cạn.'
-            } as any,
+            reactionRule: shockRule as any,
             equation: '2H₂O + 2e⁻ → H₂↑ + 2OH⁻',
             observablePhenomenaVI: 'Tia sét điện phân phóng rực sáng trên mặt nước sông.',
             bonusDamage: 50,
@@ -1260,25 +1300,35 @@ export class MobaEngine {
           this.spawnFloatingText(aoe.pos, `💥 NỔ KHÍ HYDRO TRÊN SÔNG (${sym})!`, '#f59e0b', true, true);
           this.spawnFloatingText({ x: aoe.pos.x, y: aoe.pos.y - 24 }, `2${sym} + 2H₂O → 2${sym}OH + H₂↑`, '#fbbf24', false, true);
 
+          const alkaliRule = {
+            ruleCode: `RX_${sym}_RIVER_EXPLOSION`,
+            name_vi: `Bùng Nổ Kim Loại Kiềm ${sym} Trên Sông`,
+            name_en: `Alkali River Hydrogen Detonation`,
+            equation: `2${sym} + 2H₂O → 2${sym}OH + H₂↑`,
+            reactants: [sym, 'H2O'],
+            products: [`${sym}OH`, 'H2'],
+            basePower: 75,
+            thermodynamics: 'EXOTHERMIC' as const,
+            groupCategory: 'GROUP_A_ACID_BASE' as const,
+            isTrap: false,
+            observablePhenomenaVI: `Kim loại kiềm phản ứng mãnh liệt với nước sông, bốc cháy ngọn lửa màu đặc trưng và phát nổ khí hydro.`,
+            pedagogicalExplanation: `Kim loại nhóm IA/IIA có thế điện cực chuẩn rất âm, dễ dàng khử ion H+ của nước giải phóng H2 và tỏa nhiệt lượng lớn gây nổ.`
+          };
+
+          this.latestReactionAlert = {
+            rule: alkaliRule as any,
+            equation: `2${sym} + 2H₂O → 2${sym}OH + H₂↑`,
+            phenomena: `Kim loại kiềm ${sym} nổ tung khí hydro khi chạm dòng sông.`,
+            timestamp: this.matchTimeSeconds,
+            pos: { x: aoe.pos.x, y: aoe.pos.y }
+          };
+
           this.reactionsTriggered.push({
             id: `rx_alkali_river_${Date.now()}_${Math.random()}`,
             timestampSeconds: this.matchTimeSeconds,
             sourceHeroId: aoe.sourceEntityId,
             targetEntityId: 'river_h2o',
-            reactionRule: {
-              ruleCode: `RX_${sym}_RIVER_EXPLOSION`,
-              name_vi: `Bùng Nổ Kim Loại Kiềm ${sym} Trên Sông`,
-              name_en: `Alkali River Hydrogen Detonation`,
-              equation: `2${sym} + 2H₂O → 2${sym}OH + H₂↑`,
-              reactants: [sym, 'H2O'],
-              products: [`${sym}OH`, 'H2'],
-              basePower: 75,
-              thermodynamics: 'EXOTHERMIC',
-              groupCategory: 'GROUP_A_ACID_BASE',
-              isTrap: false,
-              observablePhenomenaVI: `Kim loại kiềm phản ứng mãnh liệt với nước sông, bốc cháy ngọn lửa màu đặc trưng và phát nổ khí hydro.`,
-              pedagogicalExplanation: `Kim loại nhóm IA/IIA có thế điện cực chuẩn rất âm, dễ dàng khử ion H+ của nước giải phóng H2 và tỏa nhiệt lượng lớn gây nổ.`
-            } as any,
+            reactionRule: alkaliRule as any,
             equation: `2${sym} + 2H₂O → 2${sym}OH + H₂↑`,
             observablePhenomenaVI: `Kim loại kiềm nổ tung khí hydro khi chạm dòng sông.`,
             bonusDamage: 75,
@@ -1312,25 +1362,35 @@ export class MobaEngine {
             true
           );
 
+          const biomassRule = {
+            ruleCode: 'RX_BIOMASS_COMBUSTION',
+            name_vi: 'Cháy Rụi Sinh Khối Bụi Rậm',
+            name_en: 'Biomass Foliage Combustion',
+            equation: 'C₆H₁₀O₅ (Cellulose) + 6O₂ → 6CO₂ + 5H₂O',
+            reactants: ['Cellulose', 'O2'],
+            products: ['CO2', 'H2O'],
+            basePower: 35,
+            thermodynamics: 'EXOTHERMIC' as const,
+            groupCategory: 'GROUP_E_COMBUSTION' as const,
+            isTrap: false,
+            observablePhenomenaVI: 'Bụi cây bị thiêu rụi bốc cháy dữ dội, tước bỏ hoàn toàn khả năng ngụy trang của bất kỳ mục tiêu nào bên trong.',
+            pedagogicalExplanation: 'Quá trình cháy hoàn toàn của xenlulozơ tỏa nhiệt phá hủy cấu trúc sinh khối thực vật, làm lộ diện vị trí ngụy trang.'
+          };
+
+          this.latestReactionAlert = {
+            rule: biomassRule as any,
+            equation: 'C₆H₁₀O₅ + 6O₂ → 6CO₂ + 5H₂O',
+            phenomena: 'Bụi rậm bốc cháy dữ dội, mất hoàn toàn khả năng ẩn nấp.',
+            timestamp: this.matchTimeSeconds,
+            pos: { x: brush.x + brush.width / 2, y: brush.y + brush.height / 2 }
+          };
+
           this.reactionsTriggered.push({
             id: `rx_bush_burn_${Date.now()}_${Math.random()}`,
             timestampSeconds: this.matchTimeSeconds,
             sourceHeroId: aoe.sourceEntityId,
             targetEntityId: brush.id,
-            reactionRule: {
-              ruleCode: 'RX_BIOMASS_COMBUSTION',
-              name_vi: 'Cháy Rụi Sinh Khối Bụi Rậm',
-              name_en: 'Biomass Foliage Combustion',
-              equation: 'C₆H₁₀O₅ (Cellulose) + 6O₂ → 6CO₂ + 5H₂O',
-              reactants: ['Cellulose', 'O2'],
-              products: ['CO2', 'H2O'],
-              basePower: 35,
-              thermodynamics: 'EXOTHERMIC',
-              groupCategory: 'GROUP_E_COMBUSTION',
-              isTrap: false,
-              observablePhenomenaVI: 'Bụi cây bị thiêu rụi bốc cháy dữ dội, tước bỏ hoàn toàn khả năng ngụy trang của bất kỳ mục tiêu nào bên trong.',
-              pedagogicalExplanation: 'Quá trình cháy hoàn toàn của xenlulozơ tỏa nhiệt phá hủy cấu trúc sinh khối thực vật, làm lộ diện vị trí ngụy trang.'
-            } as any,
+            reactionRule: biomassRule as any,
             equation: 'C₆H₁₀O₅ + 6O₂ → 6CO₂ + 5H₂O',
             observablePhenomenaVI: 'Bụi rậm bốc cháy dữ dội, mất hoàn toàn khả năng ẩn nấp.',
             bonusDamage: 0,

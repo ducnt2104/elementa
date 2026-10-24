@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-24T23:26:00+07:00`  
-**Elapsed Real Time:** `0h 38m`  
+**Latest Checkpoint Timestamp:** `2026-10-24T23:42:00+07:00`  
+**Elapsed Real Time:** `0h 54m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 0h 38m)
+## 1. CURRENT AUDIT SUMMARY (T = 0h 54m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 157 / 157 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 159 / 159 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.60s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 698 kB (139 kB gzip) |
@@ -28,7 +28,8 @@
 | **Security & Fuzzing** | Verified | Firestore deep rules spec & XSS neutralization verified |
 | **Content Security Policy** | Enforced | `public/_headers` + `<meta CSP>` locking down scripts, styles, objects, and connect endpoints |
 | **MOBA 60FPS Budget** | Benchmarked | 0.0082ms avg ParticleEngine update across 1,000 frames (Suite 156 passed) |
-| **Deck Formats & Banlists** | Governed | `STANDARD_GDPT`, `CLASSROOM_SAFE`, `UNLIMITED` rules engine & hazard limits (Suite 157 passed) |
+| **Deck Formats & Banlists** | Governed | `STANDARD_GDPT`, `CLASSROOM_SAFE`, `UNLIMITED` rules engine & hazard limits (Suite 157 & 158 passed) |
+| **MOBA Reaction Telemetry** | Synchronized | In-game HUD chemical reaction popups & environmental river/brush detonations (Suite 159 passed) |
 | **Automated CI/CD** | Deployed | GitHub Actions workflow `.github/workflows/deploy.yml` with relative base path |
 | **Firebase Services** | Live | Auth (Guest/Email), Firestore, Security Rules verified |
 | **Gameplay Systems** | Operational | TCG Arena (8000 LP), MOBA Canvas 60FPS, Codices, Workshop, Missions, Events, Shop |
@@ -103,4 +104,10 @@
   - Benchmarked MOBA ParticleEngine frame budget: 0.0082ms avg update time, < 0.5ms threshold, 60 FPS verified (Suite 156, 10/10 passed).
   - Built Deck Format Banlist & Chemical Hazard Regulations engine (`STANDARD_GDPT`, `CLASSROOM_SAFE`, `UNLIMITED`) in `DeckManagementService` (Suite 157, 15/15 passed).
   - Hardened PWA Service Worker (`public/sw.js`) with relative and absolute path precaching for subpath hosting.
-  - Total test suites expanded to 157 / 157 with 100% pass rate.
+  - Added interactive tournament and classroom format switcher UI in `TacticalDeckBuilderTab.tsx` (Suite 158, 13/13 passed).
+  - Total test suites expanded to 158 / 158 with 100% pass rate.
+- **2026-10-24 23:42 (Iteration 4 Checkpoint)**:
+  - Enriched MOBA chemical reaction alerts: Populated `latestReactionAlert` for all environmental reactions (Steam vaporization, Quicklime slaking, Nitrogen river freeze, Electrolytic shock, Alkali metal water detonation, Biomass combustion).
+  - Upgraded `MobaArenaTab.tsx` with ref-based timestamp synchronization (`lastReactionAlertTimestampRef`) ensuring consecutive triggers of the same reaction properly refresh HUD popups.
+  - Created and passed Test Suite 159 (`test-moba-reaction-alerts-and-vfx.mjs`, 14/14 passed).
+  - Verified full test matrix: 158/158 suites passed cleanly in 311.38s; total test suites now 159.
