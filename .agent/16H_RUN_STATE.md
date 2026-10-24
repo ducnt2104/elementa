@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T06:44:00+07:00`  
-**Elapsed Real Time:** `7h 55m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T06:50:00+07:00`  
+**Elapsed Real Time:** `8h 01m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE — 8H HALFWAY MARK ACHIEVED]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -22,11 +22,11 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 7h 55m)
+## 1. CURRENT AUDIT SUMMARY (T = 8h 01m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 269 / 269 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 271 / 271 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1298,3 +1298,27 @@
   - TypeScript validation: 0 errors across entire workspace.
   - Production build: `dist/assets/index-DIh2_jak.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 269 / 269 with 100% pass rate.
+- **2026-10-25 06:50 (Iteration 61 Checkpoint — PHASE C EXTENSION & 8-HOUR HALFWAY MARK)**:
+  - Implemented Salinity Gradient Energy & Osmotic Power (Blue Energy - PRO & RED) in `src/domain/salinityGradientOsmoticEngine.ts` strictly conforming to IUPAC Van 't Hoff Solution Thermodynamics, IEA Ocean Energy Systems (IEA-OES) Blue Energy Protocols & Vietnam GDPT 2018 Chemistry 11 & 12 (Dung dịch điện li, Áp suất thẩm thấu Van 't Hoff, Năng lượng Gibbs hòa trộn & Pin điện hóa ion):
+    - Van 't Hoff Osmotic Pressure & Waterfall Head Equivalence:
+      - Theoretical osmotic pressure: $\Delta \pi = i \cdot \Delta C \cdot R \cdot T$.
+      - Standard seawater ($35\text{ g/L}$, $0.55\text{M } NaCl$) vs river water ($0.5\text{ g/L}$, $0.0085\text{M}$) generates $\Delta \pi = 26.18\text{ bar}$.
+      - Equivalent hydrostatic head: $h = \frac{\Delta \pi}{\rho g} = \mathbf{262.8\text{ meters}}$, releasing $\Delta G_{mix} = 2.58\text{ MJ/m}^3$ of river water (dropping $1\text{ m}^3$ over a 263m waterfall, five times higher than Niagara Falls!).
+      - Hypersaline SWRO brine ($70\text{ g/L}$) yields $\Delta \pi = 56.8\text{ bar}$ ($570\text{m}$ head), and Dead Sea brine ($280\text{ g/L}$) yields $\Delta \pi = 245\text{ bar}$ ($2,450\text{m}$ head).
+    - Membrane Power Generation Technologies:
+      - **Pressure Retarded Osmosis (PRO):** Fresh water permeates naturally across semi-permeable TFC polyamide membrane into pressurized seawater ($\Delta P \approx \Delta \pi / 2 = 13.0\text{ bar}$). Drives Pelton hydro-turbine generator at **$6.9\text{ W/m}^2$ power density**, producing $2.829\text{ MW}$ net export power ($22.8\text{ GWh/year}$) from a $500,000\text{ m}^2$ plant.
+      - **Reverse Electrodialysis (RED):** Solid-state alternating stack of Cation Exchange Membranes (CEM) and Anion Exchange Membranes (AEM). $Na^+$ and $Cl^-$ ion migration creates a direct DC electrical potential without turbines ($2.8\text{ W/m}^2$, boosting to $32.2\text{ W/m}^2$ with hypersaline SWRO brine).
+    - Environmental Stewardship & Baseload Energy:
+      - Continuous 24/7 baseload power with **$92\%$ capacity factor** (river discharges into the sea continuously without intermittency).
+      - $0.0\text{ kg CO}_2/\text{MWh}$ emissions; discharged brackish water returns harmlessly to the ocean.
+      - Vietnam potential: Mekong River Delta (9 river mouths) and Red River Delta discharge $> 850\text{ billion m}^3/\text{year}$, representing over **$25,000\text{ MW}$ of clean baseload blue energy potential**!
+  - Created and passed Test Suite 270 (`test-salinity-gradient-osmotic.mjs`, 3/3 passed).
+  - Implemented `SalinityGradientOsmoticVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Interactive SVG PRO module cross-section showing river water channel ($0.5\text{ g/L}$), TFC membrane, pressurized seawater channel ($13\text{ bar}$), water permeation arrows $J_w$, high-pressure pipeline, and Pelton hydro-turbine generator.
+    - Mode 2: Reverse Electrodialysis (RED) ion exchange stack showing alternating CEM ($Na^+$) and AEM ($Cl^-$) membranes, ion migration paths, and external DC electrical circuit.
+    - Mode 3: 263m waterfall equivalence and LCOE economics dashboard with river vs ocean, SWRO brine, and Dead Sea presets, hydraulic pressure slider ($5 - 25\text{ bar}$), membrane area slider ($100k - 2M\text{ m}^2$), and Mekong River Delta blue energy potential callout.
+  - Integrated `SalinityGradientOsmoticVisualizer` into `PeriodicCodexTab.tsx` under `'SALINITY_GRADIENT_OSMOTIC'` with `Waves` icon.
+  - Created and passed Test Suite 271 (`test-salinity-gradient-osmotic-visualizer-ui.mjs`, 7/7 passed).
+  - TypeScript validation: 0 errors across entire workspace.
+  - Production build: `dist/assets/index-Dg8_eRb1.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 271 / 271 with 100% pass rate.
