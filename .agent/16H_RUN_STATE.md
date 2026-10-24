@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T06:32:00+07:00`  
-**Elapsed Real Time:** `7h 43m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T06:37:30+07:00`  
+**Elapsed Real Time:** `7h 48m 40s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -22,11 +22,11 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 7h 43m)
+## 1. CURRENT AUDIT SUMMARY (T = 7h 48m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 265 / 265 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 267 / 267 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1253,3 +1253,26 @@
   - TypeScript validation: 0 errors across entire workspace.
   - Production build: `dist/assets/index-BCRGdKng.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 265 / 265 with 100% pass rate.
+- **2026-10-25 06:37 (Iteration 59 Checkpoint — PHASE C EXTENSION)**:
+  - Implemented Direct Lithium Extraction (DLE), Geothermal Brine Sorbent Kinetics & Sub-Nanometer Steric Sieving in `src/domain/directLithiumExtractionEngine.ts` strictly conforming to IUPAC Ion Exchange & Coordination Chemistry, IEA Critical Minerals Market Review 2024 & Vietnam GDPT 2018 Chemistry 12 (Kim loại kiềm, Bán kính ion, Trao đổi ion, Tích số tan Ksp & Pin Lithium-ion):
+    - Sub-Nanometer Steric Ion Exclusion & Hydration Barrier:
+      - Crystal cavities of Manganese Oxide ($LiMn_2O_4 \to HMnO$) and Titanium Oxide ($H_2TiO_3$) have precise apertures of $0.76\text{ \AA}$, providing a perfect match for $Li^+$ ($0.76\text{ \AA}$).
+      - Steric exclusion: $Na^+$ ($1.02\text{ \AA}$) and $Ca^{2+}$ ($1.00\text{ \AA}$) are excluded by size.
+      - Hydration barrier: $Mg^{2+}$ ($0.72\text{ \AA}$) is energetically blocked from entering the non-hydrated cavity due to its immense hydration enthalpy ($\Delta H_{hyd} = -1921\text{ kJ/mol}$ vs $Li^+$ $-519\text{ kJ/mol}$), achieving ultra-high $Li/Mg$ selectivity ($> 3,200 : 1$).
+    - Commercial Sorbent Technologies:
+      - **HMO Ion Sieve (Acid Eluted):** $HMnO(s) + Li^+ \rightleftharpoons LiMnO(s) + H^+$. Eluted with mild $0.25\text{M } HCl$, producing $> 99.4\%$ pure $LiCl$ solution.
+      - **Al-LDH Sorbent (Zero-Acid Water Wash):** Layered double hydroxide ($LiCl \cdot 2 Al(OH)_3 \cdot n H_2O$) adsorbs neutral $LiCl$ pairs and desorbs with hot water ($75^\circ\text{C}$), completely eliminating acid consumption!
+    - Geothermal Reservoirs & Environmental Water Stewardship:
+      - Modeled key global brine assets: Salton Sea Geothermal ($220\text{ ppm } Li, 110^\circ\text{C}$), Upper Rhine Graben ($180\text{ ppm}, 160^\circ\text{C}$), and Atacama Salar ($1400\text{ ppm}, Mg/Li = 6.29$).
+      - At Salton Sea ($500\text{ m}^3/\text{h}$ brine feed), DLE recovers **$2,515\text{ kg } Li/\text{day}$** ($4,887\text{ tons LCE/year}$) with **$95.3\%$ recovery efficiency** in under 2 hours, saving **$1.2\text{ million m}^3$ of fresh water annually** compared to traditional evaporation ponds ($250\text{ m}^3$ water lost per ton LCE).
+      - Low OPEX: $\$1.30 - \$1.80/\text{kg } LCE$ ($\$1,300 - \$1,800/\text{ton } LCE$).
+  - Created and passed Test Suite 266 (`test-direct-lithium-extraction.mjs`, 3/3 passed).
+  - Implemented `DirectLithiumExtractionVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Interactive SVG sub-nanometer crystal cavity showing $Li^+$ perfect fit ($0.76\text{ \AA}$), $Na^+$ size exclusion ($1.02\text{ \AA}$), $Mg^{2+}$ hydration shell barrier, and $LiCl$ eluate discharge.
+    - Mode 2: Adsorption kinetics and global geothermal reservoirs dashboard with Salton Sea, Upper Rhine, Atacama, and Smackover presets, flow rate slider ($100 - 1500\text{ m}^3/\text{h}$), cycle time slider, and live recovery/selectivity meters.
+    - Mode 3: Battery-grade LCE economics and water conservation dashboard with full OPEX stack, DLE vs solar evaporation ponds contrast cards, and annual fresh water savings meter.
+  - Integrated `DirectLithiumExtractionVisualizer` into `PeriodicCodexTab.tsx` under `'DIRECT_LITHIUM_EXTRACTION'` with `Sparkles` icon.
+  - Created and passed Test Suite 267 (`test-direct-lithium-extraction-visualizer-ui.mjs`, 7/7 passed).
+  - TypeScript validation: 0 errors across entire workspace.
+  - Production build: `dist/assets/index-CA8--1fp.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 267 / 267 with 100% pass rate.
