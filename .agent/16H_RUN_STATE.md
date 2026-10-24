@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T00:42:00+07:00`  
-**Elapsed Real Time:** `1h 53m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T00:50:00+07:00`  
+**Elapsed Real Time:** `2h 01m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 1h 53m)
+## 1. CURRENT AUDIT SUMMARY (T = 2h 01m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 175 / 175 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 177 / 177 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
@@ -206,3 +206,22 @@
   - Executed complete 173-suite master test matrix with 100% pass rate in 294.32s; total test suites now 175.
   - Built production bundles in 17.41s with entry chunk size optimized to 682.87 kB.
   - Total test suites expanded to 175 / 175 with 100% pass rate.
+- **2026-10-25 00:50 (Iteration 14 Checkpoint)**:
+  - Implemented comprehensive Alkali & Alkaline Earth Metals, Flame Emission Spectra, Water Hardness & Softening Engine in `src/domain/alkaliHardWaterEngine.ts` strictly conforming to GDPT 2018 Grade 12 (Chủ đề 7: Nguyên tố nhóm IA và nhóm IIA) & IUPAC Standards:
+    - Catalog of 7 Group IA & IIA metals (Li, Na, K, Be, Mg, Ca, Ba) with electron configurations, density ($Na < 1.0\text{ g/cm}^3$ floats on water), flame colors (Li carmine red, Na yellow, K violet, Ca brick red, Ba apple green), and water reactivity (Be inert, Mg hot water only, Ca/Ba spontaneous).
+    - Water hardness classification engine for $Ca^{2+}, Mg^{2+}, HCO_3^-, Cl^-, SO_4^{2-}$ classifying into Tạm thời (Temporary), Vĩnh cửu (Permanent), and Toàn phần (Total) hardness.
+    - Real-world economic and safety impacts: soap precipitation waste ($2C_{17}H_{35}COONa + Ca^{2+} \to (C_{17}H_{35}COO)_2Ca \downarrow + 2Na^+$) and boiler scale explosion hazard calculation.
+    - 5 water softening simulations with exact GDPT 2018 rules:
+      - Thermal boiling: 100% temporary hardness removal, but strictly 0% permanent hardness removal.
+      - Lime $Ca(OH)_2$: stoichiometric temporary hardness precipitation.
+      - Soda ash $Na_2CO_3$ and Sodium phosphate $Na_3PO_4$: universal precipitation softeners removing >90-95% of both temporary and permanent hardness.
+      - Cation exchange resin ($R-Na$): high-efficiency reversible ion exchange achieving >98% softening.
+  - Created and passed Test Suite 176 (`test-alkali-and-hard-water.mjs`, 28/28 passed).
+  - Implemented `AlkaliHardWaterVisualizer.tsx` with 3 interactive modes:
+    - Metal catalog and SVG Bunsen burner with characteristic flame spectral emission colors.
+    - Water hardness water sample lab analyzer with ionic breakdown, soap waste meter, and boiler explosion risk gauge.
+    - Interactive softening method simulator comparing thermal boiling, lime, soda ash, trisodium phosphate, and cation resin with residual hardness progress bars and exam trap notes.
+  - Integrated `AlkaliHardWaterVisualizer` into `PeriodicCodexTab.tsx` under `'ALKALI_HARD_WATER'`.
+  - Created and passed Test Suite 177 (`test-alkali-hardwater-visualizer-ui.mjs`, 11/11 passed).
+  - Production build compiled in 15.72s with entry chunk size optimized at 682.87 kB (134.29 kB gzip).
+  - Total test suites expanded to 177 / 177 with 100% pass rate.
