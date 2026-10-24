@@ -31,6 +31,11 @@ export interface ChemicalCardViewProps {
   isPlayable?: boolean;
   disableHoverZoom?: boolean;
   quantityOwned?: number;
+  currentAtk?: number;
+  currentDef?: number;
+  atkModifier?: number;
+  defModifier?: number;
+  statusEffects?: Array<'BURN' | 'FREEZE' | 'POISON' | 'CORROSION' | 'SHIELD' | 'BOOST' | 'WEAKEN' | 'STUN' | 'LE_CHATELIER' | string>;
   onClick?: () => void;
   onDoubleClick?: () => void;
   onInspect?: (card: PlayableCardDef) => void;
@@ -50,6 +55,11 @@ export const ChemicalCardView: React.FC<ChemicalCardViewProps> = ({
   isPlayable = false,
   disableHoverZoom = false,
   quantityOwned,
+  currentAtk,
+  currentDef,
+  atkModifier,
+  defModifier,
+  statusEffects = [],
   onClick,
   onDoubleClick,
   onInspect,
@@ -59,6 +69,13 @@ export const ChemicalCardView: React.FC<ChemicalCardViewProps> = ({
   customOverlayBadge
 }) => {
   const [tilt, setTilt] = useState<{ rx: number; ry: number; px: number; py: number } | null>(null);
+
+  const baseAtk = card.atk ?? 0;
+  const baseDef = card.def ?? 0;
+  const effectiveAtkModifier = atkModifier !== undefined ? atkModifier : (currentAtk !== undefined ? currentAtk - baseAtk : 0);
+  const effectiveDefModifier = defModifier !== undefined ? defModifier : (currentDef !== undefined ? currentDef - baseDef : 0);
+  const finalAtk = currentAtk !== undefined ? currentAtk : baseAtk + effectiveAtkModifier;
+  const finalDef = currentDef !== undefined ? currentDef : baseDef + effectiveDefModifier;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (disableHoverZoom || size === 'xs' || isDefensePosition) return;
@@ -316,6 +333,31 @@ export const ChemicalCardView: React.FC<ChemicalCardViewProps> = ({
           {card.manaCost}
         </div>
 
+        {/* Status Effects Badges Overlay */}
+        {statusEffects && statusEffects.length > 0 && (
+          <div className="absolute top-1 left-1 right-1 z-20 flex flex-wrap gap-0.5 pointer-events-none">
+            {statusEffects.map((status, idx) => {
+              let icon = '⚡';
+              let color = 'bg-amber-500/90 text-amber-100 border-amber-300';
+              if (status === 'BURN') { icon = '🔥'; color = 'bg-red-600/95 text-red-100 border-red-400 animate-pulse'; }
+              else if (status === 'FREEZE') { icon = '❄️'; color = 'bg-cyan-500/95 text-cyan-100 border-cyan-300'; }
+              else if (status === 'POISON') { icon = '☠️'; color = 'bg-purple-600/95 text-purple-100 border-purple-400'; }
+              else if (status === 'CORROSION') { icon = '🧪'; color = 'bg-lime-600/95 text-lime-100 border-lime-400'; }
+              else if (status === 'SHIELD') { icon = '🛡️'; color = 'bg-blue-600/95 text-blue-100 border-blue-400'; }
+              else if (status === 'BOOST') { icon = '▲'; color = 'bg-emerald-600/95 text-emerald-100 border-emerald-400'; }
+              else if (status === 'WEAKEN') { icon = '▼'; color = 'bg-rose-600/95 text-rose-100 border-rose-400'; }
+              else if (status === 'STUN') { icon = '💫'; color = 'bg-amber-600/95 text-amber-100 border-amber-400'; }
+              else if (status === 'LE_CHATELIER') { icon = '⚖️'; color = 'bg-indigo-600/95 text-indigo-100 border-indigo-400'; }
+              return (
+                <span key={idx} className={`px-1 py-0.2 rounded border text-[7px] font-bold font-mono shadow flex items-center gap-0.5 ${color}`}>
+                  <span>{icon}</span>
+                  <span>{status}</span>
+                </span>
+              );
+            })}
+          </div>
+        )}
+
         {/* Card Type Tag */}
         <div className="absolute bottom-0.5 right-0.5 text-[7px] font-mono text-slate-300 bg-black/75 px-1 rounded uppercase tracking-wider border border-white/10">
           {card.cardType === 'ELEMENT_MONSTER' && '[Nguyên Tố]'}
@@ -340,17 +382,64 @@ export const ChemicalCardView: React.FC<ChemicalCardViewProps> = ({
         </div>
       )}
 
-      {/* VÙNG 4: Chỉ Số Chiến Đấu (ATK/DEF/LINK) hoặc Loại Phép */}
-      <div className="flex items-center justify-between px-1 py-0.5 mt-0.5 rounded bg-black/70 border border-white/10 shrink-0 font-mono text-[8px] font-bold">
+      {/* VÙNG 4: Chỉ Số Chiến Đấu (ATK/DEF/LINK) hoặc Loại Phép với Buff/Debuff Rõ Ràng */}
+      <div className="flex items-center justify-between px-1 py-0.5 mt-0.5 rounded bg-black/80 border border-white/10 shrink-0 font-mono text-[8px] font-bold">
         {isLink ? (
           <div className="w-full flex items-center justify-between text-ivory">
-            <span className="text-amber-300">ATK/{card.atk ?? 0}</span>
+            {effectiveAtkModifier !== 0 ? (
+              <div className="flex flex-col leading-none items-start">
+                <div className="flex items-center gap-0.5 text-[6.5px]">
+                  <span className="text-slate-400 line-through">ATK {baseAtk}</span>
+                  <span className={effectiveAtkModifier > 0 ? 'text-emerald-400 font-black' : 'text-rose-400 font-black'}>
+                    {effectiveAtkModifier > 0 ? `+${effectiveAtkModifier}` : effectiveAtkModifier}
+                  </span>
+                </div>
+                <span className={`text-[8.5px] font-black ${effectiveAtkModifier > 0 ? 'text-emerald-300' : 'text-rose-300'}`}>
+                  ATK {finalAtk}
+                </span>
+              </div>
+            ) : (
+              <span className="text-amber-300">ATK/{baseAtk}</span>
+            )}
             <span className="text-cyan-300 font-black">L-{card.linkRating || 1}</span>
           </div>
         ) : (card.cardType === 'ELEMENT_MONSTER' || card.cardType === 'COMPOUND_MONSTER') ? (
-          <div className="w-full flex items-center justify-between text-ivory">
-            <span className="text-amber-300">ATK/{card.atk ?? 0}</span>
-            <span className="text-cyan-300">DEF/{card.def ?? 0}</span>
+          <div className="w-full flex items-center justify-between text-ivory gap-1">
+            {/* ATK Display with Buff / Debuff Stack */}
+            {effectiveAtkModifier !== 0 ? (
+              <div className="flex flex-col leading-tight items-start bg-black/40 px-1 py-0.2 rounded border border-white/5">
+                <div className="flex items-center gap-0.5 text-[6.5px]">
+                  <span className="text-slate-400 line-through">ATK {baseAtk}</span>
+                  <span className={effectiveAtkModifier > 0 ? 'text-emerald-400 font-black' : 'text-rose-400 font-black'}>
+                    {effectiveAtkModifier > 0 ? `+${effectiveAtkModifier}` : effectiveAtkModifier}
+                  </span>
+                </div>
+                <div className="w-full h-px bg-white/10 my-0.2" />
+                <span className={`text-[8.5px] font-black ${effectiveAtkModifier > 0 ? 'text-emerald-300' : 'text-rose-300'}`}>
+                  ATK {finalAtk}
+                </span>
+              </div>
+            ) : (
+              <span className="text-amber-300">ATK/{baseAtk}</span>
+            )}
+
+            {/* DEF Display with Buff / Debuff Stack */}
+            {effectiveDefModifier !== 0 ? (
+              <div className="flex flex-col leading-tight items-end bg-black/40 px-1 py-0.2 rounded border border-white/5">
+                <div className="flex items-center gap-0.5 text-[6.5px]">
+                  <span className="text-slate-400 line-through">DEF {baseDef}</span>
+                  <span className={effectiveDefModifier > 0 ? 'text-emerald-400 font-black' : 'text-rose-400 font-black'}>
+                    {effectiveDefModifier > 0 ? `+${effectiveDefModifier}` : effectiveDefModifier}
+                  </span>
+                </div>
+                <div className="w-full h-px bg-white/10 my-0.2" />
+                <span className={`text-[8.5px] font-black ${effectiveDefModifier > 0 ? 'text-emerald-300' : 'text-rose-300'}`}>
+                  DEF {finalDef}
+                </span>
+              </div>
+            ) : (
+              <span className="text-cyan-300">DEF/{baseDef}</span>
+            )}
           </div>
         ) : (
           <div className="w-full flex items-center justify-between text-slate-400 text-[7px]">

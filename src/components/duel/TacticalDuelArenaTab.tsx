@@ -1815,6 +1815,15 @@ export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
                           disableHoverZoom={true}
                           isDefensePosition={slot.position !== 'FACE_UP_ATTACK'}
                           isFaceDown={slot.position === 'FACE_DOWN_DEFENSE'}
+                          atkModifier={slot.tempAtkBoost}
+                          defModifier={slot.tempDefBoost}
+                          currentAtk={(slot.card.def.atk ?? 0) + (slot.tempAtkBoost || 0)}
+                          currentDef={(slot.card.def.def ?? 0) + (slot.tempDefBoost || 0)}
+                          statusEffects={[
+                            ...(slot.tempAtkBoost > 0 ? ['BOOST'] : slot.tempAtkBoost < 0 ? ['WEAKEN'] : []),
+                            ...(slot.passivationShieldUsed || slot.inertShieldUsed ? ['SHIELD'] : []),
+                            ...(slot.isEffectNegated ? ['STUN'] : [])
+                          ]}
                           onClick={() => setInspectCard(slot.card)}
                         />
                         {canBeAttacked && (
@@ -1970,6 +1979,14 @@ export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
                       size="sm"
                       disableHoverZoom={true}
                       isDefensePosition={playerState.extraMonsterZone.position !== 'FACE_UP_ATTACK'}
+                      atkModifier={playerState.extraMonsterZone.tempAtkBoost}
+                      defModifier={playerState.extraMonsterZone.tempDefBoost}
+                      currentAtk={(playerState.extraMonsterZone.card.def.atk ?? 0) + (playerState.extraMonsterZone.tempAtkBoost || 0)}
+                      currentDef={(playerState.extraMonsterZone.card.def.def ?? 0) + (playerState.extraMonsterZone.tempDefBoost || 0)}
+                      statusEffects={[
+                        ...(playerState.extraMonsterZone.tempAtkBoost > 0 ? ['BOOST'] : playerState.extraMonsterZone.tempAtkBoost < 0 ? ['WEAKEN'] : []),
+                        ...(playerState.extraMonsterZone.passivationShieldUsed || playerState.extraMonsterZone.inertShieldUsed ? ['SHIELD'] : [])
+                      ]}
                     />
                     {playerState.extraMonsterZone.card.def.cardType !== 'LINK_MONSTER' && (
                       <button
@@ -2003,6 +2020,14 @@ export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
                     card={opponentState.extraMonsterZone.card.def}
                     size="sm"
                     disableHoverZoom={true}
+                    atkModifier={opponentState.extraMonsterZone.tempAtkBoost}
+                    defModifier={opponentState.extraMonsterZone.tempDefBoost}
+                    currentAtk={(opponentState.extraMonsterZone.card.def.atk ?? 0) + (opponentState.extraMonsterZone.tempAtkBoost || 0)}
+                    currentDef={(opponentState.extraMonsterZone.card.def.def ?? 0) + (opponentState.extraMonsterZone.tempDefBoost || 0)}
+                    statusEffects={[
+                      ...(opponentState.extraMonsterZone.tempAtkBoost > 0 ? ['BOOST'] : opponentState.extraMonsterZone.tempAtkBoost < 0 ? ['WEAKEN'] : []),
+                      ...(opponentState.extraMonsterZone.passivationShieldUsed || opponentState.extraMonsterZone.inertShieldUsed ? ['SHIELD'] : [])
+                    ]}
                   />
                 ) : (
                   <span className="text-[10px] text-purple-400/60 font-mono text-center">EMZ 2<br/>(Link / Extra)</span>
@@ -2155,6 +2180,15 @@ export const TacticalDuelArenaTab: React.FC<TacticalDuelArenaTabProps> = ({
                           disableHoverZoom={true}
                           isDefensePosition={slot.position !== 'FACE_UP_ATTACK'}
                           isFaceDown={slot.position === 'FACE_DOWN_DEFENSE'}
+                          atkModifier={slot.tempAtkBoost}
+                          defModifier={slot.tempDefBoost}
+                          currentAtk={(slot.card.def.atk ?? 0) + (slot.tempAtkBoost || 0)}
+                          currentDef={(slot.card.def.def ?? 0) + (slot.tempDefBoost || 0)}
+                          statusEffects={[
+                            ...(slot.tempAtkBoost > 0 ? ['BOOST'] : slot.tempAtkBoost < 0 ? ['WEAKEN'] : []),
+                            ...(slot.passivationShieldUsed || slot.inertShieldUsed ? ['SHIELD'] : []),
+                            ...(slot.isEffectNegated ? ['STUN'] : [])
+                          ]}
                         />
                         {/* Monster control buttons */}
                         <div className="flex items-center gap-1 mt-1">

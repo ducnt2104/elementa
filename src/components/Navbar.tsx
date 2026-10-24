@@ -17,12 +17,18 @@ import {
   Coins,
   Shield,
   Home,
-  Cloud
+  Cloud,
+  Gift,
+  Gamepad2,
+  Award,
+  CheckSquare
 } from 'lucide-react';
 import { UnifiedResourceTab } from './resources/UnifiedResourcesModal';
+import { EventsEngine } from '../domain/eventsEngine';
 
 export type ActiveTab =
   | 'MENU'
+  | 'PLAY'
   | 'DUEL'
   | 'BATTLE'
   | 'CAMPAIGN'
@@ -39,7 +45,9 @@ export type ActiveTab =
   | 'ROSTER'
   | 'SKILLS'
   | 'RANKED'
-  | 'QUESTS';
+  | 'QUESTS'
+  | 'MISSIONS'
+  | 'EVENTS';
 
 interface NavbarProps {
   activeTab: ActiveTab;
@@ -59,6 +67,7 @@ interface NavbarProps {
   openMultiplayerLobby?: () => void;
   openJudgeDemo?: () => void;
   openAuthModal?: () => void;
+  openDailyLogin?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -73,8 +82,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   toggleMute,
   openTutorial,
   openUnifiedResources,
-  openAuthModal
+  openAuthModal,
+  openDailyLogin
 }) => {
+  const loginState = EventsEngine.getDailyLoginState();
+
   const isTcgActive =
     activeTab === 'TCG_MENU' ||
     activeTab === 'DUEL' ||
@@ -82,14 +94,14 @@ export const Navbar: React.FC<NavbarProps> = ({
     activeTab === 'COLLECTION' ||
     activeTab === 'DECK' ||
     activeTab === 'SHOP' ||
-    (systemMode === 'TCG' && activeTab !== 'MENU');
+    (systemMode === 'TCG' && activeTab !== 'MENU' && activeTab !== 'PLAY' && activeTab !== 'MISSIONS' && activeTab !== 'EVENTS');
 
   const isMobaActive =
     activeTab === 'MOBA_MENU' ||
     activeTab === 'BATTLE' ||
     activeTab === 'ROSTER' ||
     activeTab === 'SKILLS' ||
-    (systemMode === 'MOBA' && activeTab !== 'MENU');
+    (systemMode === 'MOBA' && activeTab !== 'MENU' && activeTab !== 'PLAY' && activeTab !== 'MISSIONS' && activeTab !== 'EVENTS');
 
   const handleBrandClick = () => {
     sound.playUiClick();
@@ -152,83 +164,134 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Primary High-Level Navigation: 3 Gateways + 2 Global Learning Tools */}
+        {/* Primary High-Level Navigation: Gateways + Learning & Gameplay Systems */}
         <nav aria-label="Điều hướng chính" className="hidden md:flex items-center gap-1.5 bg-navy/90 p-1 rounded-xl border border-navy-light/60 shadow-inner">
           {/* 1. Sảnh Chính */}
           <button
             onClick={handleBrandClick}
             aria-current={activeTab === 'MENU' ? 'page' : undefined}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-cyan-ion focus-visible:outline-none ${
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-cyan-ion focus-visible:outline-none ${
               activeTab === 'MENU'
                 ? 'bg-cyan-ion text-obsidian shadow-sm shadow-cyan-ion/40'
                 : 'text-ivory-muted hover:text-ivory hover:bg-navy-light/60'
             }`}
           >
-            <Home className="w-4 h-4" />
-            <span>Sảnh Chính</span>
+            <Home className="w-3.5 h-3.5" />
+            <span>Sảnh</span>
           </button>
 
-          {/* 2. Đấu Bài TCG */}
+          {/* 2. Chế Độ Chơi (Play Hub) */}
+          <button
+            onClick={() => {
+              sound.playUiClick();
+              setActiveTab('PLAY');
+            }}
+            aria-current={activeTab === 'PLAY' ? 'page' : undefined}
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:outline-none ${
+              activeTab === 'PLAY'
+                ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-obsidian shadow-md shadow-sky-500/30'
+                : 'text-ivory-muted hover:text-sky-300 hover:bg-navy-light/60'
+            }`}
+          >
+            <Gamepad2 className="w-3.5 h-3.5 text-sky-400" />
+            <span>Chơi</span>
+          </button>
+
+          {/* 3. Đấu Bài TCG */}
           <button
             onClick={handleTcgClick}
             aria-current={isTcgActive ? 'page' : undefined}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none ${
+            className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none ${
               isTcgActive
                 ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-obsidian shadow-md shadow-amber-500/30'
                 : 'text-ivory-muted hover:text-amber-300 hover:bg-navy-light/60'
             }`}
           >
-            <Sword className="w-4 h-4 text-amber-400" />
-            <span>Đấu Bài TCG</span>
+            <Sword className="w-3.5 h-3.5 text-amber-400" />
+            <span>TCG</span>
           </button>
 
-          {/* 3. Đấu Trường MOBA */}
+          {/* 4. Đấu Trường MOBA */}
           <button
             onClick={handleMobaClick}
             aria-current={isMobaActive ? 'page' : undefined}
-            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-cyan-ion focus-visible:outline-none ${
+            className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-cyan-ion focus-visible:outline-none ${
               isMobaActive
                 ? 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-obsidian shadow-md shadow-cyan-500/30'
                 : 'text-ivory-muted hover:text-cyan-300 hover:bg-navy-light/60'
             }`}
           >
-            <Flame className="w-4 h-4 text-cyan-400" />
-            <span>Đấu Trường MOBA</span>
+            <Flame className="w-3.5 h-3.5 text-cyan-400" />
+            <span>MOBA</span>
           </button>
 
-          <span className="w-px h-5 bg-navy-light/60 mx-1" aria-hidden="true" />
+          {/* 5. Nhiệm Vụ */}
+          <button
+            onClick={() => {
+              sound.playUiClick();
+              setActiveTab('MISSIONS');
+            }}
+            aria-current={activeTab === 'MISSIONS' ? 'page' : undefined}
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none ${
+              activeTab === 'MISSIONS'
+                ? 'bg-navy-light text-emerald-300 font-bold border border-emerald-400/40'
+                : 'text-ivory-muted hover:text-emerald-300 hover:bg-navy-light/60'
+            }`}
+          >
+            <CheckSquare className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Nhiệm Vụ</span>
+          </button>
 
-          {/* 4. Bảng Tuần Hoàn */}
+          {/* 6. Sự Kiện */}
+          <button
+            onClick={() => {
+              sound.playUiClick();
+              setActiveTab('EVENTS');
+            }}
+            aria-current={activeTab === 'EVENTS' ? 'page' : undefined}
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:outline-none ${
+              activeTab === 'EVENTS'
+                ? 'bg-navy-light text-rose-300 font-bold border border-rose-400/40'
+                : 'text-ivory-muted hover:text-rose-300 hover:bg-navy-light/60'
+            }`}
+          >
+            <Award className="w-3.5 h-3.5 text-rose-400" />
+            <span>Sự Kiện</span>
+          </button>
+
+          <span className="w-px h-5 bg-navy-light/60 mx-0.5" aria-hidden="true" />
+
+          {/* 7. Bảng Tuần Hoàn */}
           <button
             onClick={() => {
               sound.playUiClick();
               setActiveTab('CODEX');
             }}
             aria-current={activeTab === 'CODEX' ? 'page' : undefined}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:outline-none ${
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:outline-none ${
               activeTab === 'CODEX'
                 ? 'bg-navy-light text-yellow-300 font-bold border border-yellow-400/40'
                 : 'text-ivory-muted hover:text-yellow-300 hover:bg-navy-light/60'
             }`}
           >
-            <BookOpen className="w-4 h-4 text-yellow-400" />
-            <span>Bảng Tuần Hoàn</span>
+            <BookOpen className="w-3.5 h-3.5 text-yellow-400" />
+            <span>Bảng TH</span>
           </button>
 
-          {/* 5. Xưởng AI */}
+          {/* 8. Xưởng AI */}
           <button
             onClick={() => {
               sound.playUiClick();
               setActiveTab('WORKSHOP');
             }}
             aria-current={activeTab === 'WORKSHOP' ? 'page' : undefined}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${
+            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:outline-none ${
               activeTab === 'WORKSHOP'
                 ? 'bg-navy-light text-teal-300 font-bold border border-teal-400/40'
                 : 'text-ivory-muted hover:text-teal-300 hover:bg-navy-light/60'
             }`}
           >
-            <Palette className="w-4 h-4 text-teal-400" />
+            <Palette className="w-3.5 h-3.5 text-teal-400" />
             <span>Xưởng AI</span>
           </button>
         </nav>
@@ -269,6 +332,27 @@ export const Navbar: React.FC<NavbarProps> = ({
               />
             </div>
           </div>
+
+          {/* Daily Login Rewards Gift Button */}
+          {openDailyLogin && (
+            <button
+              onClick={() => {
+                sound.playUiClick();
+                openDailyLogin();
+              }}
+              className="relative p-2 rounded-xl bg-navy hover:bg-navy-light text-amber-300 border border-amber-500/40 transition-all shadow-sm focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:outline-none"
+              title="Điểm danh 7 ngày nhận quà"
+              aria-label="Điểm danh nhận quà hàng ngày"
+            >
+              <Gift className="w-4 h-4 text-amber-400" />
+              {loginState.canClaimToday && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" />
+              )}
+              {loginState.canClaimToday && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-rose-500" />
+              )}
+            </button>
+          )}
 
           {/* Cloud Auth & Sync Portal Button */}
           {openAuthModal && (
@@ -313,39 +397,81 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Mobile Nav Strip for Small Screens (<768px) */}
-      <nav aria-label="Điều hướng di động" className="md:hidden flex items-center justify-around gap-1 px-2 py-1.5 border-t border-navy-light/40 bg-navy/80 text-[10px] font-mono">
+      <nav aria-label="Điều hướng di động" className="md:hidden flex items-center justify-around gap-1 px-1.5 py-1.5 border-t border-navy-light/40 bg-navy/80 text-[10px] font-mono overflow-x-auto">
         <button
           onClick={handleBrandClick}
           aria-current={activeTab === 'MENU' ? 'page' : undefined}
           aria-label="Về Sảnh chính"
-          className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded focus-visible:ring-1 focus-visible:ring-cyan-ion focus-visible:outline-none ${
+          className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded focus-visible:ring-1 focus-visible:ring-cyan-ion focus-visible:outline-none shrink-0 ${
             activeTab === 'MENU' ? 'text-cyan-ion font-bold' : 'text-ivory-muted'
           }`}
         >
-          <Home className="w-4 h-4" />
+          <Home className="w-3.5 h-3.5" />
           <span>Sảnh</span>
+        </button>
+        <button
+          onClick={() => {
+            sound.playUiClick();
+            setActiveTab('PLAY');
+          }}
+          aria-current={activeTab === 'PLAY' ? 'page' : undefined}
+          aria-label="Chọn chế độ chơi"
+          className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded focus-visible:ring-1 focus-visible:ring-sky-400 focus-visible:outline-none shrink-0 ${
+            activeTab === 'PLAY' ? 'text-sky-400 font-bold' : 'text-ivory-muted'
+          }`}
+        >
+          <Gamepad2 className="w-3.5 h-3.5" />
+          <span>Chơi</span>
         </button>
         <button
           onClick={handleTcgClick}
           aria-current={isTcgActive ? 'page' : undefined}
           aria-label="Đấu Bài TCG"
-          className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded focus-visible:ring-1 focus-visible:ring-amber-400 focus-visible:outline-none ${
+          className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded focus-visible:ring-1 focus-visible:ring-amber-400 focus-visible:outline-none shrink-0 ${
             isTcgActive ? 'text-amber-400 font-bold' : 'text-ivory-muted'
           }`}
         >
-          <Sword className="w-4 h-4" />
+          <Sword className="w-3.5 h-3.5" />
           <span>TCG</span>
         </button>
         <button
           onClick={handleMobaClick}
           aria-current={isMobaActive ? 'page' : undefined}
           aria-label="Đấu Trường MOBA"
-          className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded focus-visible:ring-1 focus-visible:ring-cyan-ion focus-visible:outline-none ${
+          className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded focus-visible:ring-1 focus-visible:ring-cyan-ion focus-visible:outline-none shrink-0 ${
             isMobaActive ? 'text-cyan-400 font-bold' : 'text-ivory-muted'
           }`}
         >
-          <Flame className="w-4 h-4" />
+          <Flame className="w-3.5 h-3.5" />
           <span>MOBA</span>
+        </button>
+        <button
+          onClick={() => {
+            sound.playUiClick();
+            setActiveTab('MISSIONS');
+          }}
+          aria-current={activeTab === 'MISSIONS' ? 'page' : undefined}
+          aria-label="Nhiệm vụ hàng ngày và hóa học"
+          className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded focus-visible:ring-1 focus-visible:ring-emerald-400 focus-visible:outline-none shrink-0 ${
+            activeTab === 'MISSIONS' ? 'text-emerald-400 font-bold' : 'text-ivory-muted'
+          }`}
+        >
+          <CheckSquare className="w-3.5 h-3.5" />
+          <span>Nhiệm vụ</span>
+        </button>
+        <button
+          onClick={() => {
+            sound.playUiClick();
+            setActiveTab('EVENTS');
+          }}
+          aria-current={activeTab === 'EVENTS' ? 'page' : undefined}
+          aria-label="Sự kiện mùa giải"
+          className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded focus-visible:ring-1 focus-visible:ring-rose-400 focus-visible:outline-none shrink-0 ${
+            activeTab === 'EVENTS' ? 'text-rose-400 font-bold' : 'text-ivory-muted'
+          }`}
+        >
+          <Award className="w-3.5 h-3.5" />
+          <span>Sự kiện</span>
         </button>
         <button
           onClick={() => {
@@ -354,26 +480,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           }}
           aria-current={activeTab === 'CODEX' ? 'page' : undefined}
           aria-label="Bảng Tuần Hoàn Hóa Học"
-          className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded focus-visible:ring-1 focus-visible:ring-yellow-400 focus-visible:outline-none ${
+          className={`flex flex-col items-center gap-0.5 px-1.5 py-1 rounded focus-visible:ring-1 focus-visible:ring-yellow-400 focus-visible:outline-none shrink-0 ${
             activeTab === 'CODEX' ? 'text-yellow-400 font-bold' : 'text-ivory-muted'
           }`}
         >
-          <BookOpen className="w-4 h-4" />
+          <BookOpen className="w-3.5 h-3.5" />
           <span>Bảng TH</span>
-        </button>
-        <button
-          onClick={() => {
-            sound.playUiClick();
-            setActiveTab('WORKSHOP');
-          }}
-          aria-current={activeTab === 'WORKSHOP' ? 'page' : undefined}
-          aria-label="Xưởng Sáng Tạo Kỹ Năng AI"
-          className={`flex flex-col items-center gap-0.5 px-2 py-1 rounded focus-visible:ring-1 focus-visible:ring-teal-400 focus-visible:outline-none ${
-            activeTab === 'WORKSHOP' ? 'text-teal-400 font-bold' : 'text-ivory-muted'
-          }`}
-        >
-          <Palette className="w-4 h-4" />
-          <span>Xưởng AI</span>
         </button>
       </nav>
     </header>

@@ -6,6 +6,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { PlayableCardDef } from '../../domain/cardGameTypes';
 import { ChemicalCardView } from './ChemicalCardView';
+import { FusionRequirementsPanel } from './FusionRequirementsPanel';
 import { OrbitalBoxDiagram } from '../visualizations/OrbitalBoxDiagram';
 import { BondingVisualizerModal } from '../visualizations/BondingVisualizerModal';
 import { FlameTestVisualizer, FLAME_TEST_CATALOG } from '../visualizations/FlameTestVisualizer';
@@ -1458,6 +1459,9 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                     {card.effectText || card.scientificLore || 'Thẻ bài nguyên tố cơ bản, không có hiệu ứng kích hoạt đặc biệt.'}
                   </p>
                 </div>
+
+                {/* Explicit Fusion / Synthesis Requirements Panel */}
+                <FusionRequirementsPanel card={card} />
 
                 {/* Chemical Principle & Scientific Lore */}
                 {card.scientificLore && (

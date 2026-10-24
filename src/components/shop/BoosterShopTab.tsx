@@ -15,6 +15,7 @@ import { ChemicalCardView } from '../cards/ChemicalCardView';
 import { sound } from '../../audio/soundEngine';
 import { CardCraftingModal } from './CardCraftingModal';
 import { PackDetailModal } from './PackDetailModal';
+import { DailyMarketplaceSection } from './DailyMarketplaceSection';
 import {
   Sparkles,
   ShoppingBag,
@@ -1090,6 +1091,13 @@ export const BoosterShopTab: React.FC<BoosterShopTabProps> = ({
           </div>
         </div>
       )}
+
+      {/* 🌟 PHÚC LỢI HÀNG NGÀY & CHỢ THẺ LUÂN PHIÊN (DAILY FREE & ROTATING SINGLES) */}
+      <DailyMarketplaceSection
+        profile={profile}
+        onUpdateProfile={onUpdateProfile}
+        onOpenFreePack={() => handleExecutePull(THEMATIC_BOOSTER_BOXES[0].subPacks[0], 1, true)}
+      />
 
       {/* Multi-Dimensional Category Navigation Tabs & Search Filter */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3 rounded-xl bg-navy/50 border border-navy-light/40">

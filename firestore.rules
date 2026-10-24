@@ -7,13 +7,16 @@ rules_version = '2';
 // Threat Model & Security Posture:
 // - Default Deny: All unmatched collections and endpoints are blocked.
 // - Strict Owner Isolation: Users can only read and mutate their own private
-//   records, inventories, and progression data.
+//   records, progression, quest rewards, and inventory data.
 // - RBAC Hardening: Client requests cannot grant admin/moderator roles or
 //   escalate privileges. Role fields are protected against client mutation.
 // - Resource Exhaustion & DoS Prevention: All strings, arrays, and maps
 //   enforce strict size limits to prevent oversized payload injections.
 // - Domain Consistency: Economic balances cannot be negative, battles won cannot
-//   exceed battles played, and decks adhere to Master Rule tournament sizes.
+//   exceed battles played, decks adhere to Master Rule tournament sizes,
+//   and login reward days follow calendar bounds (1..7).
+// - Tamper-Proof Financial Ledger: Transactions are append-only; update and delete
+//   are strictly forbidden to prevent transaction repudiation or tampering.
 //
 // ============================================================================
 // Assumed Data Models
@@ -58,6 +61,40 @@ rules_version = '2';
 //   - cards: map or list (optional, max 10000 items)
 //   - totalCards: int (optional, min: 0)
 //   - updatedAt: timestamp / string (optional)
+//
+// Collection: missions/{userId}
+// Document ID: User's UID (must equal request.auth.uid)
+// Fields:
+//   - userId: string (required, must equal document ID / auth.uid)
+//   - completedMissions: list of strings or map (optional, max 500 items)
+//   - claimedMissions: list of strings or map (optional, max 500 items)
+//   - lastUpdated: timestamp / string / number (optional)
+//
+// Collection: events/{userId}
+// Document ID: User's UID (must equal request.auth.uid)
+// Fields:
+//   - userId: string (required, must equal document ID / auth.uid)
+//   - claimedEvents: map (optional, max 200 items)
+//   - lastUpdated: timestamp / string / number (optional)
+//
+// Collection: login_rewards/{userId}
+// Document ID: User's UID (must equal request.auth.uid)
+// Fields:
+//   - userId: string (required, must equal document ID / auth.uid)
+//   - currentDay: int (required, range: 1..7)
+//   - lastClaimDate: string (required, length <= 20)
+//   - claimedDays: list of ints (optional, max 7 items)
+//   - lastUpdated: timestamp / string / number (optional)
+//
+// Collection: shop_transactions/{txId}
+// Document ID: Unique transaction ID
+// Fields:
+//   - userId: string (required, immutable, must equal request.auth.uid)
+//   - itemType: string (required, 1..64 chars)
+//   - itemId: string (optional, 1..64 chars)
+//   - price: int (optional, non-negative)
+//   - currency: string (optional, 1..32 chars)
+//   - createdAt: timestamp / string / number (optional)
 //
 // Collection: matches/{matchId}
 // Document ID: Match ID or Room code (E-XXXX)
@@ -210,6 +247,36 @@ service cloud.firestore {
         && (!('totalCards' in data) || isValidInt(data.totalCards, 0, 100000));
     }
 
+    // Missions validation
+    function isValidMissionsDoc(data, userId) {
+      return data.userId == userId
+        && (!('completedMissions' in data) || data.completedMissions is map || (data.completedMissions is list && data.completedMissions.size() <= 500))
+        && (!('claimedMissions' in data) || data.claimedMissions is map || (data.claimedMissions is list && data.claimedMissions.size() <= 500));
+    }
+
+    // Events validation
+    function isValidEventsDoc(data, userId) {
+      return data.userId == userId
+        && (!('claimedEvents' in data) || (data.claimedEvents is map && data.claimedEvents.keys().size() <= 200));
+    }
+
+    // Login Rewards validation
+    function isValidLoginRewardsDoc(data, userId) {
+      return data.userId == userId
+        && isValidInt(data.currentDay, 1, 7)
+        && isValidString(data.lastClaimDate, 1, 20)
+        && (!('claimedDays' in data) || (data.claimedDays is list && data.claimedDays.size() <= 7));
+    }
+
+    // Shop Transactions validation (immutable creation only)
+    function isValidShopTransactionCreate(data) {
+      return data.userId == request.auth.uid
+        && data.itemType is string && data.itemType.size() >= 1 && data.itemType.size() <= 64
+        && (!('itemId' in data) || isValidString(data.itemId, 1, 64))
+        && (!('price' in data) || isValidInt(data.price, 0, 1000000000))
+        && (!('currency' in data) || isValidString(data.currency, 1, 32));
+    }
+
     // Match validation on creation
     function isValidMatchCreate(data) {
       return data.participants is list
@@ -306,7 +373,41 @@ service cloud.firestore {
       allow delete: if isOwner(userId);
     }
 
-    // 4. Live Multiplayer Matches
+    // 4. User Missions & Quests Progression
+    match /missions/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId)
+        && isValidMissionsDoc(request.resource.data, userId);
+      allow delete: if isOwner(userId);
+    }
+
+    // 5. User Event Participation & Claims
+    match /events/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId)
+        && isValidEventsDoc(request.resource.data, userId);
+      allow delete: if isOwner(userId);
+    }
+
+    // 6. User Daily Login Rewards Tracking
+    match /login_rewards/{userId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId)
+        && isValidLoginRewardsDoc(request.resource.data, userId);
+      allow delete: if isOwner(userId);
+    }
+
+    // 7. Shop Purchases & Economy Audit Ledger
+    match /shop_transactions/{txId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.itemType is string
+        && isValidShopTransactionCreate(request.resource.data);
+      allow update, delete: if false;
+    }
+
+    // 8. Live Multiplayer Matches
     match /matches/{matchId} {
       allow read: if isAuthenticated() && (request.auth.uid in resource.data.participants);
 
@@ -321,7 +422,7 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // 5. Match Real-Time Events (Append-Only Stream)
+    // 9. Match Real-Time Events (Append-Only Stream)
     match /match_events/{eventId} {
       allow read: if isAuthenticated();
 
@@ -332,13 +433,13 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
-    // 6. Public Canonical Card Catalog (Read-Only)
+    // 10. Public Canonical Card Catalog (Read-Only)
     match /public_cards/{cardId} {
       allow read: if true;
       allow write: if false;
     }
 
-    // 7. Competitive Leaderboards & Ranking
+    // 11. Competitive Leaderboards & Ranking
     match /leaderboards/{userId} {
       allow read: if true;
 

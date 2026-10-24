@@ -25,6 +25,10 @@ import { TcgMainMenu } from './components/tcg/TcgMainMenu';
 import { MobaMainMenu } from './components/moba/MobaMainMenu';
 import { MobaHeroShopModal } from './components/moba/MobaHeroShopModal';
 import { RankedDashboardSection } from './components/ranked/RankedDashboardSection';
+import { PlayHubTab } from './components/play/PlayHubTab';
+import { MissionsTab } from './components/missions/MissionsTab';
+import { EventsTab } from './components/events/EventsTab';
+import { DailyLoginModal } from './components/rewards/DailyLoginModal';
 import { rankedEngine } from './domain/rankedSystem';
 import { AiLevel } from './domain/duelEngine';
 
@@ -56,6 +60,7 @@ export const App: React.FC = () => {
   const [showMultiplayerLobby, setShowMultiplayerLobby] = useState<boolean>(false);
   const [showJudgeDemo, setShowJudgeDemo] = useState<boolean>(false);
   const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const [showDailyLogin, setShowDailyLogin] = useState<boolean>(false);
   const [activeDebrief, setActiveDebrief] = useState<BattleDebriefData | null>(null);
   const [activeMobaDebrief, setActiveMobaDebrief] = useState<MobaMatchDebrief | null>(null);
   const [currentCampaignStage, setCurrentCampaignStage] = useState<CampaignStage | null>(null);
@@ -296,6 +301,7 @@ export const App: React.FC = () => {
         openMultiplayerLobby={() => setShowMultiplayerLobby(true)}
         openJudgeDemo={() => setShowJudgeDemo(true)}
         openAuthModal={() => setShowAuthModal(true)}
+        openDailyLogin={() => setShowDailyLogin(true)}
       />
 
       {/* Main Screen Views */}
@@ -318,6 +324,36 @@ export const App: React.FC = () => {
               onOpenCompendium={() => handleOpenUnifiedResources('REACTIONS')}
               onOpenMultiplayerLobby={() => setShowMultiplayerLobby(true)}
               onOpenJudgeDemo={() => setShowJudgeDemo(true)}
+            />
+          </div>
+        )}
+
+        {/* PLAY HUB TAB: All Game Modes Gateway */}
+        {activeTab === 'PLAY' && (
+          <div className="w-full flex-1 flex flex-col">
+            <PlayHubTab
+              profile={profile}
+              onSelectMode={(mode, aiLevel) => {
+                if (mode === 'TUTORIAL') setActiveTab('TUTORIAL');
+                else if (mode === 'CAMPAIGN') setActiveTab('CAMPAIGN');
+                else if (mode === 'CASUAL_TCG') {
+                  setTcgAiLevel(aiLevel || 'ADEPT');
+                  setDuelMatchKey((k) => k + 1);
+                  setActiveTab('DUEL');
+                } else if (mode === 'RANKED_TCG') {
+                  setTcgAiLevel('RANKED_AI');
+                  setDuelMatchKey((k) => k + 1);
+                  setActiveTab('DUEL');
+                } else if (mode === 'MOBA') {
+                  setMobaGameMode('CASUAL_AI');
+                  setMobaMatchKey((k) => k + 1);
+                  setActiveTab('BATTLE');
+                } else if (mode === 'WORKSHOP') {
+                  setActiveTab('WORKSHOP');
+                }
+              }}
+              onOpenMultiplayerLobby={() => setShowMultiplayerLobby(true)}
+              onBackToMenu={() => setActiveTab('MENU')}
             />
           </div>
         )}
@@ -498,31 +534,25 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* QUESTS TAB: Quests & Learning Rewards */}
-        {activeTab === 'QUESTS' && (
-          <div className="max-w-7xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6 animate-fadeIn">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="font-serif font-black text-2xl text-ivory">NHIỆM VỤ & PHÚC LỢI HỌC TẬP</h2>
-                <p className="text-xs text-ivory-muted">Hoàn thành nhiệm vụ kích hoạt phản ứng hóa học và ôn tập CA-SRS nhận Tokens</p>
-              </div>
-              <button
-                onClick={() => {
-                  if (systemMode === 'TCG') setActiveTab('TCG_MENU');
-                  else if (systemMode === 'MOBA') setActiveTab('MOBA_MENU');
-                  else setActiveTab('MENU');
-                }}
-                className="px-3.5 py-1.5 rounded-xl bg-navy-light/60 hover:bg-navy-light text-xs font-bold text-ivory transition-all"
-              >
-                ← Quay Lại
-              </button>
-            </div>
-            <RankedDashboardSection
-              onStartRankedDuel={() => {
-                setTcgAiLevel('RANKED_AI');
-                setDuelMatchKey((k) => k + 1);
-                setActiveTab('DUEL');
-              }}
+        {/* MISSIONS & QUESTS TAB: Comprehensive Missions Engine */}
+        {(activeTab === 'MISSIONS' || activeTab === 'QUESTS') && (
+          <div className="w-full flex-1 flex flex-col">
+            <MissionsTab
+              profile={profile}
+              updateProfile={updateProfile}
+              onNavigateTab={(tab) => setActiveTab(tab as ActiveTab)}
+            />
+          </div>
+        )}
+
+        {/* EVENTS TAB: Timed Community Events & Competitions */}
+        {activeTab === 'EVENTS' && (
+          <div className="w-full flex-1 flex flex-col">
+            <EventsTab
+              profile={profile}
+              updateProfile={updateProfile}
+              onNavigateTab={(tab) => setActiveTab(tab as ActiveTab)}
+              onOpenDailyLogin={() => setShowDailyLogin(true)}
             />
           </div>
         )}
@@ -784,6 +814,16 @@ export const App: React.FC = () => {
           GameStorage.saveProfile(updatedProfile);
         }}
       />
+
+      {/* 7-Day Daily Login Rewards Calendar Modal */}
+      {showDailyLogin && (
+        <DailyLoginModal
+          isOpen={showDailyLogin}
+          onClose={() => setShowDailyLogin(false)}
+          profile={profile}
+          updateProfile={updateProfile}
+        />
+      )}
     </div>
   );
 };

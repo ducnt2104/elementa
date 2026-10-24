@@ -3,6 +3,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { PlayableCardDef, CardInstance, MonsterZoneSlot } from '../../domain/cardGameTypes';
+import { FusionRequirementsPanel } from '../cards/FusionRequirementsPanel';
 import { getShellElectrons, computeElectronStructure, ElementElectronStructure } from '../../domain/orbitalEngine';
 import { getRelatedCards, RelatedCardLink, CardRelationType } from '../../domain/relatedCardsService';
 import {
@@ -239,6 +240,9 @@ export const CardScientificInspector: React.FC<CardScientificInspectorProps> = (
           <div className="text-sm font-bold text-purple-200">{card.manaCost}</div>
         </div>
       </div>
+
+      {/* 2B. Explicit Fusion & Chemical Synthesis Requirements */}
+      <FusionRequirementsPanel card={card} compact={compact} />
 
       {/* 3. Master Rule Mechanics Specific Visualizers */}
       {/* 3A. Synchro Requirements */}

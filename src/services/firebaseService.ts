@@ -286,6 +286,148 @@ export class FirebaseService {
     }
   }
 
+  // --- MISSIONS, EVENTS & LOGIN REWARDS CLOUD PERSISTENCE ---
+
+  public async saveMissionsState(
+    userId: string,
+    missionsState: { completedMissions: string[]; claimedMissions: string[] }
+  ): Promise<boolean> {
+    try {
+      const docRef = doc(db, 'missions', userId);
+      await setDoc(docRef, {
+        userId,
+        completedMissions: missionsState.completedMissions || [],
+        claimedMissions: missionsState.claimedMissions || [],
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+      return true;
+    } catch (err) {
+      console.warn('[Firebase Firestore] Failed to save missions to cloud:', err);
+      return false;
+    }
+  }
+
+  public async loadMissionsState(
+    userId: string
+  ): Promise<{ completedMissions: string[]; claimedMissions: string[] } | null> {
+    try {
+      const docRef = doc(db, 'missions', userId);
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        return {
+          completedMissions: data.completedMissions || [],
+          claimedMissions: data.claimedMissions || []
+        };
+      }
+      return null;
+    } catch (err) {
+      console.warn('[Firebase Firestore] Failed to load missions from cloud:', err);
+      return null;
+    }
+  }
+
+  public async saveEventsState(
+    userId: string,
+    claimedEvents: Record<string, boolean>
+  ): Promise<boolean> {
+    try {
+      const docRef = doc(db, 'events', userId);
+      await setDoc(docRef, {
+        userId,
+        claimedEvents: claimedEvents || {},
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+      return true;
+    } catch (err) {
+      console.warn('[Firebase Firestore] Failed to save events to cloud:', err);
+      return false;
+    }
+  }
+
+  public async loadEventsState(userId: string): Promise<Record<string, boolean> | null> {
+    try {
+      const docRef = doc(db, 'events', userId);
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        return data.claimedEvents || {};
+      }
+      return null;
+    } catch (err) {
+      console.warn('[Firebase Firestore] Failed to load events from cloud:', err);
+      return null;
+    }
+  }
+
+  public async saveDailyLoginState(
+    userId: string,
+    loginData: { currentDay: number; lastClaimDate: string | null; claimedDays: number[] }
+  ): Promise<boolean> {
+    try {
+      const docRef = doc(db, 'login_rewards', userId);
+      await setDoc(docRef, {
+        userId,
+        currentDay: loginData.currentDay || 1,
+        lastClaimDate: loginData.lastClaimDate || '',
+        claimedDays: loginData.claimedDays || [],
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+      return true;
+    } catch (err) {
+      console.warn('[Firebase Firestore] Failed to save login rewards to cloud:', err);
+      return false;
+    }
+  }
+
+  public async loadDailyLoginState(
+    userId: string
+  ): Promise<{ currentDay: number; lastClaimDate: string | null; claimedDays: number[] } | null> {
+    try {
+      const docRef = doc(db, 'login_rewards', userId);
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        return {
+          currentDay: data.currentDay || 1,
+          lastClaimDate: data.lastClaimDate || null,
+          claimedDays: data.claimedDays || []
+        };
+      }
+      return null;
+    } catch (err) {
+      console.warn('[Firebase Firestore] Failed to load login rewards from cloud:', err);
+      return null;
+    }
+  }
+
+  public async recordShopTransaction(
+    userId: string,
+    tx: {
+      itemType: string;
+      itemId: string;
+      tokensSpent: number;
+      shardsSpent: number;
+      shardsGained?: number;
+      cardIdsGained?: string[];
+    }
+  ): Promise<boolean> {
+    try {
+      const txId = `tx_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+      const docRef = doc(db, 'shop_transactions', txId);
+      await setDoc(docRef, {
+        txId,
+        userId,
+        ...tx,
+        timestamp: serverTimestamp()
+      });
+      return true;
+    } catch (err) {
+      console.warn('[Firebase Firestore] Failed to record shop transaction:', err);
+      return false;
+    }
+  }
+
   // --- AUTOMATIC SYNC OF OFFLINE DATA TO CLOUD ---
 
   public async autoSyncOfflineData(userId: string): Promise<void> {
