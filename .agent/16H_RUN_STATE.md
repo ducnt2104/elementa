@@ -26,9 +26,9 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 271 / 271 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 273 / 273 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 17.46s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
@@ -1322,3 +1322,33 @@
   - TypeScript validation: 0 errors across entire workspace.
   - Production build: `dist/assets/index-Dg8_eRb1.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 271 / 271 with 100% pass rate.
+- **2026-10-25 07:15 (Iteration 62 Checkpoint — PHASE C EXTENSION)**:
+  - Implemented Ocean Thermal Energy Conversion (OTEC) & Deep-Sea Ammonia Thermochemical Engine in `src/domain/oceanThermalEnergyEngine.ts` strictly conforming to IUPAC Low-Delta T Carnot / Rankine Thermodynamic Limits, IEA-OES Ocean Energy Systems Benchmarks, and Vietnam GDPT 2018 Physics & Chemistry (Chu trình nhiệt động lực học nhiệt độ thấp, Entanpy bay hơi, Thủy động lực biển sâu):
+    - Low-ΔT Carnot & Rankine Thermodynamics:
+      - Surface warm seawater ($28.5^\circ\text{C}$) vs deep ocean water at $1,000\text{m}$ ($4.5^\circ\text{C}$) creates $\Delta T = 24.0^\circ\text{C}$.
+      - Theoretical Carnot efficiency ceiling: $\eta_{Carnot} = 1 - \frac{T_{cold}}{T_{warm}} \approx 7.96\%$.
+      - Practical gross Rankine ORC efficiency: $\eta_{gross} \approx 3.82\%$; Net cycle efficiency: $\eta_{net} \approx 3.03\%$.
+      - Ammonia Antoine vapor-liquid equilibria: at $26^\circ\text{C}$, $P_{evap} = 10.26\text{ bar}$; at $8^\circ\text{C}$, $P_{cond} = 5.68\text{ bar}$. Expansion ratio $r_p = 1.81\times$.
+      - $10\text{ MW}$ class reference plant: $25\text{ m}^3/\text{s}$ warm water + $15\text{ m}^3/\text{s}$ cold water yields $+15.0\text{ MW}$ gross generator output, $-3.11\text{ MW}$ ($20.7\%$) parasitic pumping power, delivering **$+11.9\text{ MW}$ net clean power** ($98\text{ GWh/year}$ at $94\%$ baseload capacity factor).
+    - Deep-Sea Cold Water Pipe (CWIP) Darcy-Weisbach Hydrodynamics:
+      - High Density Polyethylene (HDPE PE100) conduit ($L = 1,000\text{m}$, $D = 2.8\text{m}$), flow velocity $v = 2.44\text{ m/s}$.
+      - Darcy-Weisbach frictional head loss $h_f = 1.46\text{ m}$, density difference head $\Delta h_{density} = 4.86\text{ m}$ ($\Delta \rho = 5\text{ kg/m}^3$), Total Dynamic Head $TDH = 7.32\text{ m}$.
+      - Cold water pump electric draw: $1.86\text{ MW}$.
+    - Blue Economy Multi-product Synergies:
+      - Potable water desalination: Open-cycle Claude / hybrid condenser produces **$+11,880\text{ m}^3/\text{day}$** of pure drinking water.
+      - Deep Ocean Water (DOW) mariculture: sterile, pathogen-free water hyper-rich in nitrates ($NO_3^- = 36.5\text{ }\mu\text{mol/L}$), phosphates ($PO_4^{3-} = 2.45\text{ }\mu\text{mol/L}$), and silicates ($SiO_4^{4-} = 72.0\text{ }\mu\text{mol/L}$), boosting spirulina/seaweed/finfish growth by **$4.2\times$**.
+      - Seawater Air Conditioning (SWAC): direct thermal cooling capacity of $200.5\text{ MWth}$, saving **$44.55\text{ MW}$** of mechanical chiller electric power ($> 85\%$ electricity savings).
+      - Off-grid ocean green fuels: Net export power drives continuous AEMWE electrolysis synthesizing **$5,948\text{ kg } H_2/\text{day}$** and **$33.4\text{ tons } NH_3/\text{day}$** as zero-carbon maritime fuel.
+    - Vietnam Coastal & Island Strategic Potential:
+      - Cataloged 5 premier resource sites: Cà Ná (Ninh Thuận, $\Delta T = 24.0^\circ\text{C}$, 22 km to 1,000m trench, 4,500 MW potential), Vịnh Cam Ranh (Khánh Hòa, 3,800 MW), Côn Đảo (1,200 MW), Đảo Phú Quý (850 MW), Quần đảo Trường Sa (15,000 MW, steep coral atoll walls dropping directly into 1,500m trenches just 5 km offshore).
+      - Theoretical Vietnam oceanic baseload potential exceeds **$100,000\text{ MW}$**.
+  - Created and passed Test Suite 272 (`test-ocean-thermal-energy.mjs`, 6/6 passed).
+  - Implemented `OceanThermalEnergyVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Sơ Đồ Chu Trình OTEC & Bay Hơi Amoniac (Rankine ORC) with interactive SVG animated flow diagram (Evaporator, NH3 Turbine, Condenser, Pump, warm/cold seawater streams), operating parameters sliders, and energy balance metrics.
+    - Mode 2: Ống Hút Nước Biển Sâu CWIP 1000m & Thủy Động Lực Darcy-Weisbach with interactive ocean profile diagram showing sunlight layer (0-100m), thermocline drop (100-500m), bathypelagic deep ocean (1,000m), and HDPE pipe specifications.
+    - Mode 3: Hệ Sinh Thái Biển Xanh & Tiềm Năng Biển Đông with 4 co-product cards (Potable Water, DOW Nutrients, SWAC Cooling, Green NH3/H2) and interactive Vietnam OTEC resource sites selector with geographic coordinates and CO2 avoidance metrics.
+  - Integrated `OceanThermalEnergyVisualizer` into `PeriodicCodexTab.tsx` under `'OCEAN_THERMAL_ENERGY'` with `Waves` icon.
+  - Created and passed Test Suite 273 (`test-ocean-thermal-energy-visualizer-ui.mjs`, 7/7 passed).
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-B0BaNcFm.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 273 / 273 with 100% pass rate.
