@@ -4,22 +4,22 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T01:17:00+07:00`  
-**Elapsed Real Time:** `2h 28m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T01:26:00+07:00`  
+**Elapsed Real Time:** `2h 37m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 2h 21m)
+## 1. CURRENT AUDIT SUMMARY (T = 2h 37m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 185 / 185 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 187 / 187 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
-| **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.06s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.50 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -306,3 +306,20 @@
   - Created and passed Test Suite 185 (`test-nitrogen-sulfur-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 15.44s with entry chunk size preserved at 682.87 kB (134.30 kB gzip).
   - Total test suites expanded to 185 / 185 with 100% pass rate.
+- **2026-10-25 01:26 (Iteration 19 Checkpoint)**:
+  - Implemented comprehensive Hydrocarbons (Alkanes, Alkenes, Alkynes, Arenes) Engine in `src/domain/hydrocarbonEngine.ts` strictly conforming to GDPT 2018 Grade 11 (Chủ đề 4: Hydrocarbon) & IUPAC Standards:
+    - Catalog of 11 core hydrocarbons (CH4, C3H8, C4H10, i-C4H10, C2H4, C3H6, but-2-ene, C2H2, C3H4, but-2-yne, C6H6, C7H8) with hybridizations ($sp^3, sp^2, sp, sp^2\text{-aromatic}$), molecular geometries, boiling points, and GDPT curriculum references.
+    - Alkene Electrophilic Addition: Markovnikov's rule (preferential proton addition to less substituted carbon) vs Kharasch peroxide effect (anti-Markovnikov free radical addition of $HBr$ yielding 1-bromopropane 95%), and Bayer $KMnO_4$ test (purple decolorization + brown-black $MnO_2 \downarrow$ precipitate).
+    - Terminal Alkynes ($R-C \equiv C-H$): weakly acidic terminal hydrogen replacement with ammoniacal silver nitrate $AgNO_3/NH_3$ producing bright pale-yellow silver acetylide precipitates ($Ag-C \equiv C-Ag \downarrow$ for ethyne in 1:2 ratio, $CH_3-C \equiv C-Ag \downarrow$ for propyne in 1:1 ratio), Kucherov hydration ($CH \equiv CH \to CH_3CHO$), and exam trap identification showing internal non-terminal alkynes (But-2-yne) are completely inert to Tollens reagent.
+    - Alkane Free-Radical Halogenation ($S_R$): photochemical UV requirement, relative reactivity scales ($3^\circ > 2^\circ > 1^\circ$), high bromine selectivity (97% 2-bromopropane, 99% 2-bromo-2-methylpropane) vs chlorine statistical distribution.
+    - Arenes: Benzene aromatic resonance stability ($150\text{ kJ/mol}$) and chemical inertia towards $KMnO_4$ and $Br_2$ water vs Toluene ring activation by $+I$/hyperconjugation directing electrophiles to ortho/para positions (selective 2,4,6-trinitrotoluene / TNT synthesis) and side-chain oxidation with heated $KMnO_4$ yielding white crystalline Benzoic acid ($C_6H_5COOH \downarrow$).
+  - Created and passed Test Suite 186 (`test-hydrocarbon-reactions.mjs`, 23/23 passed).
+  - Implemented `HydrocarbonVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Markovnikov addition simulator with Kharasch peroxide switch, carbocation stability analysis, and animated SVG Bayer $KMnO_4 \to MnO_2 \downarrow$ test tube.
+    - Mode 2: Terminal alkyne Tollens laboratory with interactive moles slider, SVG silver acetylide test tube, stoichiometric mass calculator, and Kucherov hydration overview.
+    - Mode 3: Arene laboratory comparing Toluene vs Benzene with heated $KMnO_4$, TNT nitration, and Alkane photochemical free-radical halogenation laboratory.
+  - Integrated `HydrocarbonVisualizer` into `PeriodicCodexTab.tsx` under `'HYDROCARBONS_REACTIONS'`.
+  - Created and passed Test Suite 187 (`test-hydrocarbon-visualizer-ui.mjs`, 12/12 passed).
+  - Code splitting enhancement in `vite.config.ts`: Split visualizers into curriculum (1.50 MB) and advanced (1.53 MB), eliminating 3000 kB chunk warning.
+  - Production build compiled in 15.06s with entry chunk size preserved at 682.96 kB (134.30 kB gzip).
+  - Total test suites expanded to 187 / 187 with 100% pass rate.

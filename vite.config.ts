@@ -46,7 +46,18 @@ export default defineConfig({
             return 'cards-expansion-data';
           }
           if (id.includes('src/components/visualizations/')) {
-            return 'chemistry-visualizers';
+            const advancedKeywords = [
+              'Af4', 'Afm', 'Auc', 'Battery', 'Bli', 'Capillary', 'Circular', 'Crispr', 'Cryo', 'Dma',
+              'Dsc', 'DualPolarization', 'DynamicLight', 'ElectronMicroscopy', 'Enzyme', 'Esi',
+              'Fcs', 'Femtosecond', 'Flim', 'FuelCell', 'Itc', 'Magnetic', 'Mossbauer', 'Mst',
+              'Nmr', 'Nta', 'Optical', 'Ozone', 'Pcr', 'Pet', 'Ppc', 'Qcmd', 'Quantum', 'Rmm',
+              'Saxs', 'SecMals', 'Sfc', 'Sims', 'SmFret', 'SolidState', 'Stm', 'StoppedFlow',
+              'Superconductivity', 'SurfacePlasmon', 'Tda', 'ThermalAnalysis', 'ThermalShift', 'Xafs', 'Xps'
+            ];
+            if (advancedKeywords.some(keyword => id.includes(keyword))) {
+              return 'chemistry-visualizers-advanced';
+            }
+            return 'chemistry-visualizers-curriculum';
           }
           if (id.includes('src/components/moba/')) {
             return 'moba-arena';
