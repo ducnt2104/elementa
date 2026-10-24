@@ -4,21 +4,21 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T02:24:00+07:00`  
-**Elapsed Real Time:** `3h 35m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T02:30:00+07:00`  
+**Elapsed Real Time:** `3h 41m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 3h 35m)
+## 1. CURRENT AUDIT SUMMARY (T = 3h 41m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 203 / 203 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 205 / 205 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 17.03s with 0 warnings |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 17.19s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
@@ -466,3 +466,23 @@
   - Created and passed Test Suite 203 (`test-tournament-championship-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 17.03s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 203 / 203 with 100% pass rate.
+- **2026-10-25 02:30 (Iteration 28 Checkpoint)**:
+  - Implemented comprehensive Salt Hydrolysis, pH Determination & Alum Water Clarification Engine in `src/domain/saltHydrolysisEngine.ts` strictly conforming to GDPT 2018 Grade 11 (Chủ đề 2: Cân bằng trong dung dịch nước) & IUPAC Standards:
+    - 7 representative salts across all 4 hydrolysis categories:
+      - Neutral ($NaCl$): strong base + strong acid, no hydrolysis, neutral $pH = 7.00$, litmus unchanged.
+      - Basic ($Na_2CO_3$, $CH_3COONa$): strong base + weak acid, anion hydrolysis ($CO_3^{2-} + H_2O \rightleftharpoons HCO_3^- + OH^-$, $CH_3COO^- + H_2O \rightleftharpoons CH_3COOH + OH^-$), basic $pH \approx 8.87 - 11.52$, litmus turns blue, phenolphthalein turns pink.
+      - Acidic ($NH_4Cl$, $Al_2(SO_4)_3$, $FeCl_3$): weak base + strong acid, cation hydrolysis ($NH_4^+ + H_2O \rightleftharpoons NH_3 + H_3O^+$, $Al^{3+} + 3H_2O \rightleftharpoons Al(OH)_3 + 3H^+$, $Fe^{3+} + 3H_2O \rightleftharpoons Fe(OH)_3 + 3H^+$), acidic $pH \approx 2.50 - 5.12$, litmus turns red, methyl orange turns red/orange.
+      - Dual hydrolysis ($CH_3COONH_4$): weak base + weak acid ($K_a \approx K_b \approx 1.8 \times 10^{-5}$), balancing each other to yield neutral $pH \approx 7.00$.
+    - 3-indicator color mapping logic (Litmus, Phenolphthalein, Methyl Orange) responding accurately to solution pH.
+    - Practical Vietnam flood water clarification simulation using Potash Alum (Phèn chua, $KAl(SO_4)_2 \cdot 12H_2O$):
+      - Models aluminum cation hydrolysis yielding gelatinous colloidal aluminum hydroxide ($Al(OH)_3$) flocs.
+      - Adsorptive sweep flocculation neutralizes clay colloid negative zeta potential, removing $> 85-98\%$ of suspended sediment turbidity within 30 minutes.
+  - Created and passed Test Suite 204 (`test-salt-hydrolysis.mjs`, 8/8 passed).
+  - Implemented `SaltHydrolysisVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Salt catalog with nominal pH gauge, hydrolysis equilibrium chemical equations, and acid/base classifications.
+    - Mode 2: Indicator test tube rack SVG rendering 3 test tubes with authentic chemical color transitions and pH threshold badges.
+    - Mode 3: Alum water clarification settling cylinder SVG with alum dosage slider (0..100 mg/L), time slider (0..60 min), live turbidity meter (NTU), and sediment bed accumulation.
+  - Integrated `SaltHydrolysisVisualizer` into `PeriodicCodexTab.tsx` under `'SALT_HYDROLYSIS'` with `Droplets` icon.
+  - Created and passed Test Suite 205 (`test-salt-hydrolysis-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 17.19s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 205 / 205 with 100% pass rate.
