@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T00:13:00+07:00`  
-**Elapsed Real Time:** `1h 24m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T00:17:00+07:00`  
+**Elapsed Real Time:** `1h 28m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 1h 24m)
+## 1. CURRENT AUDIT SUMMARY (T = 1h 28m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 167 / 167 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 168 / 168 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
@@ -145,3 +145,10 @@
   - Added dedicated screen reader ARIA live region (`sr-only`) announcing major chemical reactions and combat milestones in real-time.
   - Created and passed Test Suite 167 (`test-moba-accessibility-and-aria.mjs`, 6/6 passed).
   - Total test suites expanded to 167 / 167 with 100% pass rate.
+- **2026-10-25 00:17 (Iteration 10 Checkpoint)**:
+  - Implemented Fischer Esterification Equilibrium, Lipid Saponification, and Soap Salting-Out Engine in `src/domain/esterLipidEngine.ts`.
+  - Added Le Chatelier water removal yield optimization (66.7% -> 85%+), triglyceride saponification stoichiometry (Triolein, Tristearin, Tripalmitin, Trilinolein) conserving mass across soap ($RCOONa$) and glycerol ($C_3H_5(OH)_3$).
+  - Added physical salting-out model: saturated NaCl (> 15% w/w) precipitates > 90% soap cake floating on top via solvated ion depletion and common ion effect.
+  - Added catalog of 5 fruit/flower fragrance esters (Isoamyl acetate, Ethyl acetate, Benzyl acetate, Ethyl formate, Ethyl butyrate).
+  - Created and passed Test Suite 168 (`test-ester-lipid-saponification.mjs`, 9/9 passed).
+  - Total test suites expanded to 168 / 168 with 100% pass rate.
