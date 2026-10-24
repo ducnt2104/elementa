@@ -36,10 +36,18 @@ import {
   evaluateDiagnosticOrganicTest,
   checkGeometricIsomerismFeasibility
 } from '../../domain/organicMechanismsEngine';
+import {
+  COMMON_SUBSTRATES_CATALOG,
+  COMMON_NUCLEOPHILES_CATALOG,
+  COMMON_SOLVENTS_CATALOG,
+  SEAR_SUBSTITUENTS_CATALOG,
+  predictSubstitutionElimination,
+  predictAromaticSubstitution
+} from '../../domain/reactionMechanismsAdvancedEngine';
 import { sound } from '../../audio/soundEngine';
 
 export interface OrganicMechanismsVisualizerProps {
-  initialMode?: 'CIS_TRANS' | 'CHIRAL' | 'MARKOVNIKOV' | 'DIAGNOSTIC_TESTS';
+  initialMode?: 'CIS_TRANS' | 'CHIRAL' | 'MARKOVNIKOV' | 'DIAGNOSTIC_TESTS' | 'SUBSTITUTION_SN_E' | 'AROMATIC_SEAR';
   initialCompoundId?: string;
   className?: string;
 }
@@ -49,7 +57,7 @@ export const OrganicMechanismsVisualizer: React.FC<OrganicMechanismsVisualizerPr
   initialCompoundId,
   className = ''
 }) => {
-  const [activeMode, setActiveMode] = useState<'CIS_TRANS' | 'CHIRAL' | 'MARKOVNIKOV' | 'DIAGNOSTIC_TESTS'>(initialMode);
+  const [activeMode, setActiveMode] = useState<'CIS_TRANS' | 'CHIRAL' | 'MARKOVNIKOV' | 'DIAGNOSTIC_TESTS' | 'SUBSTITUTION_SN_E' | 'AROMATIC_SEAR'>(initialMode);
 
   // 1. Cis/Trans State
   const [selectedGeometricId, setSelectedGeometricId] = useState<string>(initialCompoundId || 'but_2_ene');
@@ -74,6 +82,32 @@ export const OrganicMechanismsVisualizer: React.FC<OrganicMechanismsVisualizerPr
   const [selectedTestId, setSelectedTestId] = useState<string>('tollens_silver_mirror');
   const [testedSubstance, setTestedSubstance] = useState<string>('CH3CHO');
   const [isTestRun, setIsTestRun] = useState<boolean>(true);
+
+  // 5. Substitution & Elimination State (SN1, SN2, E1, E2)
+  const [selectedSubstrateId, setSelectedSubstrateId] = useState<string>('s_2_bromobutane');
+  const [selectedNucleophileId, setSelectedNucleophileId] = useState<string>('iodide');
+  const [selectedSolventId, setSelectedSolventId] = useState<string>('acetone');
+  const [reactionTempC, setReactionTempC] = useState<number>(25);
+
+  // 6. Electrophilic Aromatic Substitution State (SEAr)
+  const [selectedAromaticKey, setSelectedAromaticKey] = useState<'BENZENE' | 'TOLUENE' | 'PHENOL' | 'ANILINE' | 'CHLOROBENZENE' | 'NITROBENZENE' | 'BENZOIC_ACID'>('TOLUENE');
+  const [selectedElectrophileType, setSelectedElectrophileType] = useState<'NITRATION' | 'BROMINATION' | 'CHLORINATION' | 'FRIEDEL_CRAFTS_ALKYLATION'>('NITRATION');
+
+  const snPrediction = useMemo(() => {
+    return predictSubstitutionElimination({
+      substrateId: selectedSubstrateId,
+      nucleophileId: selectedNucleophileId,
+      solventId: selectedSolventId,
+      temperatureCelsius: reactionTempC
+    });
+  }, [selectedSubstrateId, selectedNucleophileId, selectedSolventId, reactionTempC]);
+
+  const searPrediction = useMemo(() => {
+    return predictAromaticSubstitution({
+      aromaticSubstrateKey: selectedAromaticKey,
+      electrophileType: selectedElectrophileType
+    });
+  }, [selectedAromaticKey, selectedElectrophileType]);
 
   // Selected Geometric pair
   const geometricPair: GeometricIsomerPair = useMemo(() => {
@@ -197,6 +231,28 @@ export const OrganicMechanismsVisualizer: React.FC<OrganicMechanismsVisualizerPr
           >
             <FlaskConical className="w-3.5 h-3.5" />
             Thuốc Thử Đặc Trưng
+          </button>
+          <button
+            onClick={() => { setActiveMode('SUBSTITUTION_SN_E'); sound.playDomainSnap?.(); }}
+            className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+              activeMode === 'SUBSTITUTION_SN_E'
+                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Activity className="w-3.5 h-3.5" />
+            Thế & Tách (SN1/SN2/E1/E2)
+          </button>
+          <button
+            onClick={() => { setActiveMode('AROMATIC_SEAR'); sound.playDomainSnap?.(); }}
+            className={`px-3 py-1.5 rounded-lg font-medium transition-all flex items-center gap-1.5 ${
+              activeMode === 'AROMATIC_SEAR'
+                ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Atom className="w-3.5 h-3.5" />
+            Thế Vòng Thơm (SEAr)
           </button>
         </div>
       </div>
@@ -839,6 +895,296 @@ export const OrganicMechanismsVisualizer: React.FC<OrganicMechanismsVisualizerPr
               <p className="text-xs text-slate-400 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 leading-relaxed">
                 {testResult.pedagogicalReasonVI}
               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5. MODE 5: NUCLEOPHILIC SUBSTITUTION & ELIMINATION (SN1/SN2/E1/E2) */}
+      {activeMode === 'SUBSTITUTION_SN_E' && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 animate-fadeIn">
+          {/* Controls Column (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-4 bg-slate-950/60 p-4 rounded-2xl border border-slate-800">
+            <h4 className="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2">
+              <Activity className="w-4 h-4" />
+              <span>Thiết Lập Phản Ứng Dẫn Xuất Halogen</span>
+            </h4>
+
+            {/* Substrate Selector */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-mono text-slate-400">1. Cơ chất (Substrate):</label>
+              <div className="flex flex-col gap-1.5">
+                {COMMON_SUBSTRATES_CATALOG.map(sub => (
+                  <button
+                    key={sub.id}
+                    onClick={() => { setSelectedSubstrateId(sub.id); sound.playDomainSnap?.(); }}
+                    className={`px-3 py-2 rounded-xl text-xs font-mono text-left border transition-all ${
+                      selectedSubstrateId === sub.id
+                        ? 'bg-rose-500/20 text-rose-200 border-rose-500 shadow-sm'
+                        : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="font-bold">{sub.nameVI} ({sub.formula})</div>
+                    <div className="text-[10px] text-slate-400">Bậc {sub.carbonClassification} · Che chắn: {sub.stericHindranceScore}/10</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Nucleophile Selector */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-mono text-slate-400">2. Tác nhân Nucleophile / Bazơ:</label>
+              <div className="grid grid-cols-2 gap-1.5">
+                {COMMON_NUCLEOPHILES_CATALOG.map(nuc => (
+                  <button
+                    key={nuc.id}
+                    onClick={() => { setSelectedNucleophileId(nuc.id); sound.playDomainSnap?.(); }}
+                    className={`px-2.5 py-1.5 rounded-lg text-xs font-mono text-center border transition-all ${
+                      selectedNucleophileId === nuc.id
+                        ? 'bg-rose-500/20 text-rose-200 border-rose-500'
+                        : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="font-bold">{nuc.formula}</div>
+                    <div className="text-[10px] text-slate-400">{nuc.nucleophilicity === 'STRONG' ? 'Mạnh' : 'Yếu'}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Solvent Selector */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-mono text-slate-400">3. Dung môi (Solvent):</label>
+              <div className="grid grid-cols-2 gap-1.5">
+                {COMMON_SOLVENTS_CATALOG.map(sol => (
+                  <button
+                    key={sol.id}
+                    onClick={() => { setSelectedSolventId(sol.id); sound.playDomainSnap?.(); }}
+                    className={`px-2.5 py-1.5 rounded-lg text-xs font-mono text-center border transition-all ${
+                      selectedSolventId === sol.id
+                        ? 'bg-rose-500/20 text-rose-200 border-rose-500'
+                        : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="font-bold">{sol.nameVI.split('(')[0]}</div>
+                    <div className="text-[10px] text-slate-400">{sol.type === 'POLAR_PROTIC' ? 'Proton' : 'Aprotic'}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Temperature Slider */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-[11px] font-mono">
+                <span className="text-slate-400">Nhiệt độ phản ứng:</span>
+                <span className="text-amber-400 font-bold">{reactionTempC}°C</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="5"
+                value={reactionTempC}
+                onChange={e => setReactionTempC(parseInt(e.target.value))}
+                className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-400"
+              />
+            </div>
+          </div>
+
+          {/* Prediction & Outcome Column (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col gap-4">
+            {/* Mechanism Hero Banner */}
+            <div className="bg-slate-900/80 p-5 rounded-2xl border border-rose-500/40 shadow-xl space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-xs font-mono font-bold text-slate-400 uppercase">Cơ chế ưu thế dự đoán:</span>
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/50">
+                  {snPrediction.predominantMechanism}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                  <div className="text-[10px] font-mono text-slate-400">Phương trình động học:</div>
+                  <div className="text-xs font-mono font-bold text-amber-300">{snPrediction.rateLawEquation}</div>
+                  <div className="text-[10px] text-slate-400">Bậc phản ứng: {snPrediction.kineticOrder}</div>
+                </div>
+                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                  <div className="text-[10px] font-mono text-slate-400">Kết quả hóa lập thể:</div>
+                  <div className="text-xs font-mono font-bold text-emerald-400">
+                    {snPrediction.stereochemicalOutcome === 'WALDEN_INVERSION' ? 'Đảo cấu hình Walden (100%)' :
+                     snPrediction.stereochemicalOutcome === 'RACEMIZATION' ? 'Racemic hóa (50:50)' :
+                     snPrediction.stereochemicalOutcome === 'ZAITSEV_ALKENE' ? 'Anken Zaitsev (bền hơn)' : 'Hofmann'}
+                  </div>
+                  <div className="text-[10px] text-slate-400">Sản phẩm chính: {snPrediction.majorProductFormula}</div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-1">
+                <div className="font-bold text-slate-200">Trạng thái chuyển tiếp / Trung gian:</div>
+                <div className="text-slate-400 font-sans leading-relaxed">{snPrediction.intermediateOrTransitionStateVI}</div>
+              </div>
+            </div>
+
+            {/* Pedagogical Step-by-Step */}
+            <div className="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 space-y-2">
+              <h4 className="text-xs font-bold text-rose-400 uppercase tracking-wider">
+                Giải Thích Cơ Chế Từng Bước (GDPT 2018 Lớp 11)
+              </h4>
+              <div className="space-y-1.5 text-xs font-mono">
+                {snPrediction.stepByStepExplanationVI.map((step, idx) => (
+                  <div key={idx} className="p-2.5 rounded-lg bg-slate-950 border border-slate-800/80 text-slate-300">
+                    {step}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 6. MODE 6: ELECTROPHILIC AROMATIC SUBSTITUTION (SEAr) */}
+      {activeMode === 'AROMATIC_SEAR' && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 p-5 animate-fadeIn">
+          {/* Aromatic Controls Column (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-4 bg-slate-950/60 p-4 rounded-2xl border border-slate-800">
+            <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-2">
+              <Atom className="w-4 h-4" />
+              <span>Cơ Chất Aren & Tác Nhân Thế</span>
+            </h4>
+
+            {/* Aromatic Substrate Selector */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-mono text-slate-400">Vòng benzen có nhóm thế:</label>
+              <div className="flex flex-col gap-1.5">
+                {[
+                  { key: 'BENZENE', label: 'Benzen (C₆H₆) - Chuẩn quy chiếu' },
+                  { key: 'TOLUENE', label: 'Toluen (C₆H₅-CH₃) - Hoạt hóa nhẹ' },
+                  { key: 'PHENOL', label: 'Phenol (C₆H₅-OH) - Hoạt hóa cực mạnh' },
+                  { key: 'ANILINE', label: 'Anilin (C₆H₅-NH₂) - Hoạt hóa cực mạnh' },
+                  { key: 'CHLOROBENZENE', label: 'Clorobenzen (C₆H₅-Cl) - Phản hoạt hóa' },
+                  { key: 'NITROBENZENE', label: 'Nitrobenzen (C₆H₅-NO₂) - Định hướng Meta' },
+                  { key: 'BENZOIC_ACID', label: 'Axit benzoic (C₆H₅-COOH) - Định hướng Meta' }
+                ].map(item => (
+                  <button
+                    key={item.key}
+                    onClick={() => { setSelectedAromaticKey(item.key as any); sound.playDomainSnap?.(); }}
+                    className={`px-3 py-2 rounded-xl text-xs font-mono text-left border transition-all ${
+                      selectedAromaticKey === item.key
+                        ? 'bg-indigo-500/20 text-indigo-200 border-indigo-500 shadow-sm'
+                        : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Reaction Type Selector */}
+            <div className="space-y-1.5">
+              <label className="text-[11px] font-mono text-slate-400">Loại phản ứng thế ái điện tử:</label>
+              <div className="grid grid-cols-2 gap-1.5">
+                {[
+                  { key: 'NITRATION', label: 'Nitro hóa (-NO₂)' },
+                  { key: 'BROMINATION', label: 'Brom hóa (-Br)' },
+                  { key: 'CHLORINATION', label: 'Clo hóa (-Cl)' },
+                  { key: 'FRIEDEL_CRAFTS_ALKYLATION', label: 'Alkyl hóa F-C' }
+                ].map(rx => (
+                  <button
+                    key={rx.key}
+                    onClick={() => { setSelectedElectrophileType(rx.key as any); sound.playDomainSnap?.(); }}
+                    className={`px-2.5 py-2 rounded-lg text-xs font-mono text-center border transition-all ${
+                      selectedElectrophileType === rx.key
+                        ? 'bg-indigo-500/20 text-indigo-200 border-indigo-500'
+                        : 'bg-slate-900/60 text-slate-400 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    {rx.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* SEAr Results Column (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col gap-4">
+            {/* Hero Card */}
+            <div className="bg-slate-900/80 p-5 rounded-2xl border border-indigo-500/40 shadow-xl space-y-4">
+              <div className="flex justify-between items-center">
+                <span className="text-xs font-mono font-bold text-slate-400">TÁC NHÂN ÁI ĐIỆN TỬ:</span>
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/50">
+                  {searPrediction.activeElectrophileFormula}
+                </span>
+              </div>
+
+              <div className="text-xs font-mono text-slate-300">
+                <span className="text-slate-400">Điều kiện &amp; xúc tác: </span>
+                <span className="text-white font-bold">{searPrediction.reagentsAndCatalystVI}</span>
+              </div>
+
+              {/* Orientation Distribution Bars */}
+              <div className="space-y-2 pt-2">
+                <div className="text-xs font-mono font-bold text-slate-300">
+                  Phân bố phần trăm sản phẩm định hướng (Ortho / Para / Meta):
+                </div>
+
+                <div className="space-y-1.5 font-mono text-xs">
+                  <div>
+                    <div className="flex justify-between text-[11px] mb-0.5">
+                      <span className="text-indigo-300">Ortho (vị trí 2, 6):</span>
+                      <span className="font-bold">{searPrediction.orientationDistribution.orthoPct}%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-slate-800 overflow-hidden">
+                      <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${searPrediction.orientationDistribution.orthoPct}%` }} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-[11px] mb-0.5">
+                      <span className="text-emerald-300">Para (vị trí 4):</span>
+                      <span className="font-bold">{searPrediction.orientationDistribution.paraPct}%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-slate-800 overflow-hidden">
+                      <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${searPrediction.orientationDistribution.paraPct}%` }} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between text-[11px] mb-0.5">
+                      <span className="text-amber-300">Meta (vị trí 3, 5):</span>
+                      <span className="font-bold">{searPrediction.orientationDistribution.metaPct}%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-slate-800 overflow-hidden">
+                      <div className="h-full bg-amber-500 rounded-full" style={{ width: `${searPrediction.orientationDistribution.metaPct}%` }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Major Product Readout */}
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1 text-xs">
+                <div className="font-mono text-indigo-400 font-bold">Sản phẩm chính thu được:</div>
+                <div className="text-white font-bold">{searPrediction.majorProductVI}</div>
+              </div>
+
+              {/* Wheland Complex Note */}
+              <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs text-slate-400 leading-relaxed font-sans">
+                {searPrediction.whelandComplexIntermediateVI}
+              </div>
+            </div>
+
+            {/* Step by Step Explanation */}
+            <div className="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 space-y-2">
+              <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-wider">
+                Quy Trình Sư Phạm Định Hướng Vòng Thơm
+              </h4>
+              <div className="space-y-1.5 text-xs font-mono">
+                {searPrediction.stepByStepExplanationVI.map((step, idx) => (
+                  <div key={idx} className="p-2.5 rounded-lg bg-slate-950 border border-slate-800/80 text-slate-300">
+                    {step}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

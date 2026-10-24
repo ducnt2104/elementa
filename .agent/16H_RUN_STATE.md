@@ -4,21 +4,21 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T00:03:00+07:00`  
-**Elapsed Real Time:** `1h 14m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T00:10:00+07:00`  
+**Elapsed Real Time:** `1h 21m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 1h 14m)
+## 1. CURRENT AUDIT SUMMARY (T = 1h 21m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 164 / 164 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 166 / 166 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.76s |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
@@ -130,3 +130,10 @@
   - Created and passed Test Suite 163 (`test-buffer-capacity-and-henderson.mjs`, 18/18 passed) and Test Suite 164 (`test-buffer-capacity-visualizer-ui.mjs`, 7/7 passed).
   - Production build compiled in 15.76s with entry chunk size optimized to 682.87 kB (134.30 kB gzip).
   - Total test suites expanded to 164 / 164 with 100% pass rate.
+- **2026-10-25 00:10 (Iteration 8 Checkpoint)**:
+  - Implemented Advanced Organic Reaction Mechanisms ($S_N1$, $S_N2$, $E1$, $E2$, and $S_EAr$) in `src/domain/reactionMechanismsAdvancedEngine.ts`.
+  - Added physical organic models: steric hindrance scores, carbocation stability hyperconjugation scores, polar protic vs aprotic dielectric constants, bulky base Hofmann eliminations, Walden Inversion (100% stereochemical inversion), and arenium ion Wheland complex resonance stabilization.
+  - Upgraded `OrganicMechanismsVisualizer.tsx` with two dedicated interactive modes: "Thế & Tách (SN1/SN2/E1/E2)" and "Thế Vòng Thơm (SEAr)" with orientation percentage distribution bars (Ortho/Para/Meta).
+  - Created and passed Test Suite 165 (`test-reaction-mechanisms-advanced.mjs`, 16/16 passed) and Test Suite 166 (`test-organic-advanced-ui.mjs`, 6/6 passed).
+  - Production build compiled in 14.59s with entry chunk at 682.87 kB.
+  - Total test suites expanded to 166 / 166 with 100% pass rate.
