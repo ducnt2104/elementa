@@ -4,22 +4,22 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T01:50:00+07:00`  
-**Elapsed Real Time:** `3h 01m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T01:58:00+07:00`  
+**Elapsed Real Time:** `3h 09m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 3h 01m)
+## 1. CURRENT AUDIT SUMMARY (T = 3h 09m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 193 / 193 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 195 / 195 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.08s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.59 MB) & advanced (1.53 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.24s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.61 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -384,3 +384,20 @@
   - Created and passed Test Suite 193 (`test-chemical-kinetics-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 15.08s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 193 / 193 with 100% pass rate.
+- **2026-10-25 01:58 (Iteration 23 Checkpoint)**:
+  - Implemented comprehensive Halogens & Redox Reactions Engine in `src/domain/halogensRedoxEngine.ts` strictly conforming to GDPT 2018 Grade 10 (Chủ đề 7: Nguyên tố nhóm VIIA - Halogen) & IUPAC Standards:
+    - Group VIIA Halogen catalog ($F, Cl, Br, I$): atomic numbers, electron configurations ($ns^2 np^5$), electronegativity trends ($F\ 3.98 > Cl\ 3.16 > Br\ 2.96 > I\ 2.66$), and standard reduction potentials ($F_2\ +2.87\text{ V} > Cl_2\ +1.36\text{ V} > Br_2\ +1.07\text{ V} > I_2\ +0.54\text{ V}$) dictating oxidizing strength.
+    - Halogen displacement reactions in aqueous salt solution: $Cl_2 + 2NaBr \to 2NaCl + Br_2$; $Cl_2 + 2NaI \to 2NaCl + I_2$; $Br_2 + 2NaI \to 2NaBr + I_2$; failure of weaker halogens to displace stronger ones ($Br_2 + NaCl \to$ no reaction; $I_2 + NaBr \to$ no reaction); and fluorine's violent decomposition of water ($2F_2 + 2H_2O \to 4HF + O_2$) preventing aqueous displacement reactions.
+    - Hydrogen halides ($HX$) and hydrohalic acids: acid strength in aqueous solution increases down the group ($HF \ll HCl < HBr < HI$) due to decreasing $H-X$ bond dissociation energy, while reducing power with concentrated $H_2SO_4$ increases ($HF, HCl$ do not reduce $H_2SO_4$; $HBr$ reduces $H_2SO_4$ to $SO_2$; $HI$ reduces $H_2SO_4$ strongly to $H_2S$).
+    - Hydrofluoric acid ($HF$) glass etching mechanism ($SiO_2 + 4HF \to SiF_4 \uparrow + 2H_2O$), explaining mandatory storage in polyethylene (PE) or wax bottles instead of glass.
+    - Javel water ($Cl_2 + 2NaOH \to NaCl + NaClO + H_2O$ at room temperature) and Bleaching powder ($Ca(OH)_2 + Cl_2 \to CaOCl_2 + H_2O$) bleach mechanisms via hypochlorite ($ClO^-$) oxidizing action.
+    - Starch-iodine amylose helical inclusion complex with temperature reversibility: blue-purple at room temperature; helix uncoiling and decolorization above $70^\circ C$; helix re-coiling and blue return upon cooling.
+  - Created and passed Test Suite 194 (`test-halogens-redox.mjs`, 16/16 passed).
+  - Implemented `HalogensRedoxVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Halogen displacement lab with 2-layer organic solvent extraction SVG (aqueous layer vs hexan layer with distinct iodine violet and bromine orange colors).
+    - Mode 2: Hydrogen halides redox lab with bond length/strength charts and concentrated $H_2SO_4$ reaction tube.
+    - Mode 3: Javel water synthesis and starch-iodine temperature slider showing helical inclusion and thermal uncoiling.
+  - Integrated `HalogensRedoxVisualizer` into `PeriodicCodexTab.tsx` under `'HALOGENS_REDOX'`.
+  - Created and passed Test Suite 195 (`test-halogens-redox-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 15.24s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 195 / 195 with 100% pass rate.
