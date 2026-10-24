@@ -910,7 +910,11 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
   };
 
   return (
-    <div className="relative w-full h-[calc(100vh-4.5rem)] bg-obsidian overflow-hidden select-none flex flex-col">
+    <div
+      className="relative w-full h-[calc(100vh-4.5rem)] bg-obsidian overflow-hidden select-none flex flex-col"
+      role="region"
+      aria-label="Đấu Trường MOBA Hóa Học Real-Time 60 FPS"
+    >
       {/* 1. TOP BAR HUD */}
       <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-4 py-2 bg-obsidian/85 backdrop-blur-md border-b border-navy-light/60">
         {/* Left: Mode Title & Draft button */}
@@ -1053,7 +1057,12 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
 
       {/* 1.5 KILL ANNOUNCEMENT BANNER */}
       {activeAnnouncement && (
-        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-none animate-slideDown">
+        <div
+          className="absolute top-14 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-none animate-slideDown"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {activeAnnouncement.type === 'TEAM_SYNERGY' ? (
             <div className="relative px-6 py-2.5 rounded-2xl bg-slate-950/95 backdrop-blur-xl border-2 border-emerald-400/80 shadow-[0_0_35px_rgba(16,185,129,0.5)] flex items-center gap-3.5">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-300 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg border border-emerald-200">
@@ -1088,7 +1097,12 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
 
       {/* 2. CHEMICAL REACTION ALERT BANNER (TOP-CENTER POPUP) */}
       {reactionAlert && (
-        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-40 max-w-xl w-[92%] bg-obsidian/95 border-2 border-cyan-ion/80 rounded-2xl p-3.5 shadow-2xl shadow-cyan-ion/40 animate-slideDown flex items-start gap-3">
+        <div
+          className="absolute top-14 left-1/2 -translate-x-1/2 z-40 max-w-xl w-[92%] bg-obsidian/95 border-2 border-cyan-ion/80 rounded-2xl p-3.5 shadow-2xl shadow-cyan-ion/40 animate-slideDown flex items-start gap-3"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-ion to-coral-reaction flex items-center justify-center shrink-0 shadow-md">
             <Sparkles className="w-5 h-5 text-obsidian" />
           </div>
@@ -1097,7 +1111,11 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
               <span className="text-[11px] font-mono font-bold text-coral-reaction uppercase tracking-wider">
                 ⚡ PHẢN ỨNG HÓA HỌC KÍCH HOẠT TRONG GIAO TRANH
               </span>
-              <button onClick={() => setReactionAlert(null)} className="text-ivory-muted hover:text-ivory">
+              <button
+                onClick={() => setReactionAlert(null)}
+                className="text-ivory-muted hover:text-ivory"
+                aria-label="Đóng thông báo phản ứng hóa học"
+              >
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -1110,6 +1128,12 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
         </div>
       )}
 
+      {/* Screen Reader ARIA Live Region for MOBA Combat Telemetry */}
+      <div className="sr-only" aria-live="polite" aria-atomic="false">
+        {reactionAlert ? `Phản ứng hóa học ${reactionAlert.name}: ${reactionAlert.equation}. Hiện tượng: ${reactionAlert.phenomena}` : ''}
+        {activeAnnouncement ? `${activeAnnouncement.title}: ${activeAnnouncement.subtitle}` : ''}
+      </div>
+
       {/* 3. MAIN ARENA VIEWPORT CANVAS */}
       <canvas
         ref={canvasRef}
@@ -1120,7 +1144,10 @@ export const MobaArenaTab: React.FC<MobaArenaTabProps> = ({
         onTouchEnd={handleCanvasTouchEnd}
         onTouchCancel={handleCanvasTouchEnd}
         onContextMenu={(e) => e.preventDefault()}
-        className="w-full flex-1 cursor-crosshair block touch-none"
+        role="img"
+        aria-label="Bản đồ giao tranh chiến trường MOBA thời gian thực"
+        tabIndex={0}
+        className="w-full flex-1 cursor-crosshair block touch-none focus:outline-none"
       />
 
       {/* 3.5 VIRTUAL JOYSTICK FOR TOUCH & MOBILE */}

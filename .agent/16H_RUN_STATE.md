@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T00:10:00+07:00`  
-**Elapsed Real Time:** `1h 21m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T00:13:00+07:00`  
+**Elapsed Real Time:** `1h 24m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 1h 21m)
+## 1. CURRENT AUDIT SUMMARY (T = 1h 24m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 166 / 166 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 167 / 167 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
@@ -24,7 +24,7 @@
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
 | **Bot AI Intelligence** | Advanced | Threat-aware Counter Trap (Speed 3) priority & 3-reactant synthesis combinations |
-| **Accessibility (a11y)** | WCAG 2.1 AA | ARIA live regions for phase flow & combat logs; modal `role="dialog"` & Escape key |
+| **Accessibility (a11y)** | WCAG 2.1 AA | ARIA live regions for TCG & MOBA combat logs; focusable canvas & modal `role="dialog"` |
 | **Security & Fuzzing** | Verified | Firestore deep rules spec & XSS neutralization verified |
 | **Content Security Policy** | Enforced | `public/_headers` + `<meta CSP>` locking down scripts, styles, objects, and connect endpoints |
 | **MOBA 60FPS Budget** | Benchmarked | 0.0082ms avg ParticleEngine update across 1,000 frames (Suite 156 passed) |
@@ -137,3 +137,11 @@
   - Created and passed Test Suite 165 (`test-reaction-mechanisms-advanced.mjs`, 16/16 passed) and Test Suite 166 (`test-organic-advanced-ui.mjs`, 6/6 passed).
   - Production build compiled in 14.59s with entry chunk at 682.87 kB.
   - Total test suites expanded to 166 / 166 with 100% pass rate.
+- **2026-10-25 00:13 (Iteration 9 Checkpoint)**:
+  - Hardened MOBA Battlefield Accessibility & Assistive Telemetry in `src/components/moba/MobaArenaTab.tsx`.
+  - Added `role="region"` and accessible landmark label for the battlefield container.
+  - Configured `role="status"` and `aria-live="polite"` for kill & team synergy banners, `role="alert"` and `aria-live="assertive"` for chemical reaction alerts with accessible dismiss button.
+  - Added focusable `role="img"` canvas with `tabIndex={0}` and keyboard navigation hotkeys (Q, W, E, R, A, S, H).
+  - Added dedicated screen reader ARIA live region (`sr-only`) announcing major chemical reactions and combat milestones in real-time.
+  - Created and passed Test Suite 167 (`test-moba-accessibility-and-aria.mjs`, 6/6 passed).
+  - Total test suites expanded to 167 / 167 with 100% pass rate.
