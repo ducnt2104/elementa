@@ -16,9 +16,9 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 159 / 159 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 160 / 160 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.60s |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.53s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 698 kB (139 kB gzip) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
@@ -30,6 +30,7 @@
 | **MOBA 60FPS Budget** | Benchmarked | 0.0082ms avg ParticleEngine update across 1,000 frames (Suite 156 passed) |
 | **Deck Formats & Banlists** | Governed | `STANDARD_GDPT`, `CLASSROOM_SAFE`, `UNLIMITED` rules engine & hazard limits (Suite 157 & 158 passed) |
 | **MOBA Reaction Telemetry** | Synchronized | In-game HUD chemical reaction popups & environmental river/brush detonations (Suite 159 passed) |
+| **PWA Offline Readiness** | Hardened | Base URL cross-domain SW registration & multi-tier cache lifecycle (Suite 160 passed) |
 | **Automated CI/CD** | Deployed | GitHub Actions workflow `.github/workflows/deploy.yml` with relative base path |
 | **Firebase Services** | Live | Auth (Guest/Email), Firestore, Security Rules verified |
 | **Gameplay Systems** | Operational | TCG Arena (8000 LP), MOBA Canvas 60FPS, Codices, Workshop, Missions, Events, Shop |
