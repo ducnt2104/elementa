@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T06:20:00+07:00`  
-**Elapsed Real Time:** `7h 31m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T06:26:00+07:00`  
+**Elapsed Real Time:** `7h 37m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -22,11 +22,11 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 7h 31m)
+## 1. CURRENT AUDIT SUMMARY (T = 7h 37m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 261 / 261 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 263 / 263 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1200,3 +1200,33 @@
   - TypeScript validation: 0 errors across entire workspace.
   - Production build: `dist/assets/index-_-31rC_A.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 261 / 261 with 100% pass rate.
+- **2026-10-25 06:26 (Iteration 57 Checkpoint — PHASE C EXTENSION)**:
+  - Implemented Direct Air Capture (DAC), Separation Thermodynamics & Power-to-X Closed Loop in `src/domain/directAirCaptureEngine.ts` strictly conforming to IUPAC Separation Thermodynamics, IEA Net-Zero by 2050 Roadmap & Vietnam GDPT 2018 Chemistry 11 & 12 (Chu trình cacbon, Cân bằng cacbonat-hidrocacbonat, Xút hóa kiềm & Giảm phát thải khí nhà kính):
+    - Dilution Penalty & Thermodynamic Separation Limits:
+      - Rigorous ideal mixing separation work: $W_{min} = -RT \left[ \ln(y) + \frac{1-y}{y} \ln(1-y) \right]$.
+      - Separating ultra-dilute atmospheric $CO_2$ ($420\text{ ppm} = 0.042\%$) requires $W_{min} = 21.39\text{ kJ/mol } CO_2$ ($135\text{ kWh/ton } CO_2$), which is nearly $3\times$ higher than point-source flue gas separation ($12\% = 120,000\text{ ppm}$, $7.45\text{ kJ/mol } CO_2$).
+    - Technology Architectures & Thermochemical Cycles:
+      - **Liquid Alkali Cycle (KOH / CaCO3 - Oxy/Carbon Engineering):**
+        - Air Contactor ($2\text{M } KOH$): $2 KOH + CO_2 \to K_2CO_3 + H_2O$ ($\Delta H = -108.5\text{ kJ/mol}$).
+        - Pellet Reactor causticization: $K_2CO_3 + Ca(OH)_2 \to 2 KOH + CaCO_3 \downarrow$ ($\Delta H = -5.3\text{ kJ/mol}$).
+        - Oxy-fired calciner furnace at $900^\circ\text{C}$: $CaCO_3 \xrightarrow{900^\circ\text{C}} CaO + CO_2 \uparrow$ ($\Delta H = +178.2\text{ kJ/mol}$).
+        - Lime slaker: $CaO + H_2O \to Ca(OH)_2$ ($\Delta H = -64.5\text{ kJ/mol}$).
+        - Total energy: $2,650\text{ kWh/ton } CO_2$ ($2,250\text{ kWh-th}$ at $900^\circ\text{C} + 400\text{ kWh-e}$). Net water consumption: $4.5\text{ m}^3/\text{ton}$.
+      - **Solid Sorbent TVSA Cycle (Cellulose-PEI - Climeworks):**
+        - Chemisorption on porous nanofibrillated cellulose functionalized with branched polyethylenimine: $2 R\text{-}NH_2 + CO_2 \to R\text{-}NHCOO^- + R\text{-}NH_3^+$ (Ammonium carbamate).
+        - Desorption at mild $100^\circ\text{C}$ under $0.2\text{ bar}$ vacuum with low-grade geothermal/waste steam ($\Delta H = +68.0\text{ kJ/mol}$).
+        - Total energy: $1,800\text{ kWh/ton } CO_2$ ($1,500\text{ kWh-th}$ at $100^\circ\text{C} + 300\text{ kWh-e}$).
+        - Atmospheric water recovery: generates **$+1.2\text{ m}^3$ pure drinking water per ton of $CO_2$ captured**!
+    - Downstream Power-to-X Coupling:
+      - Captured $CO_2$ directly links into SOEC co-electrolysis (Iteration 55) and AEMWE hydrogen (Iteration 56) to produce carbon-neutral synthetic aviation e-Kerosene ($n CO + (2n+1) H_2 \to C_n H_{2n+2}$), creating a completely closed-loop Net-Zero carbon cycle.
+      - Alternative permanent storage: CarbFix basaltic rock mineralization dissolving $CO_2$ into groundwater and injecting $1,000\text{m}$ deep to precipitate permanent $CaCO_3$ rock for $> 10,000\text{ years}$.
+  - Created and passed Test Suite 262 (`test-direct-air-capture.mjs`, 4/4 passed).
+  - Implemented `DirectAirCaptureVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Interactive SVG chemical flowsheet for both Liquid KOH (Contactor, Pellet Reactor, Calciner at 900°C, Slaker) and Solid Sorbent TVSA (Adsorption chamber, Vacuum 0.2 bar / 100°C desorption, Condenser water recovery), with step-by-step chemical reaction viewer and thermal enthalpy tags.
+    - Mode 2: Thermodynamics & dilution penalty analysis with ambient $CO_2$ slider ($380 - 1000\text{ ppm}$), air flow rate slider ($10,000 - 150,000\text{ m}^3/\text{h}$), capture efficiency slider ($50\% - 90\%$), Sherwood plot explanation, and live energy consumption bar charts (thermal vs electrical).
+    - Mode 3: Net-Zero economics & PtX coupling dashboard with heat source selector (Geothermal, Industrial Waste Heat, Solar Thermal, Oxy-Gas), electricity/thermal price sliders, full Capex/Opex stack breakdown, and live downstream e-Kerosene production metrics.
+  - Integrated `DirectAirCaptureVisualizer` into `PeriodicCodexTab.tsx` under `'DIRECT_AIR_CAPTURE'` with `Wind` icon.
+  - Created and passed Test Suite 263 (`test-direct-air-capture-visualizer-ui.mjs`, 7/7 passed).
+  - TypeScript validation: 0 errors across entire workspace.
+  - Production build: `dist/assets/index-DL6riaLS.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 263 / 263 with 100% pass rate.
