@@ -4,22 +4,22 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T01:44:00+07:00`  
-**Elapsed Real Time:** `2h 55m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T01:50:00+07:00`  
+**Elapsed Real Time:** `3h 01m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 2h 55m)
+## 1. CURRENT AUDIT SUMMARY (T = 3h 01m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 191 / 191 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 193 / 193 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.52s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.57 MB) & advanced (1.53 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.08s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.59 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -368,3 +368,19 @@
   - Created and passed Test Suite 191 (`test-chemical-energetics-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 16.52s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 191 / 191 with 100% pass rate.
+- **2026-10-25 01:50 (Iteration 22 Checkpoint - Passing 3-Hour Mark / 50% Milestone)**:
+  - Implemented comprehensive Chemical Reaction Kinetics & Reaction Rates Engine in `src/domain/chemicalKineticsEngine.ts` strictly conforming to GDPT 2018 Grade 10 (Chủ đề 6: Tốc độ phản ứng hóa học) & IUPAC Standards:
+    - Reaction rate law & rate constant units: Differential rate equation $v = k[A]^a [B]^b$ with reaction orders 0, 1, and 2.
+    - Van 't Hoff temperature rule: $\frac{v_{T_2}}{v_{T_1}} = \gamma^{\frac{T_2 - T_1}{10}}$ with $\gamma \in [2.0, 4.0]$ and real-world presets: refrigerator preservation ($4^\circ C$ vs $25^\circ C$, slowing spoilage by $>4$ times) and pressure cooker ($100^\circ C$ vs $120^\circ C$, accelerating cooking by $6.25$ times).
+    - 5 kinetic factors model: concentration, temperature, solid surface area (powder vs chunks: fine powder $CaCO_3$ reacting with $HCl$ accelerates gas evolution by $8.5$ times over chunks), and catalysts ($MnO_2$ catalytic decomposition of $H_2O_2$ lowering activation energy from $75$ to $54\text{ kJ/mol}$ and boosting reaction rate by $28$ times).
+    - Thiosulfate acid decomposition experiment ($Na_2S_2O_3 + H_2SO_4 \to S \downarrow + SO_2 + H_2O$): models sulfur cloudiness opacity obscuring black cross on paper under conical flask as a function of concentration and temperature.
+    - Arrhenius equation & Maxwell-Boltzmann collision theory: $k = A e^{-E_a / RT}$, calculating effective collision fraction $f = e^{-E_a / RT}$ and effective collisions per million.
+  - Created and passed Test Suite 192 (`test-chemical-kinetics.mjs`, 11/11 passed).
+  - Implemented `ChemicalKineticsVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Sodium thiosulfate conical flask simulation with fading black cross under paper, animated stopwatch timer, and sulfur turbidity opacity.
+    - Mode 2: Van 't Hoff temperature preservation simulator with real-world presets (refrigerator, pressure cooker, fever) and rate multiplier calculation.
+    - Mode 3: 5 kinetic factors simulator (powder vs chunks, catalyst on/off) and Maxwell-Boltzmann Arrhenius collision theory panel.
+  - Integrated `ChemicalKineticsVisualizer` into `PeriodicCodexTab.tsx` under `'CHEMICAL_KINETICS'`.
+  - Created and passed Test Suite 193 (`test-chemical-kinetics-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 15.08s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 193 / 193 with 100% pass rate.
