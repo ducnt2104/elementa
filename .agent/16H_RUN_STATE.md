@@ -4,21 +4,21 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T02:39:00+07:00`  
-**Elapsed Real Time:** `3h 50m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T02:45:00+07:00`  
+**Elapsed Real Time:** `3h 56m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 3h 50m)
+## 1. CURRENT AUDIT SUMMARY (T = 3h 56m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 207 / 207 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 209 / 209 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.87s with 0 warnings |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.76s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
@@ -513,3 +513,27 @@
   - Created and passed Test Suite 207 (`test-forensic-chemistry-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 16.87s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 207 / 207 with 100% pass rate.
+- **2026-10-25 02:45 (Iteration 30 Checkpoint)**:
+  - Implemented comprehensive Pharmacokinetics, Drug Ionization & ADME Simulation Engine in `src/domain/pharmacokineticsEngine.ts` strictly conforming to GDPT 2018 Chemistry Specialty Modules (Chuyên đề Hóa học Y - Dược 12) & Clinical Pharmacokinetics Standards:
+    - 5 benchmark pharmaceutical profiles: Aspirin ($pK_a = 3.5$, weak acid), Paracetamol ($pK_a = 9.5$, neutral/phenolic), Morphine ($pK_a = 8.0$, weak base), Ibuprofen ($pK_a = 4.4$, weak acid), Diazepam ($pK_a = 3.4$, weak base).
+    - Henderson-Hasselbalch pH-partition membrane permeability simulation:
+      - Stomach lumen ($pH = 1.5$): Weak acid Aspirin is $> 95\%$ non-ionized ($HA$), rapidly permeating lipid bilayer membranes into blood; weak base Morphine is $> 99.9\%$ ionized ($BH^+$) and ion-trapped.
+      - Intestinal lumen ($pH = 6.8$): Morphine non-ionized fraction increases substantially, enabling extensive passive absorption in the jejunum/ileum.
+      - Blood plasma ($pH = 7.4$): Aspirin is $> 99.9\%$ ionized ($A^-$), stabilizing systemic distribution.
+    - One-compartment Bateman pharmacokinetics function ($C(t) = \frac{F \cdot \text{Dose} \cdot k_a}{V_d \cdot (k_a - k_e)} \cdot (e^{-k_e t} - e^{-k_a t})$):
+      - Models analytical $C_{max}, T_{max}, AUC$, elimination rate $k_e = \frac{\ln(2)}{t_{1/2}}$, apparent $V_d$, and systemic clearance ($Cl = k_e \cdot V_d$).
+      - Verifies the canonical $5 \times t_{1/2}$ elimination rule ($> 96.875\%$ cleared after 5 half-lives).
+      - Evaluates plasma concentration against the Therapeutic Window ($MEC$ to $MTC$).
+    - Acute Paracetamol (Acetaminophen) Overdose & Rumack-Matthew Nomogram:
+      - Models Rumack-Matthew 150-treatment line ($150\text{ mg/L}$ at 4h, $t_{1/2} = 4\text{ h}$).
+      - Simulates hepatic Cytochrome P450 (CYP2E1) conversion to toxic $NAPQI$ and intracellular Glutathione ($GSH$) depletion ($> 70\%$ depletion leading to centrilobular liver necrosis).
+      - N-Acetylcysteine (NAC) intravenous rescue therapy: provides L-cysteine precursor to restore hepatic glutathione reserves to $> 85\%$ and conjugate $NAPQI$ into nontoxic mercapturic acid.
+  - Created and passed Test Suite 208 (`test-pharmacokinetics.mjs`, 7/7 passed).
+  - Implemented `PharmacokineticsVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Phospholipid bilayer membrane SVG with animated non-ionized $HA/B$ permeability vs ionized $A^-/BH^+$ reflection across 4 physiological compartments (Stomach, Intestine, Blood, Urine).
+    - Mode 2: Interactive Bateman concentration-time plot with green shaded Therapeutic Window band, dose and weight sliders, and $C_{max}/T_{max}$ indicators.
+    - Mode 3: Rumack-Matthew nomogram plot, Paracetamol overdose dose and time sliders, hepatic Glutathione depletion meter, and NAC intravenous rescue button.
+  - Integrated `PharmacokineticsVisualizer` into `PeriodicCodexTab.tsx` under `'PHARMACOKINETICS_ADME'` with `Pill` icon.
+  - Created and passed Test Suite 209 (`test-pharmacokinetics-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 16.76s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 209 / 209 with 100% pass rate.
