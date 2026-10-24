@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T03:12:30+07:00`  
-**Elapsed Real Time:** `4h 23m 40s`  
+**Latest Checkpoint Timestamp:** `2026-10-25T03:19:10+07:00`  
+**Elapsed Real Time:** `4h 30m 20s`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 4h 23m)
+## 1. CURRENT AUDIT SUMMARY (T = 4h 30m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 217 / 217 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 219 / 219 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -634,3 +634,30 @@
   - Created and passed Test Suite 217 (`test-industrial-electrochemical-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 15.61s with entry chunk size strictly preserved at 682.96 kB (134.31 kB gzip) and 0 warnings.
   - Total test suites expanded to 217 / 217 with 100% pass rate.
+- **2026-10-25 03:19 (Iteration 35 Checkpoint)**:
+  - Implemented comprehensive Soil Chemistry, Agricultural Fertilizers, Nutrient Fixation & Nitrate Leaching Engine in `src/domain/soilFertilizerEngine.ts` strictly conforming to GDPT 2018 Chemistry Curriculum (Chuyên đề Lớp 11: Hợp chất của Nitơ - Photpho trong Nông nghiệp) & FAO / TCVN 6187 / WHO Guidelines for Drinking Water Quality (Nitrate limits < 50 mg/L):
+    - Agricultural Fertilizers Catalog:
+      - Đạm Urê ($CO(NH_2)_2$, $46\% N$, Đạm Phú Mỹ & Đạm Cà Mau): Enzyme urease thủy phân sinh $(NH_4)_2CO_3$, kiềm hóa tạm thời kích hoạt bay hơi khí $NH_3 \uparrow$ nếu bón bề mặt, sau đó nitrat hóa giải phóng $H^+$ làm chua đất.
+      - Amoni Sunfat SA ($(NH_4)_2SO_4$, $21\% N, 24\% S$): Phân chua sinh lý mạnh ($2NH_4^+ \to 2NO_3^- + 4H^+$), tối ưu cho cà phê Tây Nguyên & chè Phú Thọ.
+      - Supephotphat đơn (SSP, Lâm Thao Phú Thọ): $Ca(H_2PO_4)_2 + 2CaSO_4$ ($17.5\% P_2O_5$).
+      - Supephotphat kép (TSP, Đình Vũ & Lào Cai): $Ca(H_2PO_4)_2$ ($46\% P_2O_5$).
+      - DAP ($(NH_4)_2HPO_4$, $18-46-0$), Kali Clorua ($KCl$, $60\% K_2O$), và Đạm Urê Chậm Tan Màng Bọc (CRF).
+    - Vietnamese Soil Classifications & Cation Exchange Capacity (CEC):
+      - Đất phèn hoạt động (Acid Sulfate Soil, Đồng Tháp Mười, Tứ Giác Long Xuyên): $pH \approx 3.8$, $Al^{3+}$ tự do độc hại lên đến $85\text{ ppm}$ gây thối rễ lúa.
+      - Đất Feralit / Đất đỏ Bazan Tây Nguyên ($pH \approx 4.8$): Cố định lân mạnh ($75\%$) thành $AlPO_4 / FePO_4$ khó tan.
+      - Đất phù sa Sông Hồng & Sông Cửu Long ($pH \approx 6.5$, $CEC = 22\text{ meq/100g}$): Độ phì nhiêu cao, cân đối dinh dưỡng.
+      - Đất cát ven biển Nam Trung Bộ: $CEC$ nghèo nàn ($4.5\text{ meq/100g}$), rửa trôi nitrat cực nhanh.
+    - Agricultural Liming & Aluminum Toxicity Remediation:
+      - Bón vôi nông nghiệp ($CaO / CaCO_3$) tính toán theo $CEC$ và độ đệm thổ nhưỡng: Để nâng $pH$ đất phèn từ $3.8 \to 6.0$ cần $3383\text{ kg } CaO/\text{ha}$, kết tủa triệt để $85\text{ ppm } Al^{3+} \to Al(OH)_3 \downarrow$ giải độc rễ lúa và giải phóng lân hữu hiệu $+35\%$.
+    - 45-Day Nitrogen Transformation & Groundwater Leaching Dynamics:
+      - Urease hydrolysis $\to$ Nitrification $\to$ CEC adsorption vs Anion Exclusion: Keo đất sét mang điện tích âm giữ chặt cation $NH_4^+$, trong khi anion $NO_3^-$ bị đẩy ra dung dịch đất và rửa trôi xuống tầng nước ngầm khi mưa lớn.
+      - Đạm tan chậm CRF giảm $>50\%$ lượng nitrat rửa trôi so với urê truyền thống, bảo vệ nguồn nước ngầm không vượt ngưỡng ô nhiễm WHO ($50\text{ mg/L } NO_3^-$).
+  - Created and passed Test Suite 218 (`test-soil-fertilizer.mjs`, 6/6 passed).
+  - Implemented `SoilFertilizerVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Dynamic SVG soil cross-section with topsoil, crop roots, clay plate CEC adsorption ($NH_4^+$), mobile $NO_3^-$ leaching, and groundwater water table color shifts (WHO limit indicator).
+    - Mode 2: Acid soil liming remediation beaker SVG with $Al(OH)_3$ precipitate and root health recovery.
+    - Mode 3: Vietnamese fertilizer encyclopedia cards with chemical formulas, grades, and factory locations.
+  - Integrated `SoilFertilizerVisualizer` into `PeriodicCodexTab.tsx` under `'SOIL_FERTILIZER_CHEMISTRY'` with `Sprout` icon.
+  - Created and passed Test Suite 219 (`test-soil-fertilizer-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 15.84s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 219 / 219 with 100% pass rate.
