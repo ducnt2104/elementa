@@ -4,22 +4,22 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T02:18:00+07:00`  
-**Elapsed Real Time:** `3h 29m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T02:24:00+07:00`  
+**Elapsed Real Time:** `3h 35m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 3h 29m)
+## 1. CURRENT AUDIT SUMMARY (T = 3h 35m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 201 / 201 | 100% Passed (`node run-all-tests.mjs`) — MILESTONE 200 REACHED! |
+| **Active Test Suites** | 203 / 203 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 15.90s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.71 MB) & advanced (1.53 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 17.03s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -452,3 +452,17 @@
   - Created and passed Test Suite 201 (`test-curriculum-mastery-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 15.90s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 201 / 201 with 100% pass rate.
+- **2026-10-25 02:24 (Iteration 27 Checkpoint)**:
+  - Enhanced and completed the 16-Player Chemistry Championship & Dynamic Elo Tournament System in `src/domain/tournamentEngine.ts`:
+    - 16 historical IUPAC chemist personas with seeds, ratings, and chemistry archetypes: Mendeleev (Alkali/Halogen 1650), Lavoisier (Nitro Legion 1620), Marie Curie (Sulfur Forge 1600), Dalton (Organic Synthesis 1560), Bohr, Rutherford, Lewis, Arrhenius, Gibbs, Le Chatelier, Avogadro, Pauling, Haber, Kekule, Moseley, Faraday.
+    - Added `simulateMatchOutcome(match, rngSeed)`: calculates win probability incorporating both Elo difference ($P(A) = 1 / (1 + 10^{(R_B - R_A)/400})$) and archetype rock-paper-scissors advantage modifiers ($\pm 5\%$), simulating turn counts and remaining LP.
+    - Added `simulateFullChampionship(roster)`: executes all 4 elimination rounds (8 R16 matches $\to$ 4 QF $\to$ 2 SF $\to$ 1 GF = 15 total duels), crowns the Champion, and updates live competitor Elo ratings.
+  - Created and passed Test Suite 202 (`test-tournament-championship.mjs`, 5/5 passed).
+  - Implemented `TournamentChampionshipVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: 4-round elimination bracket tree (Vòng 1/8, Tứ Kết, Bán Kết, Chung Kết) with interactive match inspector drawer showing LP and Elo shifts.
+    - Mode 2: Live simulation controls with 1-click full championship run and round-by-round summary logs.
+    - Mode 3: Archetype meta win rate cards (Nitro Legion, Sulfur Forge, Alkali Halogen, Organic Synthesis) and 16-player sorted leaderboard.
+  - Integrated `TournamentChampionshipVisualizer` into `PeriodicCodexTab.tsx` under `'TOURNAMENT_CHAMPIONSHIP'` with `Trophy` badge.
+  - Created and passed Test Suite 203 (`test-tournament-championship-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 17.03s with entry chunk size preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 203 / 203 with 100% pass rate.

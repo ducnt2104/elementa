@@ -264,4 +264,71 @@ export class TournamentEngine {
 
     return nextMatches;
   }
+
+  /**
+   * Simulates a dynamic chemistry card duel between two competitors based on Elo,
+   * archetype advantage, and tactical variance.
+   */
+  public static simulateMatchOutcome(match: TournamentMatch, rngSeed: number = Math.random()): TournamentMatch {
+    const elo = this.calculateElo(match.competitorA.rating, match.competitorB.rating, 1);
+    let winProbA = elo.expectedScoreA;
+
+    // Archetype rock-paper-scissors advantage modifiers (+5%)
+    const archA = match.competitorA.archetype;
+    const archB = match.competitorB.archetype;
+    if (archA === 'NITRO_LEGION' && archB === 'ORGANIC_SYNTHESIS') winProbA += 0.05;
+    else if (archA === 'ORGANIC_SYNTHESIS' && archB === 'ALKALI_HALOGEN') winProbA += 0.05;
+    else if (archA === 'ALKALI_HALOGEN' && archB === 'SULFUR_FORGE') winProbA += 0.05;
+    else if (archA === 'SULFUR_FORGE' && archB === 'NITRO_LEGION') winProbA += 0.05;
+    else if (archB === 'NITRO_LEGION' && archA === 'ORGANIC_SYNTHESIS') winProbA -= 0.05;
+    else if (archB === 'ORGANIC_SYNTHESIS' && archA === 'ALKALI_HALOGEN') winProbA -= 0.05;
+    else if (archB === 'ALKALI_HALOGEN' && archA === 'SULFUR_FORGE') winProbA -= 0.05;
+    else if (archB === 'SULFUR_FORGE' && archA === 'NITRO_LEGION') winProbA -= 0.05;
+
+    winProbA = Math.max(0.1, Math.min(0.9, winProbA));
+
+    const doesAWin = rngSeed < winProbA;
+    const turns = Math.floor(7 + Math.random() * 9); // 7 to 15 turns
+    const winnerLp = Math.floor(1500 + Math.random() * 5500); // 1500 to 7000 LP
+    const loserLp = 0;
+
+    const finalLpA = doesAWin ? winnerLp : loserLp;
+    const finalLpB = doesAWin ? loserLp : winnerLp;
+
+    return this.resolveMatch(match, finalLpA, finalLpB, turns, 3000, 2500);
+  }
+
+  /**
+   * Executes a full 16-player championship simulation from R16 to Grand Finals.
+   */
+  public static simulateFullChampionship(roster = CANONICAL_CHEMIST_ROSTER) {
+    const { competitors, round1Matches } = this.generate16PlayerBracket(roster);
+
+    // Resolve R16
+    const resolvedR16 = round1Matches.map(m => this.simulateMatchOutcome(m));
+
+    // Advance & Resolve QF
+    const qfMatches = this.advanceRound(resolvedR16, 'QUARTER_FINALS');
+    const resolvedQF = qfMatches.map(m => this.simulateMatchOutcome(m));
+
+    // Advance & Resolve SF
+    const sfMatches = this.advanceRound(resolvedQF, 'SEMI_FINALS');
+    const resolvedSF = sfMatches.map(m => this.simulateMatchOutcome(m));
+
+    // Advance & Resolve GF
+    const gfMatches = this.advanceRound(resolvedSF, 'GRAND_FINALS');
+    const resolvedGF = [this.simulateMatchOutcome(gfMatches[0])];
+
+    const champion = resolvedGF[0].winner!;
+    champion.isChampion = true;
+
+    return {
+      competitors,
+      r16Matches: resolvedR16,
+      qfMatches: resolvedQF,
+      sfMatches: resolvedSF,
+      gfMatches: resolvedGF,
+      champion
+    };
+  }
 }
