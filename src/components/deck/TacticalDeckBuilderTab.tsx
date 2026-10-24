@@ -13,6 +13,7 @@ import {
   DeckManagementService,
   DeckSlot,
   DeckSynergyAnalysis,
+  TournamentFormat,
   PREBUILT_DECKS,
   TOTAL_DECK_SLOTS,
   MIN_MAIN_DECK_CARDS,
@@ -75,6 +76,7 @@ export const TacticalDeckBuilderTab: React.FC<TacticalDeckBuilderTabProps> = ({
   const [sideDeckCardIds, setSideDeckCardIds] = useState<string[]>([...(activeSlot?.sideDeck || [])]);
   const [duplicateTargetIndex, setDuplicateTargetIndex] = useState<number>(0);
   const [targetDeckSection, setTargetDeckSection] = useState<'AUTO' | 'SIDE'>('AUTO');
+  const [selectedFormat, setSelectedFormat] = useState<TournamentFormat>('STANDARD_GDPT');
 
   // Sync when active slot index changes
   const handleSelectSlot = (idx: number) => {
@@ -167,8 +169,14 @@ export const TacticalDeckBuilderTab: React.FC<TacticalDeckBuilderTabProps> = ({
 
   // Comprehensive TCG Validation & Elemental Synergy Analysis
   const validation = useMemo(() => {
-    return DeckManagementService.validateDeck(mainDeckCardIds, extraDeckCardIds, sideDeckCardIds, collectionOwned);
-  }, [mainDeckCardIds, extraDeckCardIds, sideDeckCardIds, collectionOwned]);
+    return DeckManagementService.validateDeck(
+      mainDeckCardIds,
+      extraDeckCardIds,
+      sideDeckCardIds,
+      collectionOwned,
+      selectedFormat
+    );
+  }, [mainDeckCardIds, extraDeckCardIds, sideDeckCardIds, collectionOwned, selectedFormat]);
 
   const synergy = useMemo(() => {
     return DeckManagementService.analyzeDeckSynergy(mainDeckCardIds, extraDeckCardIds);
@@ -677,6 +685,53 @@ export const TacticalDeckBuilderTab: React.FC<TacticalDeckBuilderTabProps> = ({
             <Save className="w-4 h-4" />
             LƯU BỘ BÀI
           </button>
+        </div>
+      </div>
+
+      {/* Tournament & Educational Format Switcher */}
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-lg bg-navy/60 border border-navy-light/40 text-xs">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-mono text-slate-400 font-bold uppercase text-[11px] flex items-center gap-1">
+            <Shield className="w-3.5 h-3.5 text-cyan-ion" />
+            Định Dạng (Format):
+          </span>
+          <div className="inline-flex rounded-lg bg-obsidian/80 p-0.5 border border-white/10 font-mono text-xs">
+            <button
+              onClick={() => { sound.playUiClick(); setSelectedFormat('STANDARD_GDPT'); }}
+              className={`px-2.5 py-1 rounded-md transition-all ${
+                selectedFormat === 'STANDARD_GDPT'
+                  ? 'bg-cyan-ion text-obsidian font-bold shadow'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              Chuẩn GDPT 2018
+            </button>
+            <button
+              onClick={() => { sound.playUiClick(); setSelectedFormat('CLASSROOM_SAFE'); }}
+              className={`px-2.5 py-1 rounded-md transition-all ${
+                selectedFormat === 'CLASSROOM_SAFE'
+                  ? 'bg-amber-400 text-obsidian font-bold shadow'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              Phòng TN An Toàn
+            </button>
+            <button
+              onClick={() => { sound.playUiClick(); setSelectedFormat('UNLIMITED'); }}
+              className={`px-2.5 py-1 rounded-md transition-all ${
+                selectedFormat === 'UNLIMITED'
+                  ? 'bg-purple-400 text-obsidian font-bold shadow'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              Tự Do (Unlimited)
+            </button>
+          </div>
+        </div>
+        <div className="text-[11px] text-slate-400 font-mono">
+          {selectedFormat === 'STANDARD_GDPT' && 'Giới hạn hóa chất nguy hại cao (Thermite: 1, Siêu axit: 1).'}
+          {selectedFormat === 'CLASSROOM_SAFE' && 'Cấm hợp chất nổ mạnh; giới hạn hóa chất ăn mòn / độc tính cao.'}
+          {selectedFormat === 'UNLIMITED' && 'Cho phép tối đa 3 bản sao cho mọi thẻ bài.'}
         </div>
       </div>
 
