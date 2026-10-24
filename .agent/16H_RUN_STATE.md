@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T03:25:50+07:00`  
-**Elapsed Real Time:** `4h 37m 00s`  
+**Latest Checkpoint Timestamp:** `2026-10-25T03:47:00+07:00`  
+**Elapsed Real Time:** `4h 58m 10s`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 4h 37m)
+## 1. CURRENT AUDIT SUMMARY (T = 4h 58m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 221 / 221 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 225 / 225 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 16.73s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -689,3 +689,46 @@
   - Created and passed Test Suite 221 (`test-dye-chemistry-visualizer-ui.mjs`, 12/12 passed).
   - Production build compiled in 16.85s with entry chunk size strictly preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 221 / 221 with 100% pass rate.
+- **2026-10-25 03:31 (Iteration 37 Checkpoint)**:
+  - Implemented comprehensive Petroleum Refining, Catalytic Cracking, Octane Rating (RON/MON) & Biofuel Blending (E5/E10) Engine in `src/domain/petroleumRefiningEngine.ts` strictly conforming to GDPT 2018 Chemistry Curriculum (Chương 4 Lớp 11: Hydrocarbon - Nguồn Dầu Mỏ & Khí Thiên Nhiên) & TCVN 7716:2011 / ASTM D2699 (RON) / ASTM D2700 (MON) Standards:
+    - Fractional Distillation of Crude Oil:
+      - 6 canonical cuts: Refinery Gas / LPG ($C_1-C_4$), Light Naphtha ($C_5-C_{10}$), Kerosene / Jet A-1 aviation fuel ($C_{10}-C_{16}$), Diesel Fuel DO ($C_{15}-C_{22}$), Heavy Gas Oil ($C_{20}-C_{30}$), and Vacuum Residue / Bitumen ($> C_{30}$) for expressway asphalt paving.
+      - Vietnamese crude oil benchmark: Dầu thô Bạch Hổ (Bồn trũng Cửu Long, API $38.6^\circ$, lưu huỳnh cực thấp $0.08\% S$, điểm đông đặc cao $32^\circ\text{C}$ do giàu sáp parafin) làm nguồn nạp thiết kế cho Nhà máy Lọc dầu Dung Quất (Quảng Ngãi).
+    - Fluid Catalytic Cracking (FCC) Zeolite Y Mechanism:
+      - 3-step carbocation transformation: 1) Brønsted acid site $[Si-O(H)-Al]$ protonates alkene/alkane into secondary carbocation ($2^\circ$); 2) 1,2-hydride and 1,2-alkyl shifts isomerize linear chains into highly branched tertiary carbocations ($3^\circ$), boosting octane; 3) $\beta$-scission bond cleavage yields high-octane gasoline olefins + new carbocations.
+    - Octane Rating (RON/MON/AKI) & Bio-Gasoline E5/E10 Blending:
+      - Primary Reference Fuels: n-Heptane ($RON = 0$, severe engine knocking) vs 2,2,4-Trimethylpentane (Isooctane, $RON = 100$, anti-knock standard) vs Toluene ($RON = 120$) vs Bio-Ethanol E100 ($RON = 108$).
+      - E5 blending ($95\%$ base RON 92 + $5\%$ Bio-Ethanol) raises fuel octane to RON $93.2$ and cuts toxic CO emissions by $-9\%$.
+      - E10 blending ($90\%$ base RON 95 + $10\%$ Bio-Ethanol) reaches RON $97.1$ and reduces greenhouse gases by $-11\%$, conforming to Vietnamese standard TCVN 7716:2011 and compatible with 100% of PGM-FI motorbikes and cars in Vietnam.
+  - Created and passed Test Suite 222 (`test-petroleum-refining.mjs`, 6/6 passed).
+  - Implemented `PetroleumRefiningVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Interactive SVG atmospheric distillation column with 6 bubble-cap trays, temperature gradient ($360^\circ\text{C} \to 40^\circ\text{C}$), crude oil feed selector (Bạch Hổ vs Sư Tử Đen vs Brent), and commercial product specs.
+    - Mode 2: FCC Zeolite Y carbocation 3-step slider and carbocation stability hierarchy ($3^\circ > 2^\circ > 1^\circ$).
+    - Mode 3: Octane rating blender with base gasoline & bio-ethanol sliders, 4 quantitative gauges (RON, MON, AKI, sensitivity), and TCVN 7716 emission reduction metrics.
+  - Integrated `PetroleumRefiningVisualizer` into `PeriodicCodexTab.tsx` under `'PETROLEUM_REFINING_OCTANE'` with `Fuel` icon.
+- **2026-10-25 03:47 (Iteration 38 Checkpoint)**:
+  - Implemented comprehensive Atmospheric Photochemistry, Stratospheric Ozone (Chapman Cycle), CFC Catalytic Depletion, Diurnal Urban Photochemical Smog (AQI / O₃ / PAN) & Acid Rain / Wet Limestone Flue Gas Desulfurization (FGD) Engine in `src/domain/atmosphericPhotochemistryEngine.ts` strictly conforming to GDPT 2018 Chemistry Curriculum (Chương 6 Lớp 10: Tốc độ phản ứng hóa học & Chương 7: Ozon, Halogen; Chương 2 Lớp 11: Nitrogen & Sulfur - Mưa axit; Chương 8: Hóa học & Môi trường) & QCVN 19:2009/BTNMT / QCVN 05:2023/BTNMT Standards:
+    - Chapman Stratospheric Ozone Cycle (Sydney Chapman 1930):
+      - 4-step canonical cycle: 1) $O_2 + h\nu (\lambda < 242\text{ nm}) \to 2 O(^{3}P)$ (deep UV photolysis); 2) $O(^{3}P) + O_2 + M \to O_3 + M$ (exothermic three-body chaperone collision, $\Delta H = -106.5\text{ kJ/mol}$); 3) $O_3 + h\nu (200 < \lambda < 310\text{ nm}) \to O_2 + O(^{1}D)$ (Hartley band UV-B shielding absorbing $98\%$ solar radiation); 4) $O_3 + O \to 2 O_2$ ($\Delta H = -391.9\text{ kJ/mol}$, slow steady-state recombination maintaining natural ~300 Dobson Units).
+    - Catalytic Ozone Depletion by CFCs & Antarctic Polar Vortex PSCs:
+      - Molina-Rowland catalytic cycle: $CCl_2F_2 + h\nu (\lambda < 220\text{ nm}) \to CClF_2^\bullet + Cl^\bullet$; $Cl^\bullet + O_3 \to ClO^\bullet + O_2$; $ClO^\bullet + O \to Cl^\bullet + O_2$.
+      - Catalytic turnover: 1 single Chlorine radical destroys $> 100,000$ ozone molecules before deactivating into reservoir species ($HCl$, $ClONO_2$).
+      - Antarctic winter polar vortex ($T < 195\text{ K}$): Polar Stratospheric Clouds (PSCs) trigger heterogeneous surface activation ($HCl + ClONO_2 \xrightarrow{\text{ice}} Cl_2 + HNO_3$), releasing $Cl_2$ that photolyzes in Austral spring sun into $Cl^\bullet$, collapsing total ozone to $< 90\text{ DU}$ (Antarctic Ozone Hole $< 220\text{ DU}$) and driving surface UV-B irradiance to $23.19\text{ W/m}^2$ (Extreme DNA damage risk).
+    - Tropospheric Photochemical Smog Diurnal Simulator (0h - 24h):
+      - Morning traffic rush hour (06:00 - 08:00): Peak primary emissions of nitric oxide ($NO = 60.9\text{ ppb}$) and volatile organic compounds ($VOC = 143.5\text{ ppb}$).
+      - Midday solar photolysis (11:00 - 13:00): Sunlight ($h\nu < 420\text{ nm}$) splits nitrogen dioxide ($NO_2 \to NO + O \to O_3$). Peroxy radicals ($RO_2^\bullet$) oxidize $NO \to NO_2$ without destroying ozone, preventing natural titration and accumulating secondary oxidants.
+      - Afternoon toxic peak (13:00 - 16:00): Ozone reaches toxic peak ($O_3 = 128.9\text{ ppb}$) alongside peroxyacetyl nitrate ($PAN = 21.5\text{ ppb}$, severe lachrymator eye-irritant), spiking AQI to 184 (UNHEALTHY per QCVN 05:2023/BTNMT) with thick brown photochemical haze.
+      - Nighttime titration (18:00 - 24:00): $NO + O_3 \to NO_2 + O_2$ titrates ground ozone downward in the absence of sunlight.
+    - Acid Rain Kinetics & Wet Limestone Flue Gas Desulfurization (FGD):
+      - Clean rain baseline: $pH = 5.6$ due to natural dissolved $CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3^-$. Acid rain defined as $pH < 5.6$ (often $pH < 4.0$ from $SO_2 \to H_2SO_4$ and $NO_2 \to HNO_3$).
+      - Historic limestone/marble architecture ($CaCO_3$) weathering: $CaCO_3(s) + H_2SO_4(aq) \to CaSO_4(s) + CO_2(g) \uparrow + H_2O(l)$. Gypsum is ~100x more soluble than calcite, causing erosion rate to accelerate from $6.3\text{ }\mu\text{m/yr}$ (clean rain) to $18.94\text{ }\mu\text{m/yr}$ under $pH = 3.8$ acid rain.
+      - Industrial FGD wet limestone scrubber column: Spray nozzles disperse $CaCO_3$ slurry droplets counter-current to raw coal flue gas ($SO_2 = 1800\text{ ppm}$), achieving $98.5\%$ removal efficiency at optimal $pH = 5.8$. Clean outlet emission is $77.1\text{ mg/Nm}^3$ (strictly complying with Vietnamese industrial emission standard QCVN 19:2009/BTNMT $< 500\text{ mg/Nm}^3$) while recovering $136.1\text{ kg/h}$ of synthetic gypsum ($CaSO_4 \cdot 2H_2O$) for the construction industry.
+  - Created and passed Test Suite 224 (`test-atmospheric-photochemistry.mjs`, 5/5 passed).
+  - Implemented `AtmosphericPhotochemistryVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Interactive SVG Earth atmosphere with solar radiation rays, stratosphere ozone shield glow, Chapman 4-step selector, CFC $Cl^\bullet$ turnover counters, and Antarctic polar vortex ice cloud toggle.
+    - Mode 2: Urban city skyline SVG with dynamic day/night lighting, real-time photochemical brown smog haze opacity slider (0h-24h), 5 pollutant concentration gauges ($NO, NO_2, VOC, O_3, PAN$), and AQI health advisory cards.
+    - Mode 3: Acid rain monument corrosion SVG (with pitting damage) and Industrial wet limestone FGD scrubber column SVG with nozzle spray, gypsum slurry sump, and QCVN 19 compliance meters.
+  - Integrated `AtmosphericPhotochemistryVisualizer` into `PeriodicCodexTab.tsx` under `'ATMOSPHERIC_PHOTOCHEMISTRY'` with `Wind` icon.
+  - Created and passed Test Suite 225 (`test-atmospheric-photochemistry-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 16.01s with entry chunk size strictly preserved at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 225 / 225 with 100% pass rate.
