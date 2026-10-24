@@ -4,19 +4,19 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T00:58:00+07:00`  
-**Elapsed Real Time:** `2h 09m`  
+**Latest Checkpoint Timestamp:** `2026-10-25T01:04:00+07:00`  
+**Elapsed Real Time:** `2h 15m`  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon)
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 2h 09m)
+## 1. CURRENT AUDIT SUMMARY (T = 2h 15m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 179 / 179 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 181 / 181 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 14.59s |
 | **Code Splitting** | Optimized | Entry chunk `index.js` reduced from 978 kB to 682 kB (134 kB gzip) |
@@ -242,3 +242,23 @@
   - Created and passed Test Suite 179 (`test-transition-metals-ui.mjs`, 11/11 passed).
   - Production build compiled in 15.47s with entry chunk size optimized at 682.87 kB (134.30 kB gzip).
   - Total test suites expanded to 179 / 179 with 100% pass rate.
+- **2026-10-25 01:04 (Iteration 16 Checkpoint - 30-Minute Daemon Milestone 5)**:
+  - Implemented comprehensive Alcohols, Phenols & Reaction Specificity Engine in `src/domain/alcoholPhenolEngine.ts` strictly conforming to GDPT 2018 Grade 11 (Chủ đề 5: Dẫn xuất halogen - Ancol - Phenol) & IUPAC Standards:
+    - Catalog of 8 core alcohols (Methanol, Ethanol, Propan-1-ol, Propan-2-ol, 2-Methylpropan-2-ol, Butan-2-ol, Ethylene glycol, Glycerol) and 3 phenols (Phenol, o-Cresol, Picric acid) with boiling points, hydrogen bonding scales, and water solubilities.
+    - Controlled $CuO$ oxidation predictor: primary alcohols ($1^\circ$) oxidize to aldehydes with red Cu metal precipitation ($Cu \downarrow$), secondary alcohols ($2^\circ$) oxidize to ketones, tertiary alcohols ($3^\circ$) remain completely inert.
+    - Temperature-controlled dehydration kinetics: $140^\circ C$ intermolecular etherification ($2ROH \to ROR + H_2O$) vs $170^\circ C$ intramolecular alkene elimination with Zaitsev rule enforcement (preferential hydrogen elimination from less-substituted $\beta$-carbon yielding more substituted alkene e.g. Butan-2-ol $\to$ But-2-en major product).
+    - Polyol $Cu(OH)_2$ chelation diagnostic test: vicinal diols/triols (Ethylene glycol, Glycerol) dissolve $Cu(OH)_2$ at room temperature forming deep royal blue chelate complexes $[Cu(C_3H_7O_3)_2]$, whereas monohydric alcohols (Ethanol) fail to dissolve $Cu(OH)_2$.
+    - Phenol acidity and electrophilic aromatic substitution:
+      - Reaction with $NaOH$ forming soluble sodium phenolate ($C_6H_5ONa$).
+      - $CO_2 + H_2O$ displacement of phenol showing $H_2CO_3$ is a stronger acid than phenol ($pK_a = 9.95$), yielding milk-white turbid phenol precipitation and $NaHCO_3$.
+      - Bromine water qualitative test: instant decolorization of $Br_2$ and formation of dense white precipitate of 2,4,6-tribromophenol ($C_6H_2Br_3OH \downarrow$, $330.8\text{ g/mol}$) with stoichiometric mass calculation.
+      - Concentrated $HNO_3$ nitration: synthesis of yellow picric acid precipitate ($229.1\text{ g/mol}$).
+  - Created and passed Test Suite 180 (`test-alcohol-phenol-reactions.mjs`, 36/36 passed).
+  - Implemented `AlcoholPhenolVisualizer.tsx` with 3 interactive modes:
+    - Alcohol oxidation with visual heated copper mesh (black $CuO \to$ red $Cu$) and $140^\circ C / 170^\circ C$ Zaitsev dehydration slider.
+    - Side-by-side test tube lab comparison of monohydric alcohol vs vicinal polyol with $Cu(OH)_2$ deep-blue chelation.
+    - Phenol reaction lab with $NaOH$, $CO_2$ turbidity, $Br_2$ water white precipitate, and $HNO_3$ yellow picric acid synthesis with dynamic mass calculation and exam trap alerts.
+  - Integrated `AlcoholPhenolVisualizer` into `PeriodicCodexTab.tsx` under `'ALCOHOL_PHENOL_REACTIONS'`.
+  - Created and passed Test Suite 181 (`test-alcohol-phenol-visualizer-ui.mjs`, 12/12 passed).
+  - Production build compiled in 15.97s with entry chunk size optimized at 682.87 kB (134.29 kB gzip).
+  - Total test suites expanded to 181 / 181 with 100% pass rate.
