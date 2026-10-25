@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T09:22:30+07:00`  
-**Elapsed Real Time:** `10h 33m 40s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T09:30:00+07:00`  
+**Elapsed Real Time:** `10h 41m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -26,7 +26,7 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 311 / 311 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 313 / 313 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 18.02s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1870,3 +1870,31 @@
   - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
   - Production build: `dist/assets/index-Do4Ivud3.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
   - Total test suites expanded to **311 / 311 with 100% pass rate**.
+- **2026-10-25 15:10 (Iteration 82 Checkpoint — 10h 41m Real Time, PHASE C EXTENSION)**:
+  - Implemented Molten Metal Methane Pyrolysis & Turquoise Hydrogen with Solid Carbon Black Engine in `src/domain/moltenMetalMethanePyrolysisEngine.ts` strictly conforming to IUPAC standards, Stokes' Law multiphase buoyancy hydrodynamics, and Vietnam GDPT 2018 Chemistry:
+    - Multiphase Molten Metal Bubble Column De-Coking Advantage:
+      - Heterogeneous catalytic methane cracking over conventional solid catalysts deactivates in hours due to solid carbon surface encapsulation (coking).
+      - In a molten metal bubble column ($Ni_{0.27}Bi_{0.73}$, liquid density $\rho_m = 9.85\text{ g/cm}^3$ vs solid carbon floc density $\rho_c \approx 2.10\text{ g/cm}^3$), extreme density differential ($\Delta \rho \approx 7,750\text{ kg/m}^3$) drives rapid buoyancy separation.
+      - Exact Stokes' floatation velocity:
+        $$v_t = \frac{2 r_p^2 (\rho_m - \rho_c) g}{9 \mu_m}$$
+      - Solid carbon flocs ($r_p = 150\text{ }\mu m$) rise to the top of the molten column at **$21.1\text{ cm/s}$**, where they are continuously extracted via an auger skimmer with zero catalyst fouling.
+    - High-Temperature Pyrolysis Reaction Equilibrium & Kinetics:
+      - Endothermic catalytic cracking reaction:
+        $$CH_4(g) \xrightarrow{Ni\text{-}Bi\text{, } 1050^\circ\text{C}} C(s) + 2 H_2(g) \quad (\Delta H^\circ_{298} = +74.8\text{ kJ/mol})$$
+      - At $1,050^\circ\text{C}$, methane single-pass conversion reaches **$99.2\%$** with off-gas hydrogen purity of **$99.6\text{ mol}\%$**.
+    - Commercial Pyrolysis Plant Balance ($1,000\text{ kg } CH_4/\text{hr}$ feed):
+      - Produces **$249.4\text{ kg } H_2/\text{hr}$** ($2,095\text{ metric tons/year}$) and **$742.8\text{ kg } C/\text{hr}$** ($6,240\text{ metric tons/year}$ of battery-grade conductive carbon black).
+      - Replaces Steam Methane Reforming (SMR), avoiding **$19,902.5\text{ metric tons } CO_2/\text{year}$**.
+      - Electrical energy consumption: **$18.5\text{ kWh/kg } H_2$** (over **$55\%$ lower** than green water electrolysis at $50\text{ kWh/kg } H_2$).
+      - Gross annual product revenue: **$\$28,346,400/\text{year}$** ($H_2$ at $\$3.50/\text{kg}$ + carbon black at $\$3.00/\text{kg}$).
+  - Created and passed Test Suite 312 (`test-molten-metal-pyrolysis.mjs`, 3/3 passed).
+  - Implemented `MoltenMetalPyrolysisVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Bubble Column & Buoyancy Separation with animated multiphase column schematic (Gas Sparger → Molten Liquid Metal → Rising Carbon Flocs → Auger Skimmer), catalyst selector ($Ni-Bi$, $Cu-Bi$, $Sn-Ni$, $Fe-Ni$), and terminal velocity readouts.
+    - Mode 2: Thermal Kinetics & Conversion with interactive SVG temperature curve ($800 - 1,200^\circ\text{C}$), conversion efficiency, and hydrogen off-gas purity.
+    - Mode 3: Commercial Decarbonization Plant Balance with feed methane slider ($200 - 3,000\text{ kg/hr}$), hydrogen and conductive carbon mass yields, gross revenue projection, and avoided $CO_2$ vs SMR.
+  - Integrated `MoltenMetalPyrolysisVisualizer` into `PeriodicCodexTab.tsx` under `'MOLTEN_METAL_PYROLYSIS'` with `Flame` icon.
+  - Created and passed Test Suite 313 (`test-molten-metal-pyrolysis-visualizer-ui.mjs`, 7/7 passed).
+  - Added `'MoltenMetal'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-2fKzz3lc.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
+  - Total test suites expanded to **313 / 313 with 100% pass rate**.

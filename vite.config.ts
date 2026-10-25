@@ -50,7 +50,7 @@ export default defineConfig({
               'AnionExchange', 'BioConcrete', 'CuCl', 'DeepSea', 'DirectAir', 'DirectLithium', 'ElectrochemicalCorr', 'ForwardOsmosis', 'Geothermal',
               'IodineSulfur', 'LithiumMediated', 'MembraneMethane', 'MetalAir', 'MetalHydride',
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
-              'MoltenSalt', 'OceanThermal', 'PerovskiteSolar', 'Photocatalytic',
+              'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'PerovskiteSolar', 'Photocatalytic',
               'Photoelectrochemical', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
               'SodiumIon', 'SolidOxide', 'SupercriticalWater', 'Thermophotovoltaic', 'Tokamak'
             ];
