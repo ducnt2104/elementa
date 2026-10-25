@@ -52,7 +52,7 @@ export default defineConfig({
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
               'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'PerovskiteSolar', 'Photocatalytic',
               'Photoelectrochemical', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
-              'SodiumIon', 'SolidOxide', 'SupercriticalCo2', 'SupercriticalWater', 'Thermophotovoltaic', 'Tokamak'
+              'SodiumIon', 'Sofc', 'SolidOxide', 'SupercriticalCo2', 'SupercriticalWater', 'Thermophotovoltaic', 'Tokamak'
             ];
             if (energyKeywords.some(keyword => id.includes(keyword))) {
               return 'chemistry-visualizers-energy';

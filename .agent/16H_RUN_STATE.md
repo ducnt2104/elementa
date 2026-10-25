@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T09:44:00+07:00`  
-**Elapsed Real Time:** `10h 55m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T09:54:00+07:00`  
+**Elapsed Real Time:** `11h 05m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -26,7 +26,7 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 317 / 317 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 319 / 319 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 18.02s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1959,3 +1959,34 @@
   - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
   - Production build: `dist/assets/index-CCBxpszy.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
   - Total test suites expanded to **317 / 317 with 100% pass rate**.
+- **2026-10-25 15:54 (Iteration 85 Checkpoint — 11h 05m Real Time, PHASE C EXTENSION)**:
+  - Implemented High-Temperature Solid Oxide Fuel Cell (SOFC) with Direct Internal Reforming (DIR) & Tri-Generation Combined Heat & Power (CHP) Engine in `src/domain/sofcInternalReformingEngine.ts` strictly conforming to IUPAC electrochemistry standards, ternary C-H-O carbon coking thermodynamics, Nernst-Planck ionic transport, and Vietnam GDPT 2018 Chemistry:
+    - Direct Internal Reforming (DIR) & Electrochemical Oxidation Kinetics:
+      - Endothermic Steam Methane Reforming (SMR) directly on porous Ni-YSZ cermet anode:
+        $$CH_4 + H_2O \rightleftharpoons CO + 3 H_2 \quad (\Delta H^\circ = +206.2\text{ kJ/mol})$$
+      - Water-Gas Shift (WGS):
+        $$CO + H_2O \rightleftharpoons CO_2 + H_2 \quad (\Delta H^\circ = -41.2\text{ kJ/mol})$$
+      - Electrochemical oxidation at triple phase boundary (TPB):
+        $$H_2 + O^{2-} \to H_2O + 2 e^- \quad (\Delta H^\circ = -241.8\text{ kJ/mol})$$
+        $$\frac{1}{2} O_2 + 2 e^- \to O^{2-} \quad (\text{Cathode reduction})$$
+      - Thermal Self-Cooling Synergy: Endothermic reforming absorbs **$> 65 - 85\%$** of cell Joule and polarization waste heat, dramatically reducing parasitic air cooling blowers.
+    - Solid Oxide Electrolytes & Overpotential Deconstruction:
+      - Modeled $O^{2-}$ and $H^+$ conducting electrolytes: 8YSZ ($700 - 850^\circ\text{C}$), GDC Ceria IT-SOFC ($550 - 700^\circ\text{C}$), and Protonic Ceramic BZCYYb ($450 - 650^\circ\text{C}$).
+      - At $750^\circ\text{C}$ and $500\text{ mA/cm}^2$: cell delivers $0.790\text{ V}$ with $0.395\text{ W/cm}^2$ power density and **$53.7\%$ LHV electrical efficiency**.
+    - Carbon Coking Boundary Diagnostics:
+      - Dynamic verification of steam-to-carbon ratio ($S/C$): triggers protective alert if $S/C < S/C_{min}$ ($2.0$ for $CH_4$, $1.2$ for $CH_3OH$), preventing Ni site deactivation from Boudouard ($2CO \rightleftharpoons C + CO_2$) or cracking ($CH_4 \rightleftharpoons C + 2H_2$).
+    - Commercial Tri-Generation CHP Multi-Cell Plant ($500\text{ kWe}$ Stack):
+      - 5,064 planar repeat unit cells ($126.6\text{ m}^2$ active area) consuming $60.2\text{ kg } CH_4/\text{hr}$.
+      - Cogeneration performance: delivers $500\text{ kWe}$ electrical power + $280.2\text{ kWth}$ recoverable high-grade heat ($590^\circ\text{C}$ exhaust), achieving **$83.8\%$ total CHP efficiency**.
+      - Environmental decarbonization: Displaces marginal fossil grid power, avoiding **$714.0\text{ metric tons } CO_2/\text{year}$** with near-zero $NO_x$ emissions ($< 0.5\text{ ppm}$).
+  - Created and passed Test Suite 318 (`test-sofc-internal-reforming.mjs`, 3/3 passed).
+  - Implemented `SofcInternalReformingVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Direct Internal Reforming & Coking with 3-phase cross-section schematic (Ni-YSZ Anode | Dense YSZ Solid Oxide | Porous LSCF Cathode), fuel selector ($CH_4$, $CH_3OH$, Syngas, $H_2$), S/C ratio slider ($0.8 - 4.0$), dynamic coking warning alert, reforming extent ($97.5\%$), and thermal self-cooling ratio ($83.5\%$).
+    - Mode 2: Polarization & Overpotentials with operating temperature slider ($550 - 850^\circ\text{C}$), current density slider ($100 - 1,200\text{ mA/cm}^2$), electrolyte selector, overpotentials deconstruction (Ohmic, Activation, Concentration), and interactive SVG V-I & power density curves.
+    - Mode 3: Tri-Generation CHP Plant (500 kW) with rated capacity slider ($100 - 2,000\text{ kWe}$), cell count, active area, fuel consumption, recoverable $590^\circ\text{C}$ heat, total CHP efficiency badge, and avoided grid $CO_2$.
+  - Integrated `SofcInternalReformingVisualizer` into `PeriodicCodexTab.tsx` under `'SOFC_INTERNAL_REFORMING'` with `Flame` icon.
+  - Created and passed Test Suite 319 (`test-sofc-internal-reforming-visualizer-ui.mjs`, 8/8 passed).
+  - Added `'Sofc'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-C1JmF2Sj.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
+  - Total test suites expanded to **319 / 319 with 100% pass rate**.
