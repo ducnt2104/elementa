@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T09:30:00+07:00`  
-**Elapsed Real Time:** `10h 41m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T09:38:00+07:00`  
+**Elapsed Real Time:** `10h 49m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -26,7 +26,7 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 313 / 313 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 315 / 315 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 18.02s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1898,3 +1898,33 @@
   - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
   - Production build: `dist/assets/index-2fKzz3lc.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
   - Total test suites expanded to **313 / 313 with 100% pass rate**.
+- **2026-10-25 15:38 (Iteration 83 Checkpoint — 10h 49m Real Time, PHASE C EXTENSION)**:
+  - Implemented Supercritical CO2 (sCO2) Closed Recompression Brayton Cycle & Direct Oxy-Combustion Allam-Fetvedt Clean Energy Engine in `src/domain/supercriticalCo2BraytonEngine.ts` strictly conforming to IUPAC thermodynamics, Span-Wagner real-gas state equations, ASME PTC 46 / PTC 48 performance test standards, and Vietnam GDPT 2018 Chemistry & Physics:
+    - Real-Gas Thermo-Physical Non-Ideality Near Critical Point:
+      - Critical constants: $T_c = 30.98^\circ\text{C}$ ($304.13\text{ K}$), $P_c = 73.77\text{ bar}$ ($7.377\text{ MPa}$), $\rho_c = 467.6\text{ kg/m}^3$.
+      - Near the critical point, compressibility factor $Z$ plunges from $1.0$ down to $0.21 - 0.28$, while density skyrockets to liquid-like levels ($> 520 - 650\text{ kg/m}^3$).
+      - Because pumping work scales with specific volume ($w_c = \int v \, dP$), liquid-like density slashes compression power burden by **$> 60 - 72\%$** vs ideal gas compression ($w_{real} / w_{ideal} \approx 0.28$), leaving a vastly larger net fraction of turbine power for electricity generation.
+    - Recompression Closed Brayton Cycle (RCBC) & Dual Recuperation:
+      - Overcomes the Low Temperature Recuperator (LTR) thermal pinch-point caused by the peak in $CO_2$ specific heat near the critical point ($c_p > 10\text{ kJ/(kg}\cdot\text{K)}$).
+      - Recompression split fraction $\gamma = 0.32$: diverts $32\%$ of uncooled flow directly into a recompressing compressor (RC), balancing heat capacity rates ($\dot{m} c_p$) across both sides of the LTR and maintaining a safe pinch point ($\Delta T = 5.2^\circ\text{C}$).
+      - At $650^\circ\text{C}$ turbine inlet temperature (TIT) and $200\text{ bar}$, RCBC delivers **$300.32\text{ MWe}$** net electrical power at **$51.9\%$** thermal efficiency, exceeding conventional superheated steam Rankine cycles ($41.5\%$) by **$+10.4$ percentage points**, while reducing turbomachinery volume by $> 88\%$.
+    - Direct Oxy-Combustion Allam-Fetvedt Cycle with 100% Inherent CCUS:
+      - Direct oxy-fuel combustion inside a $300\text{ bar}$ supercritical $CO_2$ working fluid:
+        $$CH_4 + 2 O_2 \xrightarrow{300\text{ bar sCO2}} CO_2 + 2 H_2O \quad (\Delta H^\circ = -890.3\text{ kJ/mol})$$
+      - Pure $O_2$ from Air Separation Unit (ASU) burns methane with $82.5\text{ kg sCO2}$ recycle diluent per $\text{kg } CH_4$ to moderate turbine inlet temperature to $1,150^\circ\text{C}$.
+      - Commercial plant balance ($10.0\text{ kg/s } CH_4 = 500\text{ MWth}$ LHV feed):
+        - Produces **$295.83\text{ MWe}$** net clean electricity at **$59.2\%$** net LHV efficiency.
+        - Delivers **$829,714.7\text{ metric tons } CO_2/\text{year}$** directly at pipeline pressure ($120\text{ bar}$) with **$100\%$ inherent carbon capture** at **zero efficiency penalty for separation**.
+        - Yields **$679,000\text{ metric tons/year}$** of ultra-pure distilled water as an industrial byproduct.
+        - Displaces conventional combined cycle natural gas turbines (CCGT), avoiding **$869,746.8\text{ metric tons } CO_2/\text{year}$**.
+  - Created and passed Test Suite 314 (`test-supercritical-co2-brayton.mjs`, 4/4 passed).
+  - Implemented `SupercriticalCo2BraytonVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Real-Gas CO2 & Critical Point with temperature/pressure sliders, dynamic phase classification (Sub-Gas, Liquid, Supercritical sCO2), compressibility $Z$ readout, liquid density, work savings metric, and interactive SVG compressibility factor $Z$ vs pressure curve.
+    - Mode 2: RCBC & Pinch-Point Solver with 4 preset configurations (Nuclear/CSP, Allam Oxy-Fuel, Simple WHRS, Gen IV Partial Cooling), TIT slider ($500 - 800^\circ\text{C}$), high pressure slider ($150 - 300\text{ bar}$), flow split slider ($\gamma = 0.20 - 0.45$), pinch point margin readout, and SVG dual-recuperation closed flow cycle schematic.
+    - Mode 3: Allam Oxy-Combustion (100% CCUS) with fuel feed slider ($2 - 20\text{ kg/s } CH_4$), combustor pressure slider ($200 - 350\text{ bar}$), net electrical power, LHV efficiency, cryogenic $O_2$ demand, annual pipeline $CO_2$ capture, distilled water byproduct, and avoided $CO_2$ vs CCGT.
+  - Integrated `SupercriticalCo2BraytonVisualizer` into `PeriodicCodexTab.tsx` under `'SUPERCRITICAL_CO2_BRAYTON'` with `Zap` icon.
+  - Created and passed Test Suite 315 (`test-supercritical-co2-brayton-visualizer-ui.mjs`, 8/8 passed).
+  - Added `'SupercriticalCo2'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-UDIX2ETV.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
+  - Total test suites expanded to **315 / 315 with 100% pass rate**.
