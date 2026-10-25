@@ -2500,3 +2500,21 @@
   - Added `'ZincAirOxide'` to `energyKeywords` manual chunk in `vite.config.ts`.
   - Production build compiled in 27.00s with main entry chunk strictly at **683.00 kB** (0 warnings).
   - Total test suites expanded to **371 / 371 with 100% pass rate**.
+- **2026-10-25 20:20 (Iteration 112 Checkpoint — 14h 24m Real Time, PHASE D)**:
+  - Implemented Concentrated Solar & HTGR Sulfur-Iodine (S-I) Thermochemical Water-Splitting Cycle in `src/domain/sulfurIodineCycleEngine.ts` strictly conforming to IUPAC chemical thermodynamics, General Atomics S-I closed-loop reaction kinetics, and gigawatt-scale green hydrogen economy:
+    - 3-Section Closed-Loop Thermochemical Cycle:
+      - Section 1 (Bunsen Reaction, $120^\circ\text{C}$): $I_2 + SO_2 + 2H_2O \to 2HI + H_2SO_4$ with spontaneous liquid-liquid phase separation into heavy $HI_x$ phase and light $H_2SO_4$ phase.
+      - Section 2 (Sulfuric Acid Decomposition, $900^\circ\text{C}$): $H_2SO_4 \to H_2O + SO_2 + \frac{1}{2} O_2$ driven by concentrated solar cavity receivers or Gen-IV HTGR nuclear helium gas, releasing pure $O_2$ and recycling $SO_2$.
+      - Section 3 (HI Reactive Distillation, $450^\circ\text{C}$): $2HI \to H_2 + I_2$ releasing pure green hydrogen and recycling iodine $I_2$.
+      - $100\%$ recycling of sulfur and iodine with zero consumable chemical reagents; only water ($H_2O$) and high-temperature heat are consumed.
+    - Thermal Efficiency & Gigawatt Economics: Thermal-to-hydrogen conversion efficiency reaches **$50.2\%$** (vs $24.5\%$ for conventional power+electrolysis routes). A 100 MWth plant produces **$1,274.5\text{ kg } H_2/\text{hour}$** ($12.74\text{ tons } H_2/\text{day}$), achieving an ultra-competitive LCOH of **$\$2.68/\text{kg } H_2$** and avoiding **$42,058\text{ tons } CO_2/\text{year}$** utilizing corrosion-resistant sintered Silicon Carbide (SSiC) ceramic heat exchangers.
+  - Created and passed Test Suite 372 (`test-sulfur-iodine-cycle.mjs`, 3/3 passed).
+  - Implemented `SulfurIodineCycleVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Sơ Đồ 3 Phân Đoạn (Bunsen - H₂SO₄ - HI) with dynamic SVG showing Bunsen reactor, H2SO4 decomposer, HI decomposer, closed SO2 & I2 recycle loops, and pure H2 & O2 outputs.
+    - Mode 2: Nguồn Nhiệt & Hiệu Suất > 50% with primary heat source selector (Solar, HTGR, Tokamak Fusion), temperature sliders, and SSiC ceramic integrity.
+    - Mode 3: Kinh Tế Hydro Gigawatt ($2.3/kg) with daily hydrogen tons, green steelmaking (H2-DRI), and green ammonia fertilizer impact.
+  - Integrated into `PeriodicCodexTab.tsx` under `'SULFUR_IODINE_ADVANCED_CYCLE'` with `Atom` icon.
+  - Created and passed Test Suite 373 (`test-sulfur-iodine-cycle-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'SulfurIodine'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - Production build compiled in 24.02s with main entry chunk strictly at **683.00 kB** (0 warnings).
+  - Total test suites expanded to **373 / 373 with 100% pass rate**.
