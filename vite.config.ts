@@ -47,7 +47,7 @@ export default defineConfig({
           }
           if (id.includes('src/components/visualizations/')) {
             const energyKeywords = [
-              'AlkalineMembrane', 'AllIronFlow', 'AluminumAir', 'AmmoniaWaterAbsorption', 'AnionExchange', 'BioConcrete', 'CopperChlorine', 'CuCl', 'DeepSea', 'DirectAir', 'DirectAmmonia', 'DirectEthanol', 'DirectFormicAcid', 'DirectFormicAcidSolidOxide', 'DirectLithium', 'ElectrochemicalCorr', 'ElectrochemicalDac', 'ElectrostaticSupercapacitor', 'ForwardOsmosis', 'Geothermal', 'HydrothermalLiquefaction',
+              'AlkalineMembrane', 'AllamCycle', 'AllIronFlow', 'AluminumAir', 'AmmoniaWaterAbsorption', 'AnionExchange', 'BioConcrete', 'CopperChlorine', 'CuCl', 'DeepSea', 'DirectAir', 'DirectAmmonia', 'DirectEthanol', 'DirectFormicAcid', 'DirectFormicAcidSolidOxide', 'DirectLithium', 'ElectrochemicalCorr', 'ElectrochemicalDac', 'ElectrostaticSupercapacitor', 'ForwardOsmosis', 'Geothermal', 'HydrothermalLiquefaction',
               'IodineSulfur', 'IronAir', 'IronSlurry', 'LiquidAir', 'LiquidMetal', 'LithiumCarbonDioxide', 'LithiumCo2', 'LithiumMediated', 'Magnetocaloric', 'ManganeseHydrogen', 'MembraneMethane', 'MetalAir', 'MetalHydride',
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
               'MethanePyrolysis', 'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'OsmoticallyDrivenHeatEngine', 'PerovskiteSolar', 'Photocatalytic',
