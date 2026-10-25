@@ -2468,3 +2468,18 @@
   - Added `'LiquidAir'` to `energyKeywords` manual chunk in `vite.config.ts`.
   - Production build compiled in 21.49s with entry chunk at **683.00 kB** (0 warnings).
   - Total test suites expanded to **367 / 367 with 100% pass rate**.
+- **2026-10-25 19:58 (Iteration 110 Checkpoint — 14h 02m Real Time, PHASE D)**:
+  - Implemented Solid-State Thermoelectric Generator & Peltier Heat Harvesting (TEG/TEC) in `src/domain/thermoelectricGeneratorEngine.ts` strictly conforming to IUPAC physical chemistry, Seebeck and Peltier transport physics, and automotive waste heat recovery:
+    - Fundamental Figure of Merit ($zT$): Analyzed dimensionless $zT = (S^2 \sigma T)/\kappa$ across nanostructured Bismuth Telluride ($Bi_2Te_3$, $zT = 1.35$), Filled Skutterudites ($(Ba,La)_xCo_4Sb_{12}$, $zT = 1.65$ via phonon-rattler scattering), NASA Deep-Space RTG Silicon-Germanium ($Si_{0.8}Ge_{0.2}$, $>45\text{ years}$ Voyager operation), and high-temperature Cobaltite Oxides ($Ca_3Co_4O_9$, $100\%$ eco-friendly).
+    - Thermoelectric Power Conversion: Maximum conversion efficiency reaches $17.3\%$ at $\Delta T = 400\text{ K}$ ($T_h = 450^\circ\text{C}$, $T_c = 50^\circ\text{C}$), generating $864\text{ W}$ electric power and $V_{oc} = 39.9\text{ V}$ across 256 thermocouple pairs with $0\%$ moving parts.
+    - Automotive & Industrial Exhaust Waste Heat Recovery: Upgrades $150\text{ kW}$ commercial diesel transport truck by capturing exhaust pipe heat into a compact Skutterudite TEG module, recovering **$1,251\text{ W}$** of direct electricity, unloading the engine alternator by **$69.5\%$**, boosting fuel economy by **$+1.28\%$**, saving **$359\text{ L/year}$** of diesel, and avoiding **$963\text{ kg } CO_2/\text{year}$** per vehicle.
+  - Created and passed Test Suite 368 (`test-thermoelectric-generator.mjs`, 4/4 passed).
+  - Implemented `ThermoelectricHarvestingVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Phát Điện Seebeck & Cặp Nhiệt with dynamic SVG showing p-type / n-type semiconductor legs, hole/electron drift arrows, and Seebeck open-circuit voltage.
+    - Mode 2: Chỉ Số zT & Bản Đồ Vật Liệu with transport property formulas, power factor, and NASA RTG space exploration profile.
+    - Mode 3: Thu Hồi Khí Thải Ô Tô & Xe Tải with engine mechanical power slider, alternator unload progress gauge, fuel savings, and CO2 reduction counters.
+  - Integrated into `PeriodicCodexTab.tsx` under `'SOLID_STATE_THERMOELECTRIC_HARVESTING'` with `Zap` icon.
+  - Created and passed Test Suite 369 (`test-thermoelectric-generator-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'Thermoelectric'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - Production build compiled in 23.45s with main entry chunk strictly at **683.00 kB** (0 warnings).
+  - Total test suites expanded to **369 / 369 with 100% pass rate**.
