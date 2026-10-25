@@ -3,6 +3,8 @@
 // Implements REST APIs, Authentication, SQLite Persistence, Authoritative Economy, Quests, CA-SRS, and Real-Time Multiplayer Rooms
 
 import { createServer, IncomingMessage, ServerResponse, Server } from 'http';
+import * as fs from 'fs';
+import * as path from 'path';
 import { DatabaseManager } from './db/database';
 import { AuthService } from './auth/authService';
 import { EconomyService } from './economy/economyService';
@@ -657,12 +659,118 @@ export class ElementaServer {
         return;
       }
 
-      // Fallthrough: 404 Route Not Found
-      this.sendError(res, 404, `API route [${method} ${pathname}] không tồn tại`);
+      // If this is an API route that didn't match any handler, return 404
+      if (pathname.startsWith('/api')) {
+        this.sendError(res, 404, `API route [${method} ${pathname}] không tồn tại`);
+        return;
+      }
+
+      // Serve static files from dist/ directory with SPA fallback
+      this.serveStaticOrFallback(req, res, pathname);
     } catch (err: any) {
       this.sendError(res, 500, err.message || 'Lỗi xử lý yêu cầu phía máy chủ');
     }
   };
+
+  /**
+   * Safe static file server with MIME type lookup and SPA routing fallback
+   */
+  private serveStaticOrFallback(req: IncomingMessage, res: ServerResponse, pathname: string): void {
+    const distDir = path.resolve(process.cwd(), 'dist');
+    const mimeTypes: Record<string, string> = {
+      '.html': 'text/html; charset=utf-8',
+      '.js': 'application/javascript; charset=utf-8',
+      '.mjs': 'application/javascript; charset=utf-8',
+      '.css': 'text/css; charset=utf-8',
+      '.json': 'application/json; charset=utf-8',
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.gif': 'image/gif',
+      '.svg': 'image/svg+xml',
+      '.ico': 'image/x-icon',
+      '.wasm': 'application/wasm',
+      '.woff': 'font/woff',
+      '.woff2': 'font/woff2',
+      '.ttf': 'font/ttf',
+      '.mp3': 'audio/mpeg',
+      '.wav': 'audio/wav',
+      '.ogg': 'audio/ogg',
+      '.webp': 'image/webp'
+    };
+
+    // Only handle GET and HEAD requests for static content
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      res.statusCode = 405;
+      res.setHeader('Allow', 'GET, HEAD');
+      res.end('Method Not Allowed');
+      return;
+    }
+
+    let relativePath = pathname;
+    if (relativePath === '/' || relativePath === '') {
+      relativePath = '/index.html';
+    }
+
+    let filePath = path.normalize(path.join(distDir, relativePath));
+
+    // Security check: Directory traversal prevention
+    if (!filePath.startsWith(distDir)) {
+      res.statusCode = 403;
+      res.end('Access Denied');
+      return;
+    }
+
+    // Check if target file exists
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      const ext = path.extname(filePath).toLowerCase();
+      const contentType = mimeTypes[ext] || 'application/octet-stream';
+      
+      this.setCorsHeaders(res);
+      res.setHeader('Content-Type', contentType);
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+
+      if (filePath.includes(path.join('dist', 'assets'))) {
+        // Immutable cache for fingerprinted assets
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      } else {
+        // Light caching / revalidation for index.html
+        res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+      }
+
+      res.statusCode = 200;
+      if (req.method === 'HEAD') {
+        res.end();
+        return;
+      }
+      const stream = fs.createReadStream(filePath);
+      stream.pipe(res);
+      return;
+    }
+
+    // SPA Fallback: If not an asset request (e.g. navigation route), serve index.html
+    const fallbackIndex = path.join(distDir, 'index.html');
+    if (fs.existsSync(fallbackIndex)) {
+      this.setCorsHeaders(res);
+      res.setHeader('Content-Type', 'text/html; charset=utf-8');
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+      res.statusCode = 200;
+      if (req.method === 'HEAD') {
+        res.end();
+        return;
+      }
+      fs.createReadStream(fallbackIndex).pipe(res);
+      return;
+    }
+
+    // Neither file nor dist/index.html found
+    res.statusCode = 404;
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.end('404 Not Found: dist/ build directory not found. Please run "npm run build".');
+  }
 
   /**
    * Listen on a specified port
@@ -690,14 +798,14 @@ export class ElementaServer {
 }
 
 // Standalone execution entry point
-if (process.argv[1] && process.argv[1].endsWith('server.ts')) {
+if (process.argv[1] && (process.argv[1].endsWith('server.ts') || process.argv[1].endsWith('server.js'))) {
   const port = parseInt(process.env.PORT || '3001', 10);
   const server = new ElementaServer();
-  server.listen(port).then(inst => {
-    console.log(`[ELEMENTA SERVER] Dang chay tai http://localhost:${inst.port}`);
-    console.log(`[ELEMENTA SERVER] Database SQLite va Authoritative Engine da san sang.`);
+  server.listen(port, '0.0.0.0').then(inst => {
+    console.log(`[ELEMENTA SERVER] Running at http://0.0.0.0:${inst.port}`);
+    console.log(`[ELEMENTA SERVER] SQLite engine, SSE multiplayer & static web hosting active.`);
   }).catch(err => {
-    console.error('[ELEMENTA SERVER] Khoi dong that bai:', err);
+    console.error('[ELEMENTA SERVER] Startup error:', err);
     process.exit(1);
   });
 }
