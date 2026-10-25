@@ -104,9 +104,11 @@ export interface RoomSubscriptionOptions {
 }
 
 const TOKEN_STORAGE_KEY = 'elementa_online_token_v2';
-const API_BASE_URL = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? (window.location.port === '3001' ? '' : 'http://localhost:3001')
-  : '';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL !== undefined && import.meta.env.VITE_API_BASE_URL !== ''
+  ? import.meta.env.VITE_API_BASE_URL
+  : (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? (window.location.port === '3001' ? '' : 'http://localhost:3001')
+    : '');
 
 class ApiClient {
   private token: string | null = null;

@@ -1,0 +1,37 @@
+# ==============================================================================
+# ELEMENTA Tactical Chemistry — Render Infrastructure-as-Code Blueprint
+# ==============================================================================
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  # Unified Production Web Service (Node.js Authoritative Server + React 18 SPA)
+  - type: web
+    name: elementa-tactical-chemistry
+    env: node
+    runtime: node
+    plan: starter
+    region: singapore
+    branch: main
+    autoDeploy: true
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
+      - key: VITE_APP_TITLE
+        value: "ELEMENTA — Trận Chiến Nguyên Tố"
+      - key: VITE_FIREBASE_PROJECT_ID
+        value: elementa-tactical-chemistry
+      - key: VITE_FIREBASE_AUTH_DOMAIN
+        value: elementa-tactical-chemistry.firebaseapp.com
+      - key: VITE_FIREBASE_STORAGE_BUCKET
+        value: elementa-tactical-chemistry.appspot.com
+      - key: VITE_FIREBASE_MESSAGING_SENDER_ID
+        value: "10485762026"
+      - key: VITE_FIREBASE_APP_ID
+        value: "1:10485762026:web:7f8d9e0a1b2c3d4e5f"
+      - key: VITE_USE_FIREBASE_EMULATOR
+        value: "false"
