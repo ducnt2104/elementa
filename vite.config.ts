@@ -51,7 +51,7 @@ export default defineConfig({
               'IodineSulfur', 'IronAir', 'LiquidMetal', 'LithiumMediated', 'MembraneMethane', 'MetalAir', 'MetalHydride',
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
               'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'PerovskiteSolar', 'Photocatalytic',
-              'Photoelectrochemical', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
+              'Photoelectrochemical', 'ProtonSolidOxide', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
               'SodiumIon', 'Sofc', 'SolidOxide', 'SupercriticalCo2', 'SupercriticalWater', 'Thermophotovoltaic', 'Tokamak',
               'VanadiumFlow'
             ];
