@@ -46,6 +46,17 @@ export default defineConfig({
             return 'cards-expansion-data';
           }
           if (id.includes('src/components/visualizations/')) {
+            const energyKeywords = [
+              'AnionExchange', 'CuCl', 'DeepSea', 'DirectAir', 'DirectLithium', 'Geothermal',
+              'IodineSulfur', 'LithiumMediated', 'MembraneMethane', 'MetalAir', 'MetalHydride',
+              'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
+              'MoltenSalt', 'OceanThermal', 'PerovskiteSolar', 'Photocatalytic',
+              'Photoelectrochemical', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
+              'SodiumIon', 'SolidOxide', 'SupercriticalWater', 'Thermophotovoltaic', 'Tokamak'
+            ];
+            if (energyKeywords.some(keyword => id.includes(keyword))) {
+              return 'chemistry-visualizers-energy';
+            }
             const advancedKeywords = [
               'Af4', 'Afm', 'Auc', 'Battery', 'Bli', 'Capillary', 'Circular', 'Crispr', 'Cryo', 'Dma',
               'Dsc', 'DualPolarization', 'DynamicLight', 'ElectronMicroscopy', 'Enzyme', 'Esi',
