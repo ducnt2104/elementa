@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T09:38:00+07:00`  
-**Elapsed Real Time:** `10h 49m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T09:44:00+07:00`  
+**Elapsed Real Time:** `10h 55m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -26,7 +26,7 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 315 / 315 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 317 / 317 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 18.02s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1928,3 +1928,34 @@
   - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
   - Production build: `dist/assets/index-UDIX2ETV.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
   - Total test suites expanded to **315 / 315 with 100% pass rate**.
+- **2026-10-25 15:44 (Iteration 84 Checkpoint — 10h 55m Real Time, PHASE C EXTENSION)**:
+  - Implemented Iron-Air Long-Duration Energy Storage Battery (Fe-Air) & Reversible Rusting Multi-Day Grid Storage Engine in `src/domain/ironAirBatteryEngine.ts` strictly conforming to IUPAC electrochemistry standards, Pourbaix Fe-H2O thermodynamics, Butler-Volmer kinetics, and Vietnam GDPT 2018 Chemistry:
+    - Reversible Rusting Electrochemical Redox Coupling:
+      - Discharge (Spontaneous Rusting):
+        $$\text{Anode: } Fe + 2 OH^- \to Fe(OH)_2 + 2 e^- \quad (E^\circ = -0.877\text{ V vs SHE})$$
+        $$\text{Cathode: } O_2 + 2 H_2O + 4 e^- \to 4 OH^- \quad (E^\circ = +0.401\text{ V vs SHE})$$
+        $$\text{Full Cell: } 2 Fe + O_2 + 2 H_2O \to 2 Fe(OH)_2 \quad (E^\circ_{cell} = 1.278\text{ V})$$
+      - Recharge (Electrolytic Un-Rusting): Electrical current reduces iron hydroxide back to metallic iron while evolving pure oxygen at the air cathode ($4 OH^- \to O_2 \uparrow + 2 H_2O + 4 e^-$).
+      - Theoretical capacity of iron anode: **$960.6\text{ mAh/g}$** ($960.6\text{ Ah/kg}$), delivering high energy density with Earth-abundant non-toxic materials.
+    - Parasitic Hydrogen Evolution Reaction (HER) Suppression & Dopant Screening:
+      - Because the $Fe/Fe(OH)_2$ redox potential ($-0.877\text{ V}$) is more negative than the water reduction potential ($-0.828\text{ V}$ at pH 14), un-doped iron suffers from rapid self-discharge ($> 8.5\%/\text{day}$) and low Coulombic efficiency ($62\%$).
+      - $Bi_2O_3$ / $SnO_2 + K_2S$ dopants electrolessly deposit high-hydrogen-overpotential metallic clusters on iron grains, boosting HER overpotential by **$+215\text{ to }+245\text{ mV}$**.
+      - Parasitic HER fraction is suppressed from $35\%$ down to **$< 2.3\%$**, driving Coulombic efficiency to **$97.7\%$** and self-discharge down to **$0.38\%/\text{day}$**.
+    - Multi-Day 100-Hour Grid Storage Plant Techno-Economics ($10\text{ MW} / 1,000\text{ MWh}$ System):
+      - Capital cost: **$\$27.26/\text{kWh}$** (over **$89\%$ cheaper** than conventional Lithium-ion BESS at $\$250/\text{kWh}$).
+      - Total installed capital cost: **$\$27,260,000$**, generating **$\$222,740,000$ in CapEx savings** compared to equivalent $1\text{ GWh}$ Li-ion packs.
+      - Requires $1,695.4\text{ metric tons}$ of recycled or DRI iron anode pellets in non-flammable aqueous $6\text{ M KOH}$ electrolyte.
+      - Inherent Fire Safety: Zero thermal runaway or fire risk.
+      - Long Asset Durability: $30\text{ years}$ calendar life ($> 10,000\text{ deep discharge cycles}$).
+      - Displaces fossil gas peaker plants, avoiding **$22,500\text{ metric tons } CO_2/\text{year}$** and enabling deep multi-day renewable grid reliability.
+  - Created and passed Test Suite 316 (`test-iron-air-battery.mjs`, 3/3 passed).
+  - Implemented `IronAirBatteryVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Reversible Rusting Mechanism & Additives with 3-phase cross-section schematic (Porous Iron Anode | 6M KOH Aqueous Electrolyte | Air Breathing Cathode), additive selector ($Bi_2O_3$, $SnO_2+K_2S$, $CNT$, $In-Bi$), HER suppression readouts, and GDPT 2018 chemical equations.
+    - Mode 2: Cell Polarization & Voltage Curves with DOD slider ($10 - 95\%$), current density slider ($5 - 50\text{ mA/cm}^2$), temperature slider ($10 - 50^\circ\text{C}$), discharge/charge voltages, RTE efficiency ($51.6\%$), and interactive SVG galvanostatic charge/discharge plateau curve with secondary $Fe_3O_4$ phase transition marker.
+    - Mode 3: 100-Hour Grid Plant (< $25/kWh) with power rating slider ($2 - 50\text{ MW}$), multi-day storage duration slider ($24 - 150\text{ hours}$), total MWh capacity, capital cost per kWh, CapEx savings vs Li-ion, iron mass inventory, aqueous electrolyte volume, and avoided peaker $CO_2$.
+  - Integrated `IronAirBatteryVisualizer` into `PeriodicCodexTab.tsx` under `'IRON_AIR_BATTERY'` with `Layers` icon.
+  - Created and passed Test Suite 317 (`test-iron-air-battery-visualizer-ui.mjs`, 8/8 passed).
+  - Added `'IronAir'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-CCBxpszy.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
+  - Total test suites expanded to **317 / 317 with 100% pass rate**.
