@@ -140,18 +140,103 @@ npx firebase-tools emulators:start
 
 ---
 
-## 6. HẠ TẦNG & TRIỂN KHAI TRỰC TUYẾN MIỄN PHÍ (DYNAMIC DEPLOYMENT)
+## 6. QUY TRÌNH TRIỂN KHAI PRODUCTION: GITHUB + FIREBASE + RENDER
 
-- **Trực tiếp trên Netlify Global CDN (Miễn phí):**
-  - **Địa chỉ truy cập chính thức:** `https://resonant-shortbread-5179a3.netlify.app/`
-  - **Mật khẩu bảo vệ bản phát hành (Drop Gate):** `My-Drop-Site`
-- **Dự phòng trên Cloudflare Workers:**
-  - `https://elementa-tactical-chemistry.equal-bangle.workers.dev`
-- **Hạn ngạch miễn phí (Free Tier Limits):**
-  - Firebase Spark Plan: 50,000 lượt đọc / 20,000 lượt ghi mỗi ngày (hoàn toàn đủ cho hàng ngàn trận đấu đồng thời).
-  - Netlify / Cloudflare: Băng thông 100GB/tháng, SSL TLS 1.3 tự động, độ trễ toàn cầu < 50ms.
+ELEMENTA được thiết kế theo kiến trúc Fullstack hiện đại, vận hành linh hoạt và hoàn toàn tự động thông qua chu trình CI/CD tích hợp giữa **GitHub**, **Firebase** và **Render**:
+
+```
+┌─────────────────┐       git push main       ┌────────────────────────┐
+│  Local Dev Env  │ ────────────────────────> │  GitHub Repository     │
+│  (Vite + Node)  │                           │  (ducnt2104/elementa)  │
+└─────────────────┘                           └───────────┬────────────┘
+                                                          │ Auto-Deploy
+                                                          ▼
+┌─────────────────────────────────┐           ┌────────────────────────┐
+│  Google Cloud / Firebase        │           │  Render Web Service    │
+│  - Firebase Authentication      │ <───────> │  - Node.js Auth Engine │
+│  - Cloud Firestore Database     │           │  - Native SQLite WAL   │
+│  - Strict Security Rules v2     │           │  - Dynamic SPA Hosting │
+└─────────────────────────────────┘           └────────────────────────┘
+```
+
+### 6.1. Quản lý mã nguồn trên GitHub
+- **Repository:** `https://github.com/ducnt2104/elementa.git`
+- **Branch triển khai:** `main`
+- **Quy tắc an toàn (Zero Secret Leaks):**
+  - Mọi tệp `.env`, `.env.local`, credential, key, private token và file database cục bộ (`*.db`, `*.db-wal`) đều được chặn tuyệt đối qua `.gitignore`.
+  - Mọi thay đổi đều được kiểm tra nghiêm ngặt qua test suite trước khi commit và push.
+
+### 6.2. Thiết lập cơ sở dữ liệu Firebase Cloud
+1. **Firebase Project:** `elementa-tactical-chemistry`
+2. **Kích hoạt Authentication:** Hỗ trợ Anonymous Guest Sign-in và Email/Password Auth.
+3. **Triển khai Firestore Rules & Indexes:**
+   ```bash
+   # Triển khai Rules bảo mật
+   npx firebase-tools deploy --only firestore:rules --project elementa-tactical-chemistry
+
+   # Triển khai Composite Indexes
+   npx firebase-tools deploy --only firestore:indexes --project elementa-tactical-chemistry
+   ```
+4. **Nguyên tắc bảo vệ dữ liệu:**
+   - **Default Deny:** Toàn bộ truy vấn không khớp đều bị chặn.
+   - **Owner Isolation:** Mỗi người dùng chỉ đọc/ghi hồ sơ của chính mình (`request.auth.uid == userId`).
+   - **Bất biến số dư & giao dịch:** Số dư token/shard không âm, bảng giao dịch `shop_transactions` là append-only không thể sửa hoặc xóa.
+
+### 6.3. Triển khai Web Động trên Render
+ELEMENTA cung cấp tệp cấu hình hạ tầng dạng mã nguồn `render.yaml` (Render Blueprint IaC) chuẩn hóa:
+
+1. **Kết nối Render với GitHub:**
+   - Đăng nhập vào [Render Dashboard](https://dashboard.render.com/).
+   - Chọn **New +** \(\rightarrow\) **Blueprint** hoặc **Web Service**, kết nối tới repository `ducnt2104/elementa`.
+2. **Cấu hình dịch vụ (Service Specification):**
+   - **Service Name:** `elementa-tactical-chemistry`
+   - **Environment:** `Node` (Node.js 22+)
+   - **Branch:** `main`
+   - **Region:** `Singapore` (hoặc vùng gần nhất)
+   - **Build Command:** `npm run build` (Biên dịch TypeScript và đóng gói Vite)
+   - **Start Command:** `npm start` (Khởi chạy máy chủ Native HTTP tích hợp static SPA)
+   - **Health Check Path:** `/api/health`
+3. **Biến môi trường cần thiết trên Render (Environment Variables):**
+
+| Tên biến | Giá trị mẫu | Mô tả |
+| :--- | :--- | :--- |
+| `NODE_ENV` | `production` | Chế độ runtime tối ưu hóa hiệu năng |
+| `PORT` | `3001` (Render tự cấp phát động) | Cổng lắng nghe máy chủ HTTP |
+| `VITE_APP_TITLE` | `ELEMENTA — Trận Chiến Nguyên Tố` | Tiêu đề ứng dụng |
+| `VITE_FIREBASE_PROJECT_ID` | `elementa-tactical-chemistry` | Định danh dự án Firebase |
+| `VITE_FIREBASE_AUTH_DOMAIN` | `elementa-tactical-chemistry.firebaseapp.com` | Tên miền xác thực Firebase |
+| `VITE_FIREBASE_STORAGE_BUCKET`| `elementa-tactical-chemistry.appspot.com` | Kho lưu trữ Firebase |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | `10485762026` | Cloud Messaging Sender ID |
+| `VITE_FIREBASE_APP_ID` | `1:10485762026:web:7f8d9e0a1b2c3d4e5f` | Định danh ứng dụng web Firebase |
+| `VITE_USE_FIREBASE_EMULATOR` | `false` | Tắt chế độ giả lập cục bộ khi chạy production |
+
+### 6.4. Hướng dẫn cập nhật phiên bản (Continuous Deployment Workflow)
+Mỗi khi có cập nhật tính năng hoặc dữ liệu hóa học mới:
+```bash
+# 1. Chạy kiểm thử tự động
+npm test
+
+# 2. Kiểm tra đóng gói production
+npm run build
+
+# 3. Commit thay đổi với thông điệp rõ ràng
+git add .
+git commit -m "feat(chemistry): add new reaction catalysts and balance tweaks"
+
+# 4. Push lên GitHub (Render sẽ tự động kích hoạt webhook Build & Deploy)
+git push origin main
+```
 
 ---
 
-## 7. BẢN QUYỀN & MÃ NGUỒN MỞ
+## 7. HẠ TẦNG & TÊN MIỀN TRUY CẬP (DOMAINS & ACCESS)
+
+- **Render Production URL:** Do Render tự động cấp phát khi kích hoạt dịch vụ (VD: `https://elementa-tactical-chemistry.onrender.com`).
+- **Netlify CDN Edge (Mirror):** `https://resonant-shortbread-5179a3.netlify.app/`
+- **Cloudflare Workers (Edge API):** `https://elementa-tactical-chemistry.equal-bangle.workers.dev`
+- **Hỗ trợ tên miền riêng (Custom Domain):** Hướng dẫn chi tiết tại `docs/CUSTOM_DOMAIN_GUIDE.md` (hỗ trợ trỏ bản ghi CNAME / A record về Render và kích hoạt SSL tự động Let's Encrypt).
+
+---
+
+## 8. BẢN QUYỀN & MÃ NGUỒN MỞ
 Dự án được xây dựng phục vụ giáo dục, đổi mới phương pháp giảng dạy Khoa Học Tự Nhiên & Hóa Học tại Việt Nam theo chương trình GDPT 2018. Toàn bộ mã nguồn phát hành dưới giấy phép MIT.
