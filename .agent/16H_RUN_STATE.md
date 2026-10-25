@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T13:15:00+07:00`  
-**Elapsed Real Time:** `14h 26m 10s` [PHASE D: 14-HOUR CONTINUATION & EXPANSION TO 377 TEST SUITES (ITERATIONS 106-114)]  
+**Latest Checkpoint Timestamp:** `2026-10-25T13:38:00+07:00`  
+**Elapsed Real Time:** `14h 49m 10s` [PHASE D: 16-HOUR ABSOLUTE HORIZON CONVERGENCE & EXPANSION TO 379 TEST SUITES (ITERATIONS 106-115)]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -54,10 +54,10 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 377 / 377 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 379 / 379 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 24.74s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (2.03 MB), advanced (1.75 MB), curriculum (2.21 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 29.46s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (2.06 MB), advanced (1.75 MB), curriculum (2.21 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -2552,3 +2552,20 @@
   - TypeScript strict compilation verified (**0 errors**).
   - Production build compiled in 24.74s with main entry chunk strictly at **683.00 kB** (0 warnings).
   - Total test suites expanded to **377 / 377 with 100% pass rate**.
+- **2026-10-25 20:50 (Iteration 115 Checkpoint — 14h 48m Real Time, 16-HOUR ABSOLUTE HORIZON CONVERGENCE)**:
+  - Implemented Direct Ammonia Solid Oxide Fuel Cell (DA-SOFC) for Maritime & Heavy Transport in `src/domain/directAmmoniaSofcEngine.ts` strictly conforming to IUPAC physical chemistry, in-situ catalytic cracking thermodynamics, and IMO 2050 Net-Zero Maritime Decarbonization:
+    - In-Situ Catalytic Ammonia Cracking ($750^\circ\text{C}$): $2NH_3 \to N_2 + 3H_2$ ($\Delta H^\circ = +46.2\text{ kJ/mol } NH_3$) on active Ni-YSZ cermet anode, achieving **$>99.5\%$ cracking conversion** without needing external cracking reactors or PSA hydrogen purification.
+    - Endothermic Thermal Self-Cooling: The cracking reaction absorbs **$187.5\text{ kW}$ of heat per MW electrical output**, capturing $60 - 80\%$ of SOFC internal Joule heat and eliminating parasitic cooling blowers.
+    - High-Performance Electrochemical Cell: Delivers operating voltage of **$0.727\text{ V}$** at $0.75\text{ A/cm}^2$, power density of **$0.546\text{ W/cm}^2$**, electrical efficiency of **$56.5\%$ LHV**, and Combined Heat and Power (CHP) efficiency of **$82.0\%$**.
+    - Maritime Fleet Decarbonization (20,000 TEU Ultra-Large Container Vessel): 60 MW continuous electric propulsion consumes $20,554\text{ kg } NH_3/\text{hour}$ ($493.3\text{ tons/day}$) from compact $-33^\circ\text{C}$ bunker tanks ($12.7\text{ MJ/L}$ vs $8.5\text{ MJ/L}$ for $-253^\circ\text{C}$ liquid hydrogen). Avoids **$139,157\text{ tons } CO_2/\text{year}$**, eliminates **$1,788\text{ tons } SO_x/\text{year}$**, saves **$\$13.9\text{ Million/year}$** in EU ETS carbon tax penalties, and co-generates **$32,612\text{ kg/hour}$** ($782\text{ tons/day}$) of pure potable water.
+  - Created and passed Test Suite 378 (`test-direct-ammonia-sofc.mjs`, 4/4 passed).
+  - Implemented `DirectAmmoniaSofcVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Động Học Tự Cracking & Tế Bào with dynamic SVG showing liquid ammonia bunker tank, in-situ cracking anode, YSZ ceramic membrane, cathode air intake, propulsion circuit, and freshwater condenser.
+    - Mode 2: Đường Cong Phân Cực & Hiệu Suất 56.5% with temperature slider (650 - 800°C), current density slider, Nernst OCV, and endothermic cooling absorption meter.
+    - Mode 3: Động Cơ Tàu Thủy 20,000 TEU & IMO 2050 with fleet selector (ULCV 60 MW, Capesize 18 MW, Handymax 10 MW, Tug 4.5 MW), avoided emissions, and EU ETS carbon tax savings.
+  - Integrated into `PeriodicCodexTab.tsx` under `'DIRECT_AMMONIA_SOFC'` with `Ship` icon.
+  - Created and passed Test Suite 379 (`test-direct-ammonia-sofc-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'DirectAmmonia'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript strict compilation verified (**0 errors**).
+  - Production build compiled in 29.46s with main entry chunk strictly preserved at **683.00 kB** (0 warnings).
+  - Total test suites expanded to **379 / 379 with 100% pass rate**.
