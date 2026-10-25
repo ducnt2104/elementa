@@ -2483,3 +2483,20 @@
   - Added `'Thermoelectric'` to `energyKeywords` manual chunk in `vite.config.ts`.
   - Production build compiled in 23.45s with main entry chunk strictly at **683.00 kB** (0 warnings).
   - Total test suites expanded to **369 / 369 with 100% pass rate**.
+- **2026-10-25 20:08 (Iteration 111 Checkpoint — 14h 12m Real Time, PHASE D)**:
+  - Implemented Concentrated Solar Thermochemical Zinc-Zinc Oxide (Zn/ZnO) Water-Splitting Cycle in `src/domain/zincAirOxideCycleEngine.ts` strictly conforming to IUPAC high-temperature chemical thermodynamics, solar thermal cavity receivers, and green hydrogen economics:
+    - Two-Step Closed-Loop Solar Water-Splitting:
+      - Step 1 (High-Temperature Solar Thermal Dissociation): $ZnO(s) \xrightarrow{1950\text{ K}} Zn(g) + \frac{1}{2} O_2(g)$ ($\Delta H^\circ = +460\text{ kJ/mol}$, endothermic) under 3,500 suns concentration in a beam-down rotating cavity receiver. Produces pure $O_2$ stream without gas crossover risks.
+      - Rapid Gas Quench: Cold inert gas stream cools zinc vapor at $>1.5 \times 10^5\text{ K/s}$, preventing recombination back to $ZnO$ and condensing high-surface-area zinc nanoparticles ($d_p \approx 80\text{ nm}$).
+      - Step 2 (Exothermic Water Hydrolysis): $Zn(s) + H_2O(g) \xrightarrow{673\text{ K}} ZnO(s) + H_2(g)$ ($\Delta H^\circ = -105\text{ kJ/mol}$) produces 100% pure green hydrogen ($H_2$) at pressure while regenerating solid $ZnO$ powder recycled back to the solar tower.
+    - Solar-to-Hydrogen (STH) Efficiency & LCOH Economics: Delivers unprecedented STH thermochemical efficiency of **$40.1\%$** ($>2\times$ higher than PV + PEM electrolysis at $18.5\%$). A 10 MWth commercial solar tower produces **$101.8\text{ kg } H_2/\text{hour}$** ($0.81\text{ tons } H_2/\text{day}$), achieving a world-class LCOH of **$\$3.03/\text{kg } H_2$** and avoiding **$2,686\text{ tons } CO_2/\text{year}$**.
+  - Created and passed Test Suite 370 (`test-zinc-air-oxide-cycle.mjs`, 3/3 passed).
+  - Implemented `ZincAirOxideCycleVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Chu Trình 2 Bước & Lò Nung with dynamic SVG showing solar cavity receiver (1950 K), O2 release, quench condensation, hydrolyzer (673 K), H2 output, and ZnO recycling.
+    - Mode 2: Hiệu Suất STH (Solar-to-H₂) with steam temperature and quench effectiveness sliders, plus visual STH comparison vs PV-electrolysis.
+    - Mode 3: Kinh Tế Hydro Xanh (LCOH) with LCOH breakdown, avoided CO2 counters, and comparison vs Steam Methane Reforming (SMR).
+  - Integrated into `PeriodicCodexTab.tsx` under `'ZINC_AIR_OXIDE_SOLAR_CYCLE'` with `Sun` icon.
+  - Created and passed Test Suite 371 (`test-zinc-air-oxide-cycle-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'ZincAirOxide'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - Production build compiled in 27.00s with main entry chunk strictly at **683.00 kB** (0 warnings).
+  - Total test suites expanded to **371 / 371 with 100% pass rate**.
