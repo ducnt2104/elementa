@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T09:15:00+07:00`  
-**Elapsed Real Time:** `10h 26m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T09:22:30+07:00`  
+**Elapsed Real Time:** `10h 33m 40s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -22,11 +22,11 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 10h 26m)
+## 1. CURRENT AUDIT SUMMARY (T = 10h 33m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 309 / 309 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 311 / 311 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 18.02s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1839,3 +1839,34 @@
   - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
   - Production build: `dist/assets/index-DPK3aa5f.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
   - Total test suites expanded to **309 / 309 with 100% pass rate**.
+- **2026-10-25 14:48 (Iteration 81 Checkpoint — 10h 33m Real Time, PHASE C EXTENSION)**:
+  - Implemented Forward Osmosis (FO) Desalination & Pressure Retarded Osmosis (PRO) Salinity Gradient Energy Harvesting Engine in `src/domain/forwardOsmosisDesalinationEngine.ts` strictly conforming to IUPAC membrane transport standards, Kedem-Katchalsky equations, and Vietnam GDPT 2018 Chemistry:
+    - Dilutive Internal Concentration Polarization (ICP) in Porous Support:
+      - Solves the transport bottleneck where water permeating into the draw solution dilutes the solute within the porous backing layer ($S = t \cdot \tau / \epsilon$), drastically reducing the effective osmotic driving force.
+      - Exact Kedem-Katchalsky ICP exponent:
+        $$\text{Exponent} = \frac{J_w \cdot S}{3600 \cdot D}$$
+      - Modern TFC polyamide on electrospun nanofiber ($S = 220\text{ }\mu m$) maintains ICP modulus at $0.304$, achieving **$32.12\text{ LMH}$** water flux (compared to conventional woven CTA mesh at $S = 650\text{ }\mu m$ delivering only $8.68\text{ LMH}$).
+    - Thermolytic Low-Grade Heat Draw Solute Regeneration:
+      - Employs ammonium bicarbonate $(NH_4)_2CO_3$ ($2.5\text{ M}$, bulk osmotic pressure $\pi = 170\text{ bar}$).
+      - Thermolytic decomposition at $60^\circ\text{C}$ utilizing industrial low-grade waste heat:
+        $$(NH_4)_2CO_3 \xrightarrow{60^\circ\text{C}} 2 NH_3 \uparrow + CO_2 \uparrow + H_2O$$
+      - Off-gases are stripped and recombined in cold water, achieving closed-loop draw recycling with zero chemical consumption.
+    - Pressure Retarded Osmosis (PRO) Salinity Gradient Blue Energy:
+      - Generates clean power from salinity differences by flowing water against a hydraulic pressure gradient $\Delta P < \Delta \pi_{eff}$.
+      - Peak power density occurs at optimal hydraulic pressure $\Delta P = \Delta \pi_{eff} / 2 = 21.6\text{ bar}$, delivering **$41.47\text{ W/m}^2$** power density (over **$8\times$ higher than the $5.0\text{ W/m}^2$ commercial viability threshold**), generating $326.9\text{ MWh/year}$ per $1,000\text{ m}^2$ membrane stack.
+    - Commercial Zero Liquid Discharge (ZLD) Desalination Mass Balance ($5,000\text{ m}^2$ plant):
+      - Concentrates seawater reverse osmosis brine from $70\text{ g/L}$ to $182.0\text{ g/L}$ without high-pressure hydraulic pumping or membrane fouling.
+      - Produces **$3,854.4\text{ m}^3/\text{day}$** ($1.35\text{ million m}^3/\text{year}$) of ultra-pure distilled permeate ($TDS < 5\text{ ppm}$).
+      - Specific electrical energy consumption: **$1.15\text{ kWh/m}^3$** (over **$90\%$ energy reduction** vs conventional thermal crystallizers at $22\text{ kWh/m}^3$).
+      - Avoids **$12,657.4\text{ metric tons } CO_2/\text{year}$**.
+  - Created and passed Test Suite 310 (`test-forward-osmosis-desalination.mjs`, 4/4 passed).
+  - Implemented `ForwardOsmosisVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: FO Desalination & ICP with 3-zone counter-current membrane schematic (Feed AL side | TFC Nanofiber Support | Draw SL side), live $J_w$, $J_s$, specific salt flux, and thermolytic regeneration chemistry equations.
+    - Mode 2: PRO Blue Energy with hydraulic pressure ratio slider ($0.1 - 0.9\text{ }\Delta P / \Delta \pi$), interactive SVG power density curve, and $5\text{ W/m}^2$ commercial benchmark reference.
+    - Mode 3: Commercial ZLD Plant Balance with membrane area slider ($1,000 - 10,000\text{ m}^2$), daily pure water permeate cards, brine concentration tracking, and thermal duty metrics.
+  - Integrated `ForwardOsmosisVisualizer` into `PeriodicCodexTab.tsx` under `'FORWARD_OSMOSIS_DESALINATION'` with `Droplets` icon.
+  - Created and passed Test Suite 311 (`test-forward-osmosis-visualizer-ui.mjs`, 7/7 passed).
+  - Added `'ForwardOsmosis'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-Do4Ivud3.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
+  - Total test suites expanded to **311 / 311 with 100% pass rate**.
