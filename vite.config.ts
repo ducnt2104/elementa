@@ -47,12 +47,12 @@ export default defineConfig({
           }
           if (id.includes('src/components/visualizations/')) {
             const energyKeywords = [
-              'AnionExchange', 'BioConcrete', 'CuCl', 'DeepSea', 'DirectAir', 'DirectFormicAcid', 'DirectLithium', 'ElectrochemicalCorr', 'ForwardOsmosis', 'Geothermal',
+              'AllIronFlow', 'AluminumAir', 'AnionExchange', 'BioConcrete', 'CuCl', 'DeepSea', 'DirectAir', 'DirectFormicAcid', 'DirectLithium', 'ElectrochemicalCorr', 'ForwardOsmosis', 'Geothermal',
               'IodineSulfur', 'IronAir', 'LiquidMetal', 'LithiumMediated', 'MembraneMethane', 'MetalAir', 'MetalHydride',
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
               'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'PerovskiteSolar', 'Photocatalytic',
               'Photoelectrochemical', 'ProtonSolidOxide', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
-              'SodiumIon', 'Sofc', 'SolidOxide', 'SupercriticalCo2', 'SupercriticalWater', 'Thermophotovoltaic', 'Tokamak',
+              'SodiumIon', 'Sofc', 'SolidOxide', 'SupercriticalCo2', 'SupercriticalWater', 'ThermallyRegenerative', 'ThermoGalvanic', 'Thermophotovoltaic', 'Tokamak',
               'VanadiumFlow', 'ZincBromine'
             ];
             if (energyKeywords.some(keyword => id.includes(keyword))) {
