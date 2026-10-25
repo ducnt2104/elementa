@@ -47,10 +47,10 @@ export default defineConfig({
           }
           if (id.includes('src/components/visualizations/')) {
             const energyKeywords = [
-              'AllIronFlow', 'AluminumAir', 'AnionExchange', 'BioConcrete', 'CuCl', 'DeepSea', 'DirectAir', 'DirectFormicAcid', 'DirectLithium', 'ElectrochemicalCorr', 'ForwardOsmosis', 'Geothermal',
-              'IodineSulfur', 'IronAir', 'LiquidMetal', 'LithiumMediated', 'MembraneMethane', 'MetalAir', 'MetalHydride',
+              'AlkalineMembrane', 'AllIronFlow', 'AluminumAir', 'AnionExchange', 'BioConcrete', 'CuCl', 'DeepSea', 'DirectAir', 'DirectFormicAcid', 'DirectFormicAcidSolidOxide', 'DirectLithium', 'ElectrochemicalCorr', 'ForwardOsmosis', 'Geothermal',
+              'IodineSulfur', 'IronAir', 'LiquidMetal', 'LithiumCarbonDioxide', 'LithiumCo2', 'LithiumMediated', 'MembraneMethane', 'MetalAir', 'MetalHydride',
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
-              'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'PerovskiteSolar', 'Photocatalytic',
+              'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'OsmoticallyDrivenHeatEngine', 'PerovskiteSolar', 'Photocatalytic',
               'Photoelectrochemical', 'ProtonSolidOxide', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
               'SodiumIon', 'Sofc', 'SolidOxide', 'SupercriticalCo2', 'SupercriticalWater', 'ThermallyRegenerative', 'ThermoGalvanic', 'Thermophotovoltaic', 'Tokamak',
               'VanadiumFlow', 'ZincBromine'

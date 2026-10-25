@@ -100,6 +100,10 @@ import { AluminumAirBatteryVisualizer } from './visualizations/AluminumAirBatter
 import { ThermallyRegenerativeElectrochemicalCycleVisualizer } from './visualizations/ThermallyRegenerativeElectrochemicalCycleVisualizer';
 import { AllIronFlowBatteryVisualizer } from './visualizations/AllIronFlowBatteryVisualizer';
 import { ThermoGalvanicCellVisualizer } from './visualizations/ThermoGalvanicCellVisualizer';
+import { AlkalineMembraneFuelCellVisualizer } from './visualizations/AlkalineMembraneFuelCellVisualizer';
+import { LithiumCarbonDioxideBatteryVisualizer } from './visualizations/LithiumCarbonDioxideBatteryVisualizer';
+import { DirectFormicAcidSolidOxideVisualizer } from './visualizations/DirectFormicAcidSolidOxideVisualizer';
+import { OsmoticallyDrivenHeatEngineVisualizer } from './visualizations/OsmoticallyDrivenHeatEngineVisualizer';
 import { IndustrialSynthesisVisualizer } from './visualizations/IndustrialSynthesisVisualizer';
 import { CoordinationComplexVisualizer } from './visualizations/CoordinationComplexVisualizer';
 import { VseprVisualizer } from './visualizations/VseprVisualizer';
@@ -238,12 +242,13 @@ import {
   Focus,
   Clock,
   BatteryCharging,
-  Plane
+  Plane,
+  Rocket
 } from 'lucide-react';
 
 export const PeriodicCodexTab: React.FC = () => {
   // Navigation & Sub-tabs
-  const [activeMainTab, setActiveMainTab] = useState<'PERIODIC_TABLE' | 'SUBSTANCES' | 'COMPARISON' | 'EQUILIBRIUM' | 'GALVANIC_CELL' | 'TITRATION' | 'BUFFER_CAPACITY' | 'ESTER_LIPID_SAPONIFICATION' | 'CARBOHYDRATE_BIOCHEMISTRY' | 'AMINES_AMINO_ACIDS_PEPTIDES' | 'METALLURGY_CORROSION' | 'ALKALI_HARD_WATER' | 'TRANSITION_METALS_COMPLEXES' | 'ALCOHOL_PHENOL_REACTIONS' | 'CARBONYL_CARBOXYLIC_ACID' | 'NITROGEN_SULFUR_COMPOUNDS' | 'HYDROCARBONS_REACTIONS' | 'HALOGEN_DERIVATIVES' | 'CHEMICAL_ENERGETICS' | 'CHEMICAL_KINETICS' | 'HALOGENS_REDOX' | 'REDOX_REACTIONS' | 'PERIODIC_TRENDS_OCTET' | 'CURRICULUM_MASTERY' | 'TOURNAMENT_CHAMPIONSHIP' | 'SALT_HYDROLYSIS' | 'FORENSIC_CHEMISTRY' | 'PHARMACOKINETICS_ADME' | 'FOOD_CHEMISTRY' | 'CHIRAL_STEREOCHEMISTRY' | 'BIOPOLYMERS_BIODEGRADATION' | 'INDUSTRIAL_ELECTROCHEMICAL_REFINING' | 'SOIL_FERTILIZER_CHEMISTRY' | 'DYES_AZO_CHEMISTRY' | 'PETROLEUM_REFINING_OCTANE' | 'ATMOSPHERIC_PHOTOCHEMISTRY' | 'RADIOMETRIC_DATING_NUCLEAR' | 'QUANTUM_DOTS_NANOTECH' | 'MOF_CARBON_CAPTURE' | 'PHOTOCATALYTIC_SOLAR_ENERGY' | 'SUPERCAPACITOR_AEROGEL' | 'SOLID_STATE_BATTERY' | 'NANOGENERATOR_PENG_TENG' | 'THERMOELECTRIC_ENERGY' | 'MICROBIAL_FUEL_CELL' | 'HYDROGEN_FUEL_CELL' | 'REDOX_FLOW_BATTERY' | 'SODIUM_ION_BATTERY' | 'LITHIUM_SULFUR_BATTERY' | 'METAL_AIR_BATTERY' | 'BETAVOLTAIC_NUCLEAR_BATTERY' | 'PEROVSKITE_SOLAR_CELL' | 'SOLID_OXIDE_ELECTROLYZER' | 'ANION_EXCHANGE_ELECTROLYZER' | 'DIRECT_AIR_CAPTURE' | 'IODINE_SULFUR_CYCLE' | 'DIRECT_LITHIUM_EXTRACTION' | 'SUPERCRITICAL_WATER_OXIDATION' | 'SALINITY_GRADIENT_OSMOTIC' | 'OCEAN_THERMAL_ENERGY' | 'MOLTEN_SALT_REACTOR' | 'TOKAMAK_FUSION' | 'METAL_HYDRIDE_STORAGE' | 'PHOTOCATALYTIC_ARTIFICIAL_PHOTOSYNTHESIS' | 'GEOTHERMAL_MINERAL_EXTRACTION' | 'CU_CL_THERMOCHEMICAL_CYCLE' | 'SMES_CRYOGENIC_STORAGE' | 'MICROCHANNEL_FISCHER_TROPSCH' | 'MEMBRANE_METHANE_AROMATIZATION' | 'MICROBIAL_ELECTROSYNTHESIS_MES' | 'METAL_HYDRIDE_THERMAL_STORAGE' | 'PHOTOELECTROCHEMICAL_TANDEM' | 'LITHIUM_MEDIATED_AMMONIA' | 'THERMOPHOTOVOLTAIC_GRID_STORAGE' | 'DEEP_SEA_BIOLEACHING' | 'BIO_CONCRETE_MINERALIZATION' | 'SOLID_STATE_INTERPHASE_MECHANICS' | 'ELECTROCHEMICAL_CORR' | 'FORWARD_OSMOSIS_DESALINATION' | 'MOLTEN_METAL_PYROLYSIS' | 'SUPERCRITICAL_CO2_BRAYTON' | 'IRON_AIR_BATTERY' | 'SOFC_INTERNAL_REFORMING' | 'DIRECT_FORMIC_ACID_FUEL_CELL' | 'VANADIUM_FLOW_BATTERY_DYNAMICS' | 'LIQUID_METAL_BATTERY' | 'PROTON_SOLID_OXIDE_ELECTROLYZER' | 'ZINC_BROMINE_FLOW_BATTERY' | 'ALUMINUM_AIR_BATTERY' | 'THERMALLY_REGENERATIVE_ELECTROCHEMICAL_CYCLE' | 'ALL_IRON_FLOW_BATTERY' | 'THERMO_GALVANIC_CELL' | 'INDUSTRIAL_REACTOR' | 'COORDINATION_COMPLEX' | 'VSEPR_BONDING' | 'SOLUBILITY_PRECIPITATION' | 'ELECTROLYSIS_FARADAY' | 'ORGANIC_MECHANISMS' | 'POLYMERS_MACROMOLECULES' | 'NUCLEAR_RADIOACTIVITY' | 'GREEN_CHEMISTRY' | 'CRYSTALLOGRAPHY' | 'COLLOIDS_SURFACE' | 'SPECTROPHOTOMETRY' | 'MASS_SPECTROMETRY' | 'INFRARED_SPECTROSCOPY' | 'NMR_SPECTROSCOPY' | 'STRUCTURAL_ELUCIDATION' | 'PHASE_EQUILIBRIA' | 'EXTRACTION_PARTITION' | 'CHROMATOGRAPHY' | 'RECRYSTALLIZATION' | 'FUNCTIONAL_GROUP_REACTIONS' | 'GAS_LAWS_KINETIC' | 'OSMOSIS_COLLIGATIVE' | 'NUCLEAR_SHELL' | 'CRYSTAL_FIELD_THEORY' | 'ENZYME_KINETICS' | 'QUANTUM_HALL' | 'OZONE_PHOTOCHEMISTRY' | 'SUPERCONDUCTIVITY' | 'FUEL_CELLS' | 'BATTERY_INTERCALATION' | 'PCR_ELECTROPHORESIS' | 'CRISPR_CAS9' | 'THERMAL_ANALYSIS' | 'ELECTRON_MICROSCOPY' | 'XPS_SPECTROSCOPY' | 'AFM_CANTILEVER' | 'SURFACE_PLASMON' | 'DYNAMIC_LIGHT_SCATTERING' | 'CIRCULAR_DICHROISM' | 'THERMAL_SHIFT_ASSAY' | 'SAXS_SCATTERING' | 'CRYO_ELECTRON_MICROSCOPY' | 'SOLID_STATE_NMR' | 'STOPPED_FLOW_KINETICS' | 'DUAL_POLARIZATION_INTERFEROMETRY' | 'QCMD_MICROBALANCE' | 'OPTICAL_TWEEZERS' | 'MAGNETIC_TWEEZERS' | 'CAPILLARY_ELECTROPHORESIS' | 'PET_RADIOCHEMISTRY' | 'SCANNING_TUNNELING_MICROSCOPY' | 'FEMTOSECOND_PUMP_PROBE' | 'SECONDARY_ION_MASS_SPECTROMETRY' | 'MOSSBAUER_SPECTROSCOPY' | 'XAFS_SPECTROSCOPY' | 'DMA_VISCOELASTICITY' | 'ISOTHERMAL_TITRATION_CALORIMETRY' | 'ELECTROSPRAY_IONIZATION_MASS_SPEC' | 'SUPERCRITICAL_FLUID_CHROMATOGRAPHY' | 'NANOPARTICLE_TRACKING_ANALYSIS' | 'MICROSCALE_THERMOPHORESIS' | 'BIO_LAYER_INTERFEROMETRY' | 'RESONANT_MASS_MEASUREMENT' | 'DIFFERENTIAL_SCANNING_CALORIMETRY' | 'PRESSURE_PERTURBATION_CALORIMETRY' | 'SEC_MALS_LIGHT_SCATTERING' | 'ANALYTICAL_ULTRACENTRIFUGATION' | 'ASYMMETRICAL_FLOW_FIELD_FLOW_FRACTIONATION' | 'TAYLOR_DISPERSION_ANALYSIS' | 'FLUORESCENCE_CORRELATION_SPECTROSCOPY' | 'FLUORESCENCE_LIFETIME_IMAGING_MICROSCOPY' | 'SINGLE_MOLECULE_FRET_ALEX'>('PERIODIC_TABLE');
+  const [activeMainTab, setActiveMainTab] = useState<'PERIODIC_TABLE' | 'SUBSTANCES' | 'COMPARISON' | 'EQUILIBRIUM' | 'GALVANIC_CELL' | 'TITRATION' | 'BUFFER_CAPACITY' | 'ESTER_LIPID_SAPONIFICATION' | 'CARBOHYDRATE_BIOCHEMISTRY' | 'AMINES_AMINO_ACIDS_PEPTIDES' | 'METALLURGY_CORROSION' | 'ALKALI_HARD_WATER' | 'TRANSITION_METALS_COMPLEXES' | 'ALCOHOL_PHENOL_REACTIONS' | 'CARBONYL_CARBOXYLIC_ACID' | 'NITROGEN_SULFUR_COMPOUNDS' | 'HYDROCARBONS_REACTIONS' | 'HALOGEN_DERIVATIVES' | 'CHEMICAL_ENERGETICS' | 'CHEMICAL_KINETICS' | 'HALOGENS_REDOX' | 'REDOX_REACTIONS' | 'PERIODIC_TRENDS_OCTET' | 'CURRICULUM_MASTERY' | 'TOURNAMENT_CHAMPIONSHIP' | 'SALT_HYDROLYSIS' | 'FORENSIC_CHEMISTRY' | 'PHARMACOKINETICS_ADME' | 'FOOD_CHEMISTRY' | 'CHIRAL_STEREOCHEMISTRY' | 'BIOPOLYMERS_BIODEGRADATION' | 'INDUSTRIAL_ELECTROCHEMICAL_REFINING' | 'SOIL_FERTILIZER_CHEMISTRY' | 'DYES_AZO_CHEMISTRY' | 'PETROLEUM_REFINING_OCTANE' | 'ATMOSPHERIC_PHOTOCHEMISTRY' | 'RADIOMETRIC_DATING_NUCLEAR' | 'QUANTUM_DOTS_NANOTECH' | 'MOF_CARBON_CAPTURE' | 'PHOTOCATALYTIC_SOLAR_ENERGY' | 'SUPERCAPACITOR_AEROGEL' | 'SOLID_STATE_BATTERY' | 'NANOGENERATOR_PENG_TENG' | 'THERMOELECTRIC_ENERGY' | 'MICROBIAL_FUEL_CELL' | 'HYDROGEN_FUEL_CELL' | 'REDOX_FLOW_BATTERY' | 'SODIUM_ION_BATTERY' | 'LITHIUM_SULFUR_BATTERY' | 'METAL_AIR_BATTERY' | 'BETAVOLTAIC_NUCLEAR_BATTERY' | 'PEROVSKITE_SOLAR_CELL' | 'SOLID_OXIDE_ELECTROLYZER' | 'ANION_EXCHANGE_ELECTROLYZER' | 'DIRECT_AIR_CAPTURE' | 'IODINE_SULFUR_CYCLE' | 'DIRECT_LITHIUM_EXTRACTION' | 'SUPERCRITICAL_WATER_OXIDATION' | 'SALINITY_GRADIENT_OSMOTIC' | 'OCEAN_THERMAL_ENERGY' | 'MOLTEN_SALT_REACTOR' | 'TOKAMAK_FUSION' | 'METAL_HYDRIDE_STORAGE' | 'PHOTOCATALYTIC_ARTIFICIAL_PHOTOSYNTHESIS' | 'GEOTHERMAL_MINERAL_EXTRACTION' | 'CU_CL_THERMOCHEMICAL_CYCLE' | 'SMES_CRYOGENIC_STORAGE' | 'MICROCHANNEL_FISCHER_TROPSCH' | 'MEMBRANE_METHANE_AROMATIZATION' | 'MICROBIAL_ELECTROSYNTHESIS_MES' | 'METAL_HYDRIDE_THERMAL_STORAGE' | 'PHOTOELECTROCHEMICAL_TANDEM' | 'LITHIUM_MEDIATED_AMMONIA' | 'THERMOPHOTOVOLTAIC_GRID_STORAGE' | 'DEEP_SEA_BIOLEACHING' | 'BIO_CONCRETE_MINERALIZATION' | 'SOLID_STATE_INTERPHASE_MECHANICS' | 'ELECTROCHEMICAL_CORR' | 'FORWARD_OSMOSIS_DESALINATION' | 'MOLTEN_METAL_PYROLYSIS' | 'SUPERCRITICAL_CO2_BRAYTON' | 'IRON_AIR_BATTERY' | 'SOFC_INTERNAL_REFORMING' | 'DIRECT_FORMIC_ACID_FUEL_CELL' | 'VANADIUM_FLOW_BATTERY_DYNAMICS' | 'LIQUID_METAL_BATTERY' | 'PROTON_SOLID_OXIDE_ELECTROLYZER' | 'ZINC_BROMINE_FLOW_BATTERY' | 'ALUMINUM_AIR_BATTERY' | 'THERMALLY_REGENERATIVE_ELECTROCHEMICAL_CYCLE' | 'ALL_IRON_FLOW_BATTERY' | 'THERMO_GALVANIC_CELL' | 'ALKALINE_MEMBRANE_FUEL_CELL' | 'LITHIUM_CO2_BATTERY' | 'DIRECT_FORMIC_ACID_SOLID_OXIDE' | 'OSMOTICALLY_DRIVEN_HEAT_ENGINE' | 'INDUSTRIAL_REACTOR' | 'COORDINATION_COMPLEX' | 'VSEPR_BONDING' | 'SOLUBILITY_PRECIPITATION' | 'ELECTROLYSIS_FARADAY' | 'ORGANIC_MECHANISMS' | 'POLYMERS_MACROMOLECULES' | 'NUCLEAR_RADIOACTIVITY' | 'GREEN_CHEMISTRY' | 'CRYSTALLOGRAPHY' | 'COLLOIDS_SURFACE' | 'SPECTROPHOTOMETRY' | 'MASS_SPECTROMETRY' | 'INFRARED_SPECTROSCOPY' | 'NMR_SPECTROSCOPY' | 'STRUCTURAL_ELUCIDATION' | 'PHASE_EQUILIBRIA' | 'EXTRACTION_PARTITION' | 'CHROMATOGRAPHY' | 'RECRYSTALLIZATION' | 'FUNCTIONAL_GROUP_REACTIONS' | 'GAS_LAWS_KINETIC' | 'OSMOSIS_COLLIGATIVE' | 'NUCLEAR_SHELL' | 'CRYSTAL_FIELD_THEORY' | 'ENZYME_KINETICS' | 'QUANTUM_HALL' | 'OZONE_PHOTOCHEMISTRY' | 'SUPERCONDUCTIVITY' | 'FUEL_CELLS' | 'BATTERY_INTERCALATION' | 'PCR_ELECTROPHORESIS' | 'CRISPR_CAS9' | 'THERMAL_ANALYSIS' | 'ELECTRON_MICROSCOPY' | 'XPS_SPECTROSCOPY' | 'AFM_CANTILEVER' | 'SURFACE_PLASMON' | 'DYNAMIC_LIGHT_SCATTERING' | 'CIRCULAR_DICHROISM' | 'THERMAL_SHIFT_ASSAY' | 'SAXS_SCATTERING' | 'CRYO_ELECTRON_MICROSCOPY' | 'SOLID_STATE_NMR' | 'STOPPED_FLOW_KINETICS' | 'DUAL_POLARIZATION_INTERFEROMETRY' | 'QCMD_MICROBALANCE' | 'OPTICAL_TWEEZERS' | 'MAGNETIC_TWEEZERS' | 'CAPILLARY_ELECTROPHORESIS' | 'PET_RADIOCHEMISTRY' | 'SCANNING_TUNNELING_MICROSCOPY' | 'FEMTOSECOND_PUMP_PROBE' | 'SECONDARY_ION_MASS_SPECTROMETRY' | 'MOSSBAUER_SPECTROSCOPY' | 'XAFS_SPECTROSCOPY' | 'DMA_VISCOELASTICITY' | 'ISOTHERMAL_TITRATION_CALORIMETRY' | 'ELECTROSPRAY_IONIZATION_MASS_SPEC' | 'SUPERCRITICAL_FLUID_CHROMATOGRAPHY' | 'NANOPARTICLE_TRACKING_ANALYSIS' | 'MICROSCALE_THERMOPHORESIS' | 'BIO_LAYER_INTERFEROMETRY' | 'RESONANT_MASS_MEASUREMENT' | 'DIFFERENTIAL_SCANNING_CALORIMETRY' | 'PRESSURE_PERTURBATION_CALORIMETRY' | 'SEC_MALS_LIGHT_SCATTERING' | 'ANALYTICAL_ULTRACENTRIFUGATION' | 'ASYMMETRICAL_FLOW_FIELD_FLOW_FRACTIONATION' | 'TAYLOR_DISPERSION_ANALYSIS' | 'FLUORESCENCE_CORRELATION_SPECTROSCOPY' | 'FLUORESCENCE_LIFETIME_IMAGING_MICROSCOPY' | 'SINGLE_MOLECULE_FRET_ALEX'>('PERIODIC_TABLE');
   const [tableLayoutMode, setTableLayoutMode] = useState<'18_COLUMN' | 'GRID'>('18_COLUMN');
   
   // Element Filters & Search
@@ -1702,6 +1707,62 @@ export const PeriodicCodexTab: React.FC = () => {
             >
               <Thermometer className="w-4 h-4 text-rose-300" />
               <span>Pin Nhiệt Điện Hóa (Thermo-Galvanic Da Người)</span>
+            </button>
+            <button
+              onClick={() => {
+                sound.playUiClick();
+                setActiveMainTab('ALKALINE_MEMBRANE_FUEL_CELL');
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                activeMainTab === 'ALKALINE_MEMBRANE_FUEL_CELL'
+                  ? 'bg-cyan-500 text-obsidian shadow font-extrabold ring-2 ring-cyan-300'
+                  : 'text-ivory-muted hover:text-ivory'
+              }`}
+            >
+              <Zap className="w-4 h-4 text-cyan-300" />
+              <span>Pin Nhiên Liệu Màng Kiềm (AEMFC Không Bạch Kim)</span>
+            </button>
+            <button
+              onClick={() => {
+                sound.playUiClick();
+                setActiveMainTab('LITHIUM_CO2_BATTERY');
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                activeMainTab === 'LITHIUM_CO2_BATTERY'
+                  ? 'bg-rose-500 text-obsidian shadow font-extrabold ring-2 ring-rose-300'
+                  : 'text-ivory-muted hover:text-ivory'
+              }`}
+            >
+              <Rocket className="w-4 h-4 text-rose-300" />
+              <span>Pin Lithium-CO2 (Mars & Vũ Trụ Sâu)</span>
+            </button>
+            <button
+              onClick={() => {
+                sound.playUiClick();
+                setActiveMainTab('DIRECT_FORMIC_ACID_SOLID_OXIDE');
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                activeMainTab === 'DIRECT_FORMIC_ACID_SOLID_OXIDE'
+                  ? 'bg-amber-500 text-obsidian shadow font-extrabold ring-2 ring-amber-300'
+                  : 'text-ivory-muted hover:text-ivory'
+              }`}
+            >
+              <Flame className="w-4 h-4 text-amber-300" />
+              <span>Pin SOFC Axit Fomic (DFA-SOFC Đồng Phát Nhiệt)</span>
+            </button>
+            <button
+              onClick={() => {
+                sound.playUiClick();
+                setActiveMainTab('OSMOTICALLY_DRIVEN_HEAT_ENGINE');
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                activeMainTab === 'OSMOTICALLY_DRIVEN_HEAT_ENGINE'
+                  ? 'bg-teal-500 text-obsidian shadow font-extrabold ring-2 ring-teal-300'
+                  : 'text-ivory-muted hover:text-ivory'
+              }`}
+            >
+              <Waves className="w-4 h-4 text-teal-300" />
+              <span>Động Cơ Nhiệt Thẩm Thấu (ODHE Tuần Hoàn Kín)</span>
             </button>
             <button
               onClick={() => {
@@ -4428,6 +4489,42 @@ export const PeriodicCodexTab: React.FC = () => {
       {activeMainTab === 'THERMO_GALVANIC_CELL' && (
         <div className="space-y-6 animate-fadeIn">
           <ThermoGalvanicCellVisualizer />
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* SECTION: ALKALINE ANION EXCHANGE MEMBRANE FUEL CELL (AEMFC) HUB          */}
+      {/* ========================================================================= */}
+      {activeMainTab === 'ALKALINE_MEMBRANE_FUEL_CELL' && (
+        <div className="space-y-6 animate-fadeIn">
+          <AlkalineMembraneFuelCellVisualizer />
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* SECTION: LITHIUM-CARBON DIOXIDE (Li-CO2) BATTERY & MARS ENERGY HUB       */}
+      {/* ========================================================================= */}
+      {activeMainTab === 'LITHIUM_CO2_BATTERY' && (
+        <div className="space-y-6 animate-fadeIn">
+          <LithiumCarbonDioxideBatteryVisualizer />
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* SECTION: DIRECT FORMIC ACID SOLID OXIDE FUEL CELL (DFA-SOFC) HUB          */}
+      {/* ========================================================================= */}
+      {activeMainTab === 'DIRECT_FORMIC_ACID_SOLID_OXIDE' && (
+        <div className="space-y-6 animate-fadeIn">
+          <DirectFormicAcidSolidOxideVisualizer />
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* SECTION: OSMOTICALLY DRIVEN HEAT ENGINE (ODHE) HUB                       */}
+      {/* ========================================================================= */}
+      {activeMainTab === 'OSMOTICALLY_DRIVEN_HEAT_ENGINE' && (
+        <div className="space-y-6 animate-fadeIn">
+          <OsmoticallyDrivenHeatEngineVisualizer />
         </div>
       )}
 
