@@ -47,7 +47,7 @@ export default defineConfig({
           }
           if (id.includes('src/components/visualizations/')) {
             const energyKeywords = [
-              'AnionExchange', 'BioConcrete', 'CuCl', 'DeepSea', 'DirectAir', 'DirectLithium', 'ElectrochemicalCorr', 'ForwardOsmosis', 'Geothermal',
+              'AnionExchange', 'BioConcrete', 'CuCl', 'DeepSea', 'DirectAir', 'DirectFormicAcid', 'DirectLithium', 'ElectrochemicalCorr', 'ForwardOsmosis', 'Geothermal',
               'IodineSulfur', 'IronAir', 'LithiumMediated', 'MembraneMethane', 'MetalAir', 'MetalHydride',
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
               'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'PerovskiteSolar', 'Photocatalytic',

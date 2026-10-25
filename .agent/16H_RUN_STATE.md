@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T09:54:00+07:00`  
-**Elapsed Real Time:** `11h 05m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T10:00:00+07:00`  
+**Elapsed Real Time:** `11h 11m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -26,7 +26,7 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 319 / 319 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 321 / 321 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 18.02s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1990,3 +1990,30 @@
   - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
   - Production build: `dist/assets/index-C1JmF2Sj.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
   - Total test suites expanded to **319 / 319 with 100% pass rate**.
+- **2026-10-25 16:00 (Iteration 86 Checkpoint — 11h 11m Real Time, PHASE C EXTENSION)**:
+  - Implemented Direct Formic Acid Fuel Cell (DFAFC) & Bimetallic Electrocatalytic Dehydrogenation Engine in `src/domain/directFormicAcidFuelCellEngine.ts` strictly conforming to IUPAC electrochemistry standards, dual-pathway electro-oxidation kinetics, Donnan exclusion transport, and Vietnam GDPT 2018 Chemistry:
+    - Dual-Pathway Formic Acid Electro-Oxidation & Poison Elimination:
+      - Direct dehydrogenation pathway (favored on $Pd$ and ordered intermetallic $PtBi$):
+        $$HCOOH \to CO_2 + 2 H^+ + 2 e^- \quad (E^\circ = -0.25\text{ V vs SHE})$$
+      - Indirect dehydration pathway (occurs on pure $Pt$):
+        $$HCOOH \to *CO + H_2O \to CO_2 + 2 H^+ + 2 e^-$$
+      - Catalysts: Ordered intermetallic $PtBi / Pt_3Bi$ achieves **$99.2\%$ direct pathway selectivity** and high exchange current density ($3.10\text{ mA/cm}^2$), while $Pt(ML)@Pd/C$ core-shell nanoparticles modify the d-band center to confer $> 8,000\text{ hours}$ electrochemical durability.
+    - Electrostatic Donnan Exclusion Crossover Suppression:
+      - Fixed negative sulfonate groups ($-\text{SO}_3^-$) in the perfluorosulfonic acid (Nafion) membrane electrostatically repel formate anions ($HCOO^-$).
+      - Achieves **$89.4\%$ Donnan exclusion**, reducing fuel crossover flux to $0.20\text{ }\mu\text{mol/(cm}^2\cdot\text{s)}$ (over **$85\%$ lower** than methanol crossover in DMFCs), effectively eliminating cathode mixed potential depolarization.
+    - High-Density Portable Micro-Power System ($100\text{ W}$ / $24\text{h}$ Drone Mission):
+      - Liquid energy carrier density: **$2.08\text{ kWh/L}$** ($2,080\text{ Wh/L}$), safe and non-flammable (flash point $> 69^\circ\text{C}$).
+      - 13-cell planar air-breathing stack ($650\text{ cm}^2$ total active area) delivers $100\text{ W}$ continuous flight power at $181\text{ mW/cm}^2$ power density and $0.724\text{ V}$ cell voltage.
+      - 24-hour continuous surveillance mission consumes only **$2.72\text{ liters}$** ($3.32\text{ kg}$) of liquid formic acid cartridge fuel.
+      - Total system weight (Stack + Fuel + BoP): **$5.66\text{ kg}$** vs equivalent Lithium-ion battery pack at **$13.33\text{ kg}$**, delivering a massive **$57.5\%$ payload weight reduction** and $< 30\text{ seconds}$ mechanical refueling.
+  - Created and passed Test Suite 320 (`test-direct-formic-acid-fuel-cell.mjs`, 3/3 passed).
+  - Implemented `DirectFormicAcidFuelCellVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Dual-Pathway & Donnan Exclusion with 3-phase MEA schematic (Anode $PtBi$ | Nafion Donnan Barrier | Pt/C Air Cathode), catalyst selector ($Pd/C$, $Pt@Pd$, $PtBi$, $PtRu$), direct selectivity readout, Donnan barrier ($89.4\%$), and GDPT 2018 chemical equations.
+    - Mode 2: Polarization & Power Density with formic acid molarity slider ($3.0 - 15.0\text{ M}$), operating temperature slider ($25 - 65^\circ\text{C}$), current density slider ($50 - 500\text{ mA/cm}^2$), overpotentials breakdown, and interactive SVG V-I & power density curves.
+    - Mode 3: Multi-Day Drone Power (> 55% Weight Saved) with mission power slider ($25 - 400\text{ W}$), flight duration slider ($6 - 72\text{ hours}$), cell count, cartridge liters, system weight comparison vs Li-ion, and mechanical refuel badge.
+  - Integrated `DirectFormicAcidFuelCellVisualizer` into `PeriodicCodexTab.tsx` under `'DIRECT_FORMIC_ACID_FUEL_CELL'` with `Droplets` icon.
+  - Created and passed Test Suite 321 (`test-direct-formic-acid-fuel-cell-visualizer-ui.mjs`, 8/8 passed).
+  - Added `'DirectFormicAcid'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-Cc5h3eCq.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
+  - Total test suites expanded to **321 / 321 with 100% pass rate**.
