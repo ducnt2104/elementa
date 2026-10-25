@@ -1,7 +1,8 @@
-# ELEMENTA — BÁO CÁO NGHIỆM THU TRIỂN KHAI PRODUCTION (GITHUB + FIREBASE + RENDER)
+# ELEMENTA — BÁO CÁO NGHIỆM THU TRIỂN KHAI PRODUCTION 0 ĐỒNG (GITHUB + CLOUDFLARE PAGES + FIREBASE SPARK)
 
 **Dự án:** ELEMENTA — Tactical Chemistry Trading Card Game & 60 FPS MOBA Arena  
 **Thời điểm hoàn tất kiểm thử & phát hành:** 25/10/2026  
+**Ngân sách vận hành:** **0 ĐỒNG (FREE TIER VĨNH VIỄN)**  
 **Trạng thái toàn hệ thống:** **SẴN SÀNG PRODUCTION (100% VERIFIED & GREEN)**
 
 ---
@@ -10,34 +11,27 @@
 
 - **Repository URL:** `https://github.com/ducnt2104/elementa.git`
 - **Branch triển khai:** `main`
-- **Commit Hash mới nhất:** `eb2d6874a8d1df99b3096577358b0b50fe9e93b7`
-- **Trạng thái Push:** **THÀNH CÔNG (Push verified against GitHub remote via `git ls-remote`)**
-- **Tự động hóa CI/CD:** `.github/workflows/deploy.yml` tích hợp quy trình kiểm tra `npm ci`, typecheck `npx tsc --noEmit`, đóng gói `npm run build`, chạy kiểm thử khói `npm run test:smoke` và triển khai tự động lên GitHub Pages.
+- **Tự động hóa CI/CD:** `.github/workflows/deploy.yml` tích hợp quy trình kiểm tra `npm ci`, typecheck `npx tsc --noEmit`, đóng gói `npm run build`, chạy kiểm thử khói `npm run test:smoke` và triển khai tự động.
 - **Bảo mật mã nguồn & Secret Leaks Prevention:**
-  - Kiểm tra toàn bộ 1.070 tệp tin được Git theo dõi (`git ls-files`).
+  - Kiểm tra toàn bộ tệp tin được Git theo dõi (`git ls-files`).
   - **Kết quả:** Tuyệt đối không có file `.env`, file private key (`*.key`, `*.pem`), service account JSON, hay file database nhạy cảm (`*.db`, `*.db-shm`, `*.db-wal`) bị đẩy lên kho mã nguồn.
-  - Tệp `.gitignore` được cấu hình toàn diện cho hệ sinh thái Node/Vite/Firebase/SQLite.
+  - Tệp `.gitignore` được cấu hình toàn diện.
 
 ---
 
-## 2. THIẾT LẬP FIREBASE BACKEND / DATABASE (FIREBASE CLOUD ARCHITECTURE)
+## 2. THIẾT LẬP FIREBASE SPARK BACKEND / DATABASE (100% FREE)
 
 - **Firebase Project ID:** `elementa-tactical-chemistry`
+- **Hạn ngạch gói Spark (0 đồng):**
+  - Miễn phí vĩnh viễn, không cần thẻ tín dụng, không tự kích hoạt Blaze.
+  - 50.000 lượt đọc Firestore / ngày.
+  - 20.000 lượt ghi Firestore / ngày.
 - **Dịch vụ sử dụng:**
   1. **Firebase Authentication:**
-     - Hỗ trợ Anonymous Guest Sign-in (cấp UID tạm thời cho tân thủ).
-     - Hỗ trợ Email & Mật khẩu chuẩn xác thực danh tính.
-     - Đồng bộ tự động với hệ thống hồ sơ người chơi (`FirebaseAuthModal.tsx`).
+     - Hỗ trợ Anonymous Guest Sign-in và Email & Mật khẩu chuẩn xác thực danh tính.
+     - Tự động đồng bộ với kho dữ liệu LocalStorage khi offline.
   2. **Cloud Firestore:**
-     - Mô hình phân tán dữ liệu theo cấu trúc chuẩn:
-       - `users/{userId}`: Thông tin người dùng, cấp độ (level), kinh nghiệm (XP), số dư tri thức (knowledgeTokens) và mảnh nguyên tố (elementalShards).
-       - `decks/{deckId}`: 9 ô bộ bài trực tuyến (ràng buộc 30-60 thẻ Main Deck, tối đa 15 Extra Deck theo luật thi đấu Master Rule).
-       - `collections/{userId}`: Kho thẻ bài cá nhân (tối đa 3 bản sao mỗi mã thẻ).
-       - `matches/{matchId}`: Trạng thái và phòng đấu thời gian thực.
-       - `match_events/{eventId}`: Luồng nhật ký trận đấu bất biến (Append-Only Stream).
-       - `shop_transactions/{txId}`: Sổ cái giao dịch tài chính (Append-Only Ledger).
-       - `leaderboards/{userId}`: Bảng xếp hạng Elo & điểm xếp hạng MMR học thuật.
-       - `public_cards/{cardId}`: Danh mục thẻ bài định nghĩa chuẩn IUPAC (Chỉ đọc - Read-Only).
+     - Mô hình phân tán: `users/{userId}`, `decks/{deckId}`, `collections/{userId}`, `matches/{matchId}`, `match_events/{eventId}`, `shop_transactions/{txId}`, `leaderboards/{userId}`, `public_cards/{cardId}`.
   3. **Quy tắc bảo mật Firestore Security Rules (`firestore.rules`):**
      - Đã được subagent chuyên biệt `firestore-rules-author` kiểm tra và tinh chỉnh theo chuẩn Cloud Firestore CEL v2.
      - **Default Deny:** Toàn bộ đường dẫn không khớp được chặn qua `match /{document=**} { allow read, write: if false; }`.
@@ -45,37 +39,39 @@
      - **Bất biến giao dịch:** Bảng giao dịch cửa hàng `shop_transactions` cấm tuyệt đối thao tác sửa và xóa (`allow update, delete: if false;`).
      - **Tính toàn vẹn số liệu:** Số dư không âm (`tokens >= 0`), số trận thắng không vượt quá số trận tham gia (`battlesWon <= battlesPlayed`), cấm người dùng tự leo thang đặc quyền vai trò Admin.
   4. **Chỉ mục hợp nhất (`firestore.indexes.json`):**
-     - Đã định nghĩa 8 composite index tối ưu hóa truy vấn cho `leaderboards`, `matches`, `decks`, `match_events`, và `shop_transactions`.
+     - Đã định nghĩa 8 composite index tối ưu hóa truy vấn.
 
 ---
 
-## 3. CẤU HÌNH & TRIỂN KHAI RENDER (RENDER WEB SERVICE)
+## 3. CẤU HÌNH & TRIỂN KHAI CLOUDFLARE PAGES FREE (ZERO-COST HOSTING)
 
-- **Tên dịch vụ đề xuất:** `elementa-tactical-chemistry`
-- **Kiểu dịch vụ:** **Render Web Service (Fullstack Unified Service)**
-  - Tích hợp máy chủ Native Node.js HTTP Server (`server/src/server.ts`) kết hợp phục vụ các tài sản tĩnh đã đóng gói (`dist/`) và cơ chế SPA Fallback.
-  - Phục vụ API REST và Server-Sent Events (SSE) cho đấu trường nhiều người chơi.
-  - Loại bỏ hoàn toàn trở ngại CORS và giảm độ trễ khi frontend và backend cùng nằm trên một domain thống nhất.
-- **Tệp Blueprint IaC:** `render.yaml` tại thư mục gốc của dự án.
+- **Nền tảng:** **Cloudflare Pages Free Tier**
+  - Băng thông không giới hạn (Zero Cost Bandwidth).
+  - Tích hợp mạng phân phối nội dung toàn cầu Cloudflare Global Edge Network.
+  - SSL/TLS tự động và bảo vệ chống tấn công DDoS mặc định.
+- **Tệp cấu hình Pages:**
+  - `wrangler.toml`: Khai báo `pages_build_output_dir = "dist"`.
+  - `public/_redirects`: Quy tắc điều hướng SPA `/* /index.html 200` ngăn ngừa lỗi 404 khi tải lại trang ở màn hình sâu.
+  - `public/_headers`: Cấu hình Security Headers và Content Security Policy.
 - **Lệnh Build (Build Command):** `npm run build`
-- **Lệnh Khởi Chạy (Start Command):** `npm start` (tương đương `npx tsx server/src/server.ts`)
-- **Health Check Endpoint:** `GET /api/health` (trả về HTTP 200 OK cùng thống kê số lượng thẻ bài và SQLite stats).
-- **Cổng phân phối (Port Binding):** Lắng nghe động trên biến môi trường `process.env.PORT` (mặc định 3001) trên địa chỉ `0.0.0.0` (chuẩn Render).
-- **Production URL dự kiến (Render Free Tier):** `https://elementa-tactical-chemistry.onrender.com` (hoặc tên miền riêng theo hướng dẫn tại `docs/CUSTOM_DOMAIN_GUIDE.md`).
+- **Output Directory:** `dist`
+- **Production URL dự kiến:** `https://elementa.pages.dev` (hoặc `https://elementa-tactical-chemistry.pages.dev`).
+- **Quy trình kết nối tự động (Git Integration):**
+  1. Mở Cloudflare Dashboard -> **Workers & Pages** -> **Create application** -> **Pages** -> **Connect to Git**.
+  2. Chọn kho mã nguồn `ducnt2104/elementa` và branch `main`.
+  3. Chọn framework preset `Vite` (hoặc `None`), Build command `npm run build`, Output directory `dist`.
+  4. Nhấn **Save and Deploy**. Cloudflare Pages sẽ tự động kích hoạt mỗi khi có commit mới trên nhánh `main`.
 
 ---
 
 ## 4. BIẾN MÔI TRƯỜNG CẦN THIẾT (ENVIRONMENT VARIABLES CONFIGURATION)
 
-Khi kích hoạt dịch vụ trên Render Dashboard hoặc tạo file `.env`, thiết lập các biến sau (chỉ dẫn tên biến, không để lộ secret):
-
 | Tên Biến | Ý Nghĩa / Mục Đích | Giá Trị Mẫu / Hướng Dẫn |
 | :--- | :--- | :--- |
 | `NODE_ENV` | Môi trường vận hành | `production` |
-| `PORT` | Cổng lắng nghe (Render tự động cấp phát) | `3001` |
 | `VITE_APP_TITLE` | Tiêu đề ứng dụng | `ELEMENTA — Trận Chiến Nguyên Tố` |
-| `VITE_API_BASE_URL` | URL trỏ về Backend API (để trống khi chạy cùng origin) | `""` (chuỗi rỗng) hoặc `https://elementa-tactical-chemistry.onrender.com` |
-| `VITE_FIREBASE_API_KEY` | Public Web API Key của Firebase Project | Giá trị từ Firebase Console (Web App Config) |
+| `VITE_API_BASE_URL` | URL Backend API (để chuỗi rỗng khi chạy static SPA) | `""` (chuỗi rỗng) |
+| `VITE_FIREBASE_API_KEY` | Public Web API Key của Firebase Project | Giá trị từ Firebase Console |
 | `VITE_FIREBASE_AUTH_DOMAIN` | Tên miền xác thực Firebase | `elementa-tactical-chemistry.firebaseapp.com` |
 | `VITE_FIREBASE_PROJECT_ID` | Project ID trên Firebase | `elementa-tactical-chemistry` |
 | `VITE_FIREBASE_STORAGE_BUCKET`| Cloud Storage Bucket | `elementa-tactical-chemistry.appspot.com` |
@@ -158,14 +154,19 @@ Khi kích hoạt dịch vụ trên Render Dashboard hoặc tạo file `.env`, th
 
 ## 7. RỦI RO, HẠN CHẾ VÀ HẠNG MỤC CẦN NGƯỜI DÙNG THAO TÁC (REMAINING ACTIONS)
 
-- **Thao tác một lần trên Render Dashboard:**
-  - Vì tài khoản Render thuộc quyền sở hữu riêng của người dùng và cần liên kết OAuth cá nhân với GitHub, người dùng chỉ cần:
-    1. Truy cập [Render Dashboard](https://dashboard.render.com/).
-    2. Nhấn **New +** \(\rightarrow\) **Blueprint**, chọn repo `ducnt2104/elementa`.
-    3. Render sẽ tự động đọc tệp `render.yaml` đã chuẩn bị sẵn, tự động điền Build Command `npm run build`, Start Command `npm start`, và triển khai trong 2 phút!
-- **Hạn mức tài nguyên Free Tier:**
-  - Render Free Tier Web Service sẽ tự động "ngủ" (spin down) sau 15 phút không có lượt truy cập và mất khoảng 30-50 giây để khởi động lại ở lượt truy cập kế tiếp.
-  - SQLite database lưu trên đĩa tạm thời của Render Container Free Tier; dữ liệu tài khoản và thẻ bài chính thống được đồng bộ an toàn và bền vững trên Cloud Firestore.
+- **Kết nối Cloudflare Pages trên Cloudflare Dashboard (Chỉ cần làm 1 lần, 0 đồng):**
+  - Vì tài khoản Cloudflare thuộc quyền sở hữu riêng của người dùng và cần liên kết OAuth cá nhân với GitHub:
+    1. Truy cập [Cloudflare Dashboard](https://dash.cloudflare.com/) (miễn phí).
+    2. Nhấn vào **Workers & Pages** \(\rightarrow\) **Create application** \(\rightarrow\) chọn tab **Pages** \(\rightarrow\) **Connect to Git**.
+    3. Chọn kho mã nguồn `ducnt2104/elementa` và branch `main`.
+    4. Cấu hình thông số:
+       - Framework preset: `Vite` (hoặc `None`)
+       - Build command: `npm run build`
+       - Output directory: `dist`
+    5. Nhấn **Save and Deploy**. Cloudflare Pages sẽ tự động biên dịch và phát hành tại `https://elementa.pages.dev` (hoặc tên miền thay thế).
+- **Hạn mức gói miễn phí (Free Tier Limits):**
+  - Cloudflare Pages Free: Băng thông không giới hạn, 500 builds/tháng.
+  - Firebase Spark: 50.000 reads/ngày, 20.000 writes/ngày, không bao giờ phát sinh cước phí ngoài ý muốn do không kích hoạt Blaze.
 
 ---
 

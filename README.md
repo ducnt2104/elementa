@@ -140,22 +140,22 @@ npx firebase-tools emulators:start
 
 ---
 
-## 6. QUY TRÌNH TRIỂN KHAI PRODUCTION: GITHUB + FIREBASE + RENDER
+## 6. QUY TRÌNH TRIỂN KHAI PRODUCTION 0 ĐỒNG: GITHUB + CLOUDFLARE PAGES + FIREBASE SPARK
 
-ELEMENTA được thiết kế theo kiến trúc Fullstack hiện đại, vận hành linh hoạt và hoàn toàn tự động thông qua chu trình CI/CD tích hợp giữa **GitHub**, **Firebase** và **Render**:
+ELEMENTA được cấu hình vận hành với ngân sách mặc định **0 đồng**, tận dụng tối đa gói miễn phí của **GitHub**, **Cloudflare Pages** và **Firebase Spark**:
 
 ```
 ┌─────────────────┐       git push main       ┌────────────────────────┐
 │  Local Dev Env  │ ────────────────────────> │  GitHub Repository     │
-│  (Vite + Node)  │                           │  (ducnt2104/elementa)  │
+│  (Vite + React) │                           │  (ducnt2104/elementa)  │
 └─────────────────┘                           └───────────┬────────────┘
                                                           │ Auto-Deploy
                                                           ▼
 ┌─────────────────────────────────┐           ┌────────────────────────┐
-│  Google Cloud / Firebase        │           │  Render Web Service    │
-│  - Firebase Authentication      │ <───────> │  - Node.js Auth Engine │
-│  - Cloud Firestore Database     │           │  - Native SQLite WAL   │
-│  - Strict Security Rules v2     │           │  - Dynamic SPA Hosting │
+│  Google Cloud / Firebase Spark  │           │  Cloudflare Pages Free │
+│  - Firebase Authentication      │ <───────> │  - Free Global CDN     │
+│  - Cloud Firestore Database     │           │  - Zero Cost Bandwidth │
+│  - Strict Security Rules v2     │           │  - Native SPA Router   │
 └─────────────────────────────────┘           └────────────────────────┘
 ```
 
@@ -166,8 +166,8 @@ ELEMENTA được thiết kế theo kiến trúc Fullstack hiện đại, vận 
   - Mọi tệp `.env`, `.env.local`, credential, key, private token và file database cục bộ (`*.db`, `*.db-wal`) đều được chặn tuyệt đối qua `.gitignore`.
   - Mọi thay đổi đều được kiểm tra nghiêm ngặt qua test suite trước khi commit và push.
 
-### 6.2. Thiết lập cơ sở dữ liệu Firebase Cloud
-1. **Firebase Project:** `elementa-tactical-chemistry`
+### 6.2. Thiết lập cơ sở dữ liệu Firebase Spark (100% Free - Không Billing)
+1. **Firebase Project:** `elementa-tactical-chemistry` (Gói Spark miễn phí vĩnh viễn, không cần thẻ tín dụng).
 2. **Kích hoạt Authentication:** Hỗ trợ Anonymous Guest Sign-in và Email/Password Auth.
 3. **Triển khai Firestore Rules & Indexes:**
    ```bash
@@ -182,27 +182,31 @@ ELEMENTA được thiết kế theo kiến trúc Fullstack hiện đại, vận 
    - **Owner Isolation:** Mỗi người dùng chỉ đọc/ghi hồ sơ của chính mình (`request.auth.uid == userId`).
    - **Bất biến số dư & giao dịch:** Số dư token/shard không âm, bảng giao dịch `shop_transactions` là append-only không thể sửa hoặc xóa.
 
-### 6.3. Triển khai Web Động trên Render
-ELEMENTA cung cấp tệp cấu hình hạ tầng dạng mã nguồn `render.yaml` (Render Blueprint IaC) chuẩn hóa:
+### 6.3. Triển khai Cloudflare Pages Free (Zero-Cost Deployment)
+Dự án đã được trang bị đầy đủ cấu hình tối ưu cho Cloudflare Pages:
+- [`wrangler.toml`](./wrangler.toml): Khai báo `pages_build_output_dir = "dist"`.
+- [`public/_redirects`](./public/_redirects): Điều hướng toàn bộ route SPA `/* -> /index.html` với HTTP 200, loại bỏ lỗi 404 khi tải lại trang.
+- [`public/_headers`](./public/_headers): Cấu hình bảo mật HTTP Security Headers và Content Security Policy (CSP).
 
-1. **Kết nối Render với GitHub:**
-   - Đăng nhập vào [Render Dashboard](https://dashboard.render.com/).
-   - Chọn **New +** \(\rightarrow\) **Blueprint** hoặc **Web Service**, kết nối tới repository `ducnt2104/elementa`.
-2. **Cấu hình dịch vụ (Service Specification):**
-   - **Service Name:** `elementa-tactical-chemistry`
-   - **Environment:** `Node` (Node.js 22+)
-   - **Branch:** `main`
-   - **Region:** `Singapore` (hoặc vùng gần nhất)
-   - **Build Command:** `npm run build` (Biên dịch TypeScript và đóng gói Vite)
-   - **Start Command:** `npm start` (Khởi chạy máy chủ Native HTTP tích hợp static SPA)
-   - **Health Check Path:** `/api/health`
-3. **Biến môi trường cần thiết trên Render (Environment Variables):**
+**Các bước kết nối trên Cloudflare Dashboard (Chỉ cần làm 1 lần):**
+1. Đăng nhập [Cloudflare Dashboard](https://dash.cloudflare.com/) (Tài khoản Free).
+2. Vào mục **Workers & Pages** \(\rightarrow\) **Create application** \(\rightarrow\) chọn tab **Pages** \(\rightarrow\) **Connect to Git**.
+3. Chọn kho mã nguồn: **`ducnt2104/elementa`**.
+4. Cấu hình thông số Build:
+   - **Framework preset:** `Vite` (hoặc `None`)
+   - **Build command:** `npm run build`
+   - **Build output directory:** `dist`
+   - **Production branch:** `main`
+5. Nhấn **Save and Deploy**. Cloudflare Pages sẽ tự động build và cấp phát URL miễn phí `https://elementa.pages.dev` (hoặc tên miền thay thế theo project name).
+6. Từ nay, mỗi khi `git push origin main`, Cloudflare Pages sẽ tự động kích hoạt build và deploy phiên bản mới hoàn toàn miễn phí.
+
+### 6.4. Biến môi trường cần thiết (Environment Variables):
 
 | Tên biến | Giá trị mẫu | Mô tả |
 | :--- | :--- | :--- |
 | `NODE_ENV` | `production` | Chế độ runtime tối ưu hóa hiệu năng |
-| `PORT` | `3001` (Render tự cấp phát động) | Cổng lắng nghe máy chủ HTTP |
 | `VITE_APP_TITLE` | `ELEMENTA — Trận Chiến Nguyên Tố` | Tiêu đề ứng dụng |
+| `VITE_API_BASE_URL` | `""` (chuỗi rỗng) | Chạy static SPA không phụ thuộc server riêng |
 | `VITE_FIREBASE_PROJECT_ID` | `elementa-tactical-chemistry` | Định danh dự án Firebase |
 | `VITE_FIREBASE_AUTH_DOMAIN` | `elementa-tactical-chemistry.firebaseapp.com` | Tên miền xác thực Firebase |
 | `VITE_FIREBASE_STORAGE_BUCKET`| `elementa-tactical-chemistry.appspot.com` | Kho lưu trữ Firebase |
@@ -210,31 +214,13 @@ ELEMENTA cung cấp tệp cấu hình hạ tầng dạng mã nguồn `render.yam
 | `VITE_FIREBASE_APP_ID` | `1:10485762026:web:7f8d9e0a1b2c3d4e5f` | Định danh ứng dụng web Firebase |
 | `VITE_USE_FIREBASE_EMULATOR` | `false` | Tắt chế độ giả lập cục bộ khi chạy production |
 
-### 6.4. Hướng dẫn cập nhật phiên bản (Continuous Deployment Workflow)
-Mỗi khi có cập nhật tính năng hoặc dữ liệu hóa học mới:
-```bash
-# 1. Chạy kiểm thử tự động
-npm test
-
-# 2. Kiểm tra đóng gói production
-npm run build
-
-# 3. Commit thay đổi với thông điệp rõ ràng
-git add .
-git commit -m "feat(chemistry): add new reaction catalysts and balance tweaks"
-
-# 4. Push lên GitHub (Render sẽ tự động kích hoạt webhook Build & Deploy)
-git push origin main
-```
-
 ---
 
-## 7. HẠ TẦNG & TÊN MIỀN TRUY CẬP (DOMAINS & ACCESS)
+## 7. HẠ TẦNG & TÊN MIỀN TRUY CẬP MIỄN PHÍ
 
-- **Render Production URL:** Do Render tự động cấp phát khi kích hoạt dịch vụ (VD: `https://elementa-tactical-chemistry.onrender.com`).
-- **Netlify CDN Edge (Mirror):** `https://resonant-shortbread-5179a3.netlify.app/`
-- **Cloudflare Workers (Edge API):** `https://elementa-tactical-chemistry.equal-bangle.workers.dev`
-- **Hỗ trợ tên miền riêng (Custom Domain):** Hướng dẫn chi tiết tại `docs/CUSTOM_DOMAIN_GUIDE.md` (hỗ trợ trỏ bản ghi CNAME / A record về Render và kích hoạt SSL tự động Let's Encrypt).
+- **Cloudflare Pages Production URL:** `https://elementa-tactical-chemistry.pages.dev` (hoặc subdomain do Cloudflare Pages cấp).
+- **GitHub Pages Mirror:** `https://ducnt2104.github.io/elementa/` (triển khai tự động qua `.github/workflows/deploy.yml`).
+- **Netlify CDN Edge (Mirror):** `https://resonant-shortbread-5179a3.netlify.app/` (đã có cấu hình `netlify.toml`).
 
 ---
 
