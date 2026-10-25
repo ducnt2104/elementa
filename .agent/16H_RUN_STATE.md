@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T13:57:00+07:00`  
-**Elapsed Real Time:** `15h 08m 10s` [PHASE D: 16-HOUR ABSOLUTE HORIZON CONVERGENCE & EXPANSION TO 381 TEST SUITES (ITERATIONS 106-116)]  
+**Latest Checkpoint Timestamp:** `2026-10-25T14:04:30+07:00`  
+**Elapsed Real Time:** `15h 15m 40s` [PHASE D: 16-HOUR ABSOLUTE HORIZON CONVERGENCE & EXPANSION TO 383 TEST SUITES (ITERATIONS 106-117)]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -50,14 +50,14 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 15h 08m)
+## 1. CURRENT AUDIT SUMMARY (T = 15h 15m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 381 / 381 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 383 / 383 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 20.66s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (2.09 MB), advanced (1.75 MB), curriculum (2.21 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 20.62s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (2.12 MB), advanced (1.75 MB), curriculum (2.21 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -2590,3 +2590,25 @@
   - TypeScript strict compilation verified (**0 errors**).
   - Production build compiled in 20.66s with main entry chunk strictly preserved at **683.00 kB** (0 warnings).
   - Total test suites expanded to **381 / 381 with 100% pass rate**.
+- **2026-10-25 21:05 (Iteration 117 Checkpoint — 15h 15m Real Time, 16-HOUR ABSOLUTE HORIZON CONVERGENCE)**:
+  - Implemented Electrochemical Direct Air Capture (e-DAC) & Bipolar Membrane Electrodialysis (BPMED) in `src/domain/electrochemicalDacEngine.ts` strictly conforming to IUPAC chemical thermodynamics, electrochemical water dissociation kinetics, and the US DOE Carbon Negative Shot:
+    - Atmospheric Air Contactor ($420\text{ ppm } CO_2$): Drafts ambient air across cross-fluted structured PVC packing wetted by aqueous potassium hydroxide ($2.0\text{ M } KOH$), achieving $75 - 85\%$ capture efficiency via fast neutralization: $2KOH + CO_2 \to K_2CO_3 + H_2O$ ($\Delta H^\circ = -109.4\text{ kJ/mol}$). Exhaust air cleaned to $84\text{ ppm } CO_2$.
+    - Bipolar Membrane Electrodialysis (BPMED) Stack: Catalytic junction layer splits water under reverse bias electric field ($H_2O \to H^+ + OH^-$) at low cell voltage ($1.35\text{ V}$ per triplet cell).
+      - Acid Chamber: In-situ generated $H^+$ acidifies bicarbonate stream, desorbing pure $CO_2$ gas ($>99.8\text{ vol}\%$) at room temperature ($25 - 40^\circ\text{C}$), completely eliminating energy-intensive $900^\circ\text{C}$ oxy-fuel calcination.
+      - Base Chamber: $OH^-$ combines with $K^+$ migrating across Cation Exchange Membrane (CEM), regenerating pure $KOH$ ($pH \approx 13.8$) with **$99.95\%$ closed-loop solvent recycling**.
+    - Energetics & Decarbonization Economics (100,000 ton/year Commercial Plant):
+      - Specific energy: **$1,449.3\text{ kWh/ton } CO_2$** ($5.22\text{ GJ/ton } CO_2$), achieving **$38.6\%$ energy savings** compared to conventional thermal DAC ($8.5\text{ GJ/ton}$).
+      - 100k ton/yr facility consumes $17.67\text{ MW}$ total power (Stack: $13.77\text{ MW}$, Aux: $3.90\text{ MW}$), capturing $12,195\text{ kg } CO_2/\text{hour}$ ($292.7\text{ tons/day}$).
+      - Levelized Cost of DAC (LCOD): **$\$174.22/\text{ton } CO_2$**, meeting the US DOE Carbon Negative Shot target ($< \$200/\text{ton}$).
+    - Permanent Sequestration Portfolio: Integrated 4 geologic and utilization routes: Basalt In-Situ Mineralization (Carbfix, $100,000+$ years permanence, $10,000\text{ Gt}$ global capacity), Deep Saline Aquifers ($150\text{ bar}$ supercritical injection), Power-to-Liquid e-Kerosene (SAF), and Mineralized Concrete Curing.
+  - Created and passed Test Suite 382 (`test-electrochemical-dac.mjs`, 5/5 passed).
+  - Implemented `ElectrochemicalDacVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Sơ Đồ Quy Trình BPMED Khép Kín with dynamic SVG showing air contactor packed tower, 3-compartment BPMED stack with CEM/Acid/BPM/Base chambers, gas degasser ($>99.8\% CO_2$), $150\text{ bar}$ compressor, Carbfix basalt mineralization, and 100% KOH solvent recycle line.
+    - Mode 2: Động Học Phân Tách Nước & Màng Bipolar with ambient CO2 slider ($380 - 500\text{ ppm}$), cell voltage slider ($1.15 - 1.70\text{ V}$), capture efficiency slider, green electricity price slider, thermodynamic minimum work ($121.7\text{ kWh/ton}$), and thermal DAC energy savings bar.
+    - Mode 3: Kinh Tế Megaton & Địa Hóa Sequestration with annual capacity slider ($10,000 - 500,000\text{ tons/year}$), 4-pathway sequestration selector cards, hourly/daily CO2 counters, and detailed LCOD cost breakdown.
+  - Integrated into `PeriodicCodexTab.tsx` under `'ELECTROCHEMICAL_DAC_BPMED'` with `Wind` icon.
+  - Created and passed Test Suite 383 (`test-electrochemical-dac-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'ElectrochemicalDac'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript strict compilation verified (**0 errors**).
+  - Production build compiled in 20.62s with main entry chunk strictly preserved at **683.00 kB** (0 warnings).
+  - Total test suites expanded to **383 / 383 with 100% pass rate**.
