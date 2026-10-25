@@ -455,7 +455,7 @@ service cloud.firestore {
     // Default Deny Fallback
     // ========================================================================
     match /{document=**} {
-      allow read, write: false;
+      allow read, write: if false;
     }
   }
 }

@@ -34,7 +34,7 @@ assert(rulesContent.includes('service cloud.firestore'), 'Declares service cloud
 
 // Test 3: Default deny catch-all
 assert(
-  rulesContent.includes('match /{document=**}') && rulesContent.includes('allow read, write: false;'),
+  rulesContent.includes('match /{document=**}') && (rulesContent.includes('allow read, write: if false;') || rulesContent.includes('allow read, write: false;')),
   'Enforces default deny for all unmatched paths'
 );
 
