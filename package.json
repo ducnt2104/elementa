@@ -10,6 +10,7 @@
     "server": "npx tsx server/src/server.ts",
     "start": "npx tsx server/src/server.ts",
     "test:all": "node run-all-tests.mjs",
+    "test:smoke": "node tests/test-production-full-smoke.mjs",
     "test": "node run-all-tests.mjs"
   },
   "dependencies": {
