@@ -53,7 +53,7 @@ export default defineConfig({
               'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'PerovskiteSolar', 'Photocatalytic',
               'Photoelectrochemical', 'ProtonSolidOxide', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
               'SodiumIon', 'Sofc', 'SolidOxide', 'SupercriticalCo2', 'SupercriticalWater', 'Thermophotovoltaic', 'Tokamak',
-              'VanadiumFlow'
+              'VanadiumFlow', 'ZincBromine'
             ];
             if (energyKeywords.some(keyword => id.includes(keyword))) {
               return 'chemistry-visualizers-energy';
