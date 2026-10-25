@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T14:04:30+07:00`  
-**Elapsed Real Time:** `15h 15m 40s` [PHASE D: 16-HOUR ABSOLUTE HORIZON CONVERGENCE & EXPANSION TO 383 TEST SUITES (ITERATIONS 106-117)]  
+**Latest Checkpoint Timestamp:** `2026-10-25T14:13:00+07:00`  
+**Elapsed Real Time:** `15h 24m 10s` [PHASE D: 16-HOUR ABSOLUTE HORIZON CONVERGENCE & EXPANSION TO 385 TEST SUITES (ITERATIONS 106-118)]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -50,14 +50,14 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 15h 15m)
+## 1. CURRENT AUDIT SUMMARY (T = 15h 24m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 383 / 383 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 385 / 385 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 20.62s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (2.12 MB), advanced (1.75 MB), curriculum (2.21 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 20.49s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (2.14 MB), advanced (1.75 MB), curriculum (2.21 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -2612,3 +2612,24 @@
   - TypeScript strict compilation verified (**0 errors**).
   - Production build compiled in 20.62s with main entry chunk strictly preserved at **683.00 kB** (0 warnings).
   - Total test suites expanded to **383 / 383 with 100% pass rate**.
+- **2026-10-25 21:13 (Iteration 118 Checkpoint — 15h 24m Real Time, 16-HOUR ABSOLUTE HORIZON CONVERGENCE)**:
+  - Implemented Thermochemical Methane Pyrolysis in Molten Metal Bubble Columns in `src/domain/methanePyrolysisMoltenMetalEngine.ts` strictly conforming to IUPAC high-temperature chemical thermodynamics, bubble column multiphase hydrodynamics, and Turquoise Hydrogen Decarbonization standards:
+    - Non-Coking Liquid Metal Catalytic Cracking ($1000^\circ\text{C}$): Methane decomposes ($CH_4 \to C(s) + 2H_2(g)$, $\Delta H^\circ = +74.85\text{ kJ/mol}$) inside a heavy liquid bismuth-nickel alloy pool ($Ni_{0.27}Bi_{0.73}$, $\rho = 9,600\text{ kg/m}^3$). Liquid metal mobility prevents catalyst coking and wall deactivation.
+    - Stokes Buoyancy Anti-Coking Self-Floatation: Massive density contrast ($\Delta\rho = 7,450\text{ kg/m}^3$) between solid carbon ($\rho = 2,150\text{ kg/m}^3$) and liquid bismuth causes solid carbon particles and sintered flocs to float spontaneously to the surface ($v = 5.71\text{ cm/s}$ for $150\ \mu\text{m}$ flocs), enabling continuous mechanical skimming without reactor shutdown.
+    - Extreme Electricity Efficiency: Consumes only **$6.26\text{ kWh/kg } H_2$** (an **$88.0\%$ electricity reduction** compared to PEM water electrolysis at $52\text{ kWh/kg } H_2$), with **$0.00\text{ kg } CO_2$ direct emissions**.
+    - Coproduct Carbon Economics (1,000 Nm³/h Modular Plant):
+      - Produces $178.8\text{ kg } H_2/\text{hour}$ ($1,988\text{ Nm}^3/\text{hour}$) and co-generates $532.7\text{ kg/hour}$ of solid carbon ($2.98\text{ kg } C\text{ per } 1.0\text{ kg } H_2$).
+      - Gross LCOH before carbon credit: **$\$2.63/\text{kg } H_2$**.
+      - Sold as Conductive Carbon Black ($$1.40/\text{kg}$) for EV battery electrodes or MWCNT ($$8.50/\text{kg}$), carbon revenue reaches **$\$745.72/\text{hour}$**, yielding a net negative LCOH of **$-\$1.54/\text{kg } H_2$** (turning clean hydrogen production into a profitable enterprise).
+      - Avoids **$15,020\text{ tons } CO_2/\text{year}$** compared to conventional Steam Methane Reforming (SMR).
+  - Created and passed Test Suite 384 (`test-methane-pyrolysis-molten-metal.mjs`, 5/5 passed).
+  - Implemented `MethanePyrolysisMoltenMetalVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Sơ Đồ Cột Bọt Kim Loại Nóng Chảy with dynamic SVG showing bottom CH4 sparger ($1000\text{ Nm}^3/\text{h}$ @ 2 bar), induction heating coils ($1000^\circ\text{C}$), molten Ni-Bi pool with rising buoyant bubbles, top floating solid carbon bed, continuous carbon skimmer, and clean turquoise H2 exit.
+    - Mode 2: Động Học Bọt Khí & Chống Coking with 4-alloy selector (Ni-Bi, Pt-Bi, Fe-Sn, Cu-Bi), column height slider ($1.0 - 4.0\text{ m}$), temperature offset slider, pressure slider, Stokes floatation velocity, and water electrolysis comparison bar.
+    - Mode 3: Kinh Tế Hydro & Giá Trị Phụ Phẩm Carbon with methane feed rate slider ($200 - 5000\text{ Nm}^3/\text{h}$), 3 carbon market grades (Carbon Black, Graphite Flakes, MWCNT), Gross vs Net LCOH structure, and avoided SMR emissions.
+  - Integrated into `PeriodicCodexTab.tsx` under `'METHANE_PYROLYSIS_MOLTEN_METAL'` with `Sparkles` icon.
+  - Created and passed Test Suite 385 (`test-methane-pyrolysis-molten-metal-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'MethanePyrolysis'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript strict compilation verified (**0 errors**).
+  - Production build compiled in 20.49s with main entry chunk strictly preserved at **683.00 kB** (0 warnings).
+  - Total test suites expanded to **385 / 385 with 100% pass rate**.

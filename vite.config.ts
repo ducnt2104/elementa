@@ -50,7 +50,7 @@ export default defineConfig({
               'AlkalineMembrane', 'AllIronFlow', 'AluminumAir', 'AmmoniaWaterAbsorption', 'AnionExchange', 'BioConcrete', 'CopperChlorine', 'CuCl', 'DeepSea', 'DirectAir', 'DirectAmmonia', 'DirectEthanol', 'DirectFormicAcid', 'DirectFormicAcidSolidOxide', 'DirectLithium', 'ElectrochemicalCorr', 'ElectrochemicalDac', 'ElectrostaticSupercapacitor', 'ForwardOsmosis', 'Geothermal', 'HydrothermalLiquefaction',
               'IodineSulfur', 'IronAir', 'IronSlurry', 'LiquidAir', 'LiquidMetal', 'LithiumCarbonDioxide', 'LithiumCo2', 'LithiumMediated', 'Magnetocaloric', 'ManganeseHydrogen', 'MembraneMethane', 'MetalAir', 'MetalHydride',
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
-              'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'OsmoticallyDrivenHeatEngine', 'PerovskiteSolar', 'Photocatalytic',
+              'MethanePyrolysis', 'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'OsmoticallyDrivenHeatEngine', 'PerovskiteSolar', 'Photocatalytic',
               'Photoelectrochemical', 'PotassiumDualIon', 'ProtonSolidOxide', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
               'SodiumIon', 'SodiumSulfur', 'SoecSabatier', 'Sofc', 'SolidOxide', 'SulfurIodine', 'SupercriticalCo2', 'SupercriticalWater', 'ThermallyRegenerative', 'Thermoelectric', 'ThermoGalvanic', 'Thermophotovoltaic', 'Tokamak',
               'VanadiumFlow', 'ZincAirOxide', 'ZincBromine'
