@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T12:01:30+07:00`  
-**Elapsed Real Time:** `13h 12m 40s` [PHASE D: 13-HOUR CONTINUATION & THREE NEW FRONTIER HUBS (ITERATIONS 101-103)]  
+**Latest Checkpoint Timestamp:** `2026-10-25T12:11:30+07:00`  
+**Elapsed Real Time:** `13h 22m 40s` [PHASE D: 13-HOUR CONTINUATION & EXPANSION TO 359 TEST SUITES (ITERATIONS 101-105)]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -50,11 +50,11 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 13h 12m)
+## 1. CURRENT AUDIT SUMMARY (T = 13h 22m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 355 / 355 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 359 / 359 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 25.74s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (1.29 MB), advanced (1.75 MB), curriculum (2.24 MB) |
@@ -2384,3 +2384,31 @@
   - Integrated into `PeriodicCodexTab.tsx` under `'SUPERCRITICAL_CO2_GEOTHERMAL'` with `Mountain` icon.
   - Created and passed Test Suite 355 (`test-supercritical-co2-geothermal-visualizer-ui.mjs`, 8/8 passed).
   - Total test suites expanded to **355 / 355 with 100% pass rate**.
+- **2026-10-25 18:55 (Iteration 104 Checkpoint — 13h 18m Real Time, PHASE D)**:
+  - Implemented Aqueous Manganese-Hydrogen ($Mn-H_2$) Gas-Liquid Hybrid Battery in `src/domain/manganeseHydrogenBatteryEngine.ts` strictly conforming to IUPAC electrochemistry, dissolution-deposition phase transition kinetics, and long-duration energy storage (LDES) economics:
+    - Dissolution-Deposition Phase Transition Cathode: Reversible two-electron transition $Mn^{2+}(aq) + 2H_2O \rightleftharpoons MnO_2(s) + 4H^+ + 2e^-$ ($E^\circ = +1.23\text{ V}$ vs SHE). Soluble $Mn^{2+}$ deposits as nanostructured $\alpha\text{-MnO}_2$ on 3D carbon felt on charge, and completely dissolves back into solution on discharge, eliminating crystal lattice strain and enabling **$20,000\text{ cycles}$** (>25 years calendar life).
+    - 100% PGM-Free Hydrogen Gas Anode: Reversible $2H^+ + 2e^- \rightleftharpoons H_2(g)$ on Nickel-Molybdenum ($Ni_4Mo/C$, $\$14.5/\text{m}^2$) gas diffusion electrode, operating at $20 - 50\text{ bar}$ without precious metals and eliminating zinc/lithium dendrites.
+    - Operating Point & Grid Economics: $V_{chg} = 1.357\text{ V}$, $V_{dis} = 1.197\text{ V}$, $CE = 99.2\%$, $RTE = 87.5\%$. 10 MW / 240 MWh (24-hour LDES) achieves ultra-low CapEx of **$\$27.08/\text{kWh}$** ($\$6.50\text{M}$ total) and LCOS of **$\$26.5/\text{MWh}$** using earth-abundant $MnSO_4$ ($\$0.35/\text{kg}$) in standard HDPE tanks.
+  - Created and passed Test Suite 356 (`test-manganese-hydrogen-battery.mjs`, 4/4 passed).
+  - Implemented `ManganeseHydrogenBatteryVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Cơ Chế Hòa Tan - Lắng Đọng MnO₂ with dynamic SVG gas-liquid cell schematic.
+    - Mode 2: Đặc Tính Phóng Nạp & Hiệu Suất RTE with current density slider and overpotential breakdown.
+    - Mode 3: Lưu Trữ Lưới Điện Đa Giờ (LDES) with 10-100 hour duration slider, CapEx counter, and 20,000 cycles warranty.
+  - Integrated into `PeriodicCodexTab.tsx` under `'MANGANESE_HYDROGEN_BATTERY'` with `Boxes` icon.
+  - Created and passed Test Suite 357 (`test-manganese-hydrogen-battery-visualizer-ui.mjs`, 8/8 passed).
+  - Added `'ManganeseHydrogen'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - Total test suites expanded to **357 / 357 with 100% pass rate**.
+- **2026-10-25 19:05 (Iteration 105 Checkpoint — 13h 22m Real Time, PHASE D)**:
+  - Implemented Magnetocaloric Refrigeration & Magnetic Heat Pump (MCE) in `src/domain/magnetocaloricRefrigerationEngine.ts` strictly conforming to IUPAC physical chemistry, giant magnetocaloric effect (GMCE), Active Magnetic Regenerator (AMR) thermodynamics, and zero-GWP thermal comfort:
+    - Giant MCE Materials: $La(Fe_{0.88}Si_{0.12})_{13}H_{1.6}$ (interstitial hydride FOMT with $T_C = 22^\circ\text{C}$ room comfort, $\Delta S_{mag} = 22.5\text{ J/(kg}\cdot\text{K)}$ and $\Delta T_{ad} = 5.4\text{ K}$ at $1.5\text{ Tesla}$), pure Gadolinium metal ($Gd$), and earth-abundant $MnFe(P, Si)$ ($0\%$ rare earths).
+    - Active Magnetic Regenerator (AMR) 4-Step Cycle: Rotational permanent NdFeB magnet ($1.5\text{ T}$) drives cyclic magnetization/demagnetization of porous bed with regenerative fluid heat transfer, generating continuous temperature span $\Delta T_{span} = 14\text{ K}$ ($18^\circ\text{C}$ to $32^\circ\text{C}$), cooling capacity $>15\text{ kW}$, $COP = 3.45$, and Second-Law efficiency reaching $50 - 65\%$ of Carnot.
+    - 100% Zero-GWP Water Refrigerant & Efficiency: Eliminates fluorinated chemical refrigerants ($1.2\text{ kg}$ R410A with $GWP = 2088$ replaced by pure water $GWP = 0$), cuts annual electricity consumption by $33\%$ ($911\text{ kWh/year}$ saved per residential unit), avoids $0.70\text{ tons } CO_2e/\text{year}$, and achieves whisper-quiet operation ($<32\text{ dB}$).
+  - Created and passed Test Suite 358 (`test-magnetocaloric-refrigeration.mjs`, 4/4 passed).
+  - Implemented `MagnetocaloricRefrigerationVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Vật Lý Hiệu Ứng Từ Nhiệt (MCE) with dynamic SVG magnetic spin alignment and Maxwell relations.
+    - Mode 2: Chu Trình Hồi Nhiệt AMR 4 Bước with hot/cold temperature span sliders and COP metrics.
+    - Mode 3: Điều Hòa Xanh Zero-GWP with AC capacity slider, R410A elimination counter, and electricity bill savings.
+  - Integrated into `PeriodicCodexTab.tsx` under `'MAGNETOCALORIC_REFRIGERATION'` with `Snowflake` icon.
+  - Created and passed Test Suite 359 (`test-magnetocaloric-refrigeration-visualizer-ui.mjs`, 8/8 passed).
+  - Added `'Magnetocaloric'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - Total test suites expanded to **359 / 359 with 100% pass rate**.
