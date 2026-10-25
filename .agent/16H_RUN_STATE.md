@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T07:31:00+07:00`  
-**Elapsed Real Time:** `8h 42m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T07:37:00+07:00`  
+**Elapsed Real Time:** `8h 48m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -22,11 +22,11 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 8h 42m)
+## 1. CURRENT AUDIT SUMMARY (T = 8h 48m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 281 / 281 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 283 / 283 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 18.02s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1457,3 +1457,32 @@
   - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
   - Production build: `dist/assets/index-BWg88lJ9.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 281 / 281 with 100% pass rate.
+- **2026-10-25 08:37 (Iteration 67 Checkpoint — PHASE C EXTENSION)**:
+  - Implemented Superheated Geothermal Thermochemical Brine & Direct Mineral Extraction (DLE) in `src/domain/geothermalMineralExtractionEngine.ts` strictly conforming to GEA/IGA geothermal standards and Fournie & Marshall (1982) amorphous silica kinetics:
+    - Global Geothermal Brine Hydrochemistry:
+      - Catalogs 5 strategic sites: Salton Sea USA ($290^\circ\text{C}$, $240\text{ ppm } Li^+$, $260,000\text{ ppm}$ TDS), Upper Rhine Graben Germany ($165^\circ\text{C}$, $180\text{ ppm } Li^+$), Bình Châu Việt Nam ($135^\circ\text{C}$, $45\text{ ppm } Li^+$, low-enthalpy coastal potential), Krafla Iceland ($310^\circ\text{C}$ volcanic steam), and Wairakei New Zealand ($245^\circ\text{C}$).
+    - Amorphous Silica (SiO2) Scaling Kinetics:
+      - $\log_{10}(C_{sat}) = 4.52 - \frac{731}{T(K)}$. At $70^\circ\text{C}$, $C_{sat} = 245.3\text{ ppm}$.
+      - Evaluates Silica Saturation Index (SSI) and calculates required acid dosing ($ppm\text{ } HCl/H_2SO_4$ to adjust brine pH to $4.8-5.0$) to inhibit spontaneous polymerization and protect reinjection well porosity.
+    - Geothermal Power & Thermal Co-generation:
+      - Flash steam (single/double) and Binary ORC (isopentane working fluid).
+      - At Salton Sea ($450\text{ kg/s}$ at $290^\circ\text{C}$), exports $+105.4\text{ MWe}$ net clean baseload power, self-supplying $100\%$ of DLE parasitic power while delivering $133.7\text{ MWth}$ of low-enthalpy reject heat.
+    - Direct Lithium Extraction (DLE) & Battery Grade Yields:
+      - Nanoporous lithium titanate ($Li_2TiO_3$) and manganese oxide ion sieves extract $90\%$ of dissolved lithium in a $90\text{-minute}$ closed loop.
+      - At Salton Sea, produces $13,549\text{ metric tons/year}$ of LCE ($Li_2CO_3$) and $15,386\text{ tons/year}$ of $LiOH \cdot H_2O$, sufficient to power $\mathbf{246,344\text{ EV battery packs}}$ ($75\text{ kWh}$) annually.
+      - Strategic co-products: $+972\text{ tons/year}$ Rubidium ($Rb$) and $+176\text{ tons/year}$ Cesium ($Cs$).
+      - Closed-loop deep reinjection: $98.5\%$ of cooled brine is reinjected underground with zero surface evaporation loss.
+    - Multi-Effect Desalination (MED) Integration:
+      - Low-enthalpy reject heat ($90-120^\circ\text{C}$) drives forward-feed MED desalination, producing $15,828\text{ m}^3/\text{day}$ ($5,777,069\text{ m}^3/\text{year}$) of ultra-pure demineralized water ($TDS < 5\text{ ppm}$) for green hydrogen electrolysis and local communities.
+    - Environmental Mining Benchmark:
+      - Geothermal DLE emits only $\mathbf{0.35\text{ kg } CO_2/\text{kg } LiOH}$ (versus $15.0\text{ kg } CO_2/\text{kg}$ for hard-rock spodumene mining and $3.2\text{ kg } CO_2/\text{kg}$ for salar ponds), consumes $4.5\text{ m}^3\text{ water/ton LCE}$ (vs $450\text{ m}^3$ in Salar ponds), and occupies only $15\text{ m}^2/\text{ton LCE}$ footprint.
+  - Created and passed Test Suite 282 (`test-geothermal-mineral-extraction.mjs`, 6/6 passed).
+  - Implemented `GeothermalMineralExtractionVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Sơ Đồ Dây Chuyền & Phát Điện with interactive SVG diagram of deep production well, turbine/generator ($105\text{ MWe}$), DLE ion-sieve extraction columns, MED desalination unit ($15,828\text{ m}^3/\text{day}$), and closed-loop reinjection well.
+    - Mode 2: Mô Phỏng Lithium & Pin EV with flow rate ($50-800\text{ kg/s}$), $Li^+$ ppm, and live readouts for LCE tons, battery packs, MED water, and Rubidium/Cesium co-products.
+    - Mode 3: Đóng Cặn Silica & Khai Thác Xanh with interactive silica scaling kinetics, SSI gauge, acid dosing calculator, and ESG comparison matrix.
+  - Integrated `GeothermalMineralExtractionVisualizer` into `PeriodicCodexTab.tsx` under `'GEOTHERMAL_MINERAL_EXTRACTION'` with `Flame` icon.
+  - Created and passed Test Suite 283 (`test-geothermal-mineral-extraction-visualizer-ui.mjs`, 7/7 passed).
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-j4Ld4wfq.js` strictly maintained at 682.96 kB (134.31 kB gzip) and 0 warnings.
+  - Total test suites expanded to 283 / 283 with 100% pass rate.
