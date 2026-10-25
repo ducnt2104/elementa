@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T10:00:00+07:00`  
-**Elapsed Real Time:** `11h 11m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
+**Latest Checkpoint Timestamp:** `2026-10-25T10:18:00+07:00`  
+**Elapsed Real Time:** `11h 29m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -17,19 +17,19 @@
 > - **Total Test Suites:** **241 / 241 Suites Passing** with 0 regressions.
 > - **TypeScript Strict Compilation:** **0 Errors** (`npx tsc --noEmit`).
 > - **Vite Production Bundler:** **0 Errors, 0 Warnings** (Main entry chunk strictly preserved at 682.96 - 683.00 kB / 134.32 kB gzip).
-> - **Autonomous Iterations Completed:** 46 continuous self-directed feature and research iterations.
+> - **Autonomous Iterations Completed:** 47 continuous self-directed feature and research iterations.
 > - **Transition:** Operating in Phase C: Autonomous Long-Horizon Extension (Hours 6 to 16).
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 10h 33m)
+## 1. CURRENT AUDIT SUMMARY (T = 11h 29m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 321 / 321 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 323 / 323 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 18.02s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 20.73s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (1.19 MB), advanced (1.75 MB), curriculum (2.24 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -2017,3 +2017,33 @@
   - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
   - Production build: `dist/assets/index-Cc5h3eCq.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
   - Total test suites expanded to **321 / 321 with 100% pass rate**.
+- **2026-10-25 16:18 (Iteration 87 Checkpoint — 11h 29m Real Time, PHASE C EXTENSION)**:
+  - Implemented Vanadium Redox Flow Battery (VRFB) Dual-Membrane Electrolyte Dynamics & Viscosity-Pressure Drop Engine in `src/domain/vanadiumFlowBatteryDynamicsEngine.ts` strictly conforming to IUPAC electrochemistry standards, Darcy-Forchheimer porous media flow, and Vietnam GDPT 2018 Chemistry:
+    - 4-Valence Redox States & Spectrophotometric Beer-Lambert Color Blending:
+      - 4 Vanadium species: $V^{2+}$ (Purple/Violet, $E^\circ = -0.26\text{ V vs SHE}$), $V^{3+}$ (Dark Green, $\lambda_{max} = 600\text{ nm}$), $VO^{2+}$ (Sky Blue, $+1.00\text{ V}$), and $VO_2^+$ (Golden Yellow, $\lambda_{max} = 390\text{ nm}$).
+      - Full cell: $V^{3+} + VO^{2+} + H_2O \rightleftharpoons V^{2+} + VO_2^+ + 2H^+$ ($E^\circ_{cell} = 1.26\text{ V}$).
+      - Real-time spectrophotometric linear RGB blending tracks electrolyte color transitions across SOC ($5\% - 95\%$).
+    - Dual-Membrane Donnan Exclusion & Crossover Kinetics:
+      - Modeled Nafion 115 (CEM), Fumasep FAP-450 (AEM), and sPEEK Hydrocarbon membranes.
+      - AEM fixed quaternary ammonium cations ($-\text{NR}_3^+$) create electrostatic Donnan repulsion against all 4 positively charged vanadium cations, delivering **$> 99.98\%$ capacity retention per cycle** and slashing crossover permeability by $> 88\%$.
+    - Darcy-Forchheimer Porous Media Hydrodynamics & Viscosity:
+      - Concentration-temperature electrolyte viscosity: $\mu(T, [V], SOC)$ captures $VO_2^+$ solvation shells in catholyte.
+      - Darcy-Forchheimer pressure drop in carbon felt: $\frac{\Delta P}{L} = \frac{\mu}{K} v_s + \beta_F \rho v_s^2$ with $K = 1.2 \times 10^{-9}\text{ m}^2$.
+      - Pumping trade-off: Net round-trip efficiency curve identifies optimal stoichiometric flow ratio $\lambda^* \approx 2.5 - 3.5$ balancing concentration overpotentials against parasitic pumping power.
+    - Thermal Precipitation Boundaries:
+      - Catholyte: $VO_2^+$ thermal polymerization into solid $V_2O_5 \downarrow$ above $40^\circ\text{C}$ (widened to $50^\circ\text{C}$ with $H_3PO_4$ additive).
+      - Anolyte: $VSO_4 \cdot 7H_2O$ freezing precipitation below $10^\circ\text{C}$ at $[V] \ge 2.0\text{ M}$.
+    - Decoupled Multi-MW / Multi-MWh Grid Storage Plant ($10\text{ MW} / 40\text{ MWh}$):
+      - 199 stack modules ($50\text{ kW}$ each, $1,500\text{ cm}^2$ cell area) and $1,428.6\text{ m}^3$ HDPE electrolyte tanks ($233.9\text{ metric tons } V_2O_5$ equivalent).
+      - Total CapEx: **$\$10.36\text{M}$** (**$\$259/\text{kWh}$**), delivering **$78.6\%$ System RTE**, $> 25\text{ years}$ lifespan, and avoiding **$8,580\text{ tons } CO_2/\text{year}$** vs fossil peaker plants.
+  - Created and passed Test Suite 322 (`test-vanadium-flow-battery-dynamics.mjs`, 5/5 passed).
+  - Implemented `VanadiumFlowBatteryDynamicsVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: 4-Valence Spectrophotometry & Donnan Membrane Barrier with dynamic dual-tank and cell SVG schematic, membrane selector, SOC slider, and GDPT 2018 chemical equations.
+    - Mode 2: Darcy-Forchheimer Hydrodynamics & Pumping Trade-off with temperature slider, flow rate slider, current density slider, viscosity/pressure drop readouts, thermal stability banner, and interactive SVG Net Efficiency vs Flow Rate curve.
+    - Mode 3: Decoupled Multi-MW / Multi-MWh Grid Storage Plant (< $260/kWh) with power/duration sliders, 4 grid presets, CapEx breakdown, physical material inventory, and avoided fossil peaker $CO_2$.
+  - Integrated `VanadiumFlowBatteryDynamicsVisualizer` into `PeriodicCodexTab.tsx` under `'VANADIUM_FLOW_BATTERY_DYNAMICS'` with `Zap` icon.
+  - Created and passed Test Suite 323 (`test-vanadium-flow-battery-dynamics-visualizer-ui.mjs`, 8/8 passed).
+  - Added `'VanadiumFlow'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-CfNGy96Y.js` strictly maintained at **683.00 kB** (134.32 kB gzip) and **0 warnings**.
+  - Total test suites expanded to **323 / 323 with 100% pass rate**.
