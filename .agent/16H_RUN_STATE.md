@@ -2412,3 +2412,44 @@
   - Created and passed Test Suite 359 (`test-magnetocaloric-refrigeration-visualizer-ui.mjs`, 8/8 passed).
   - Added `'Magnetocaloric'` to `energyKeywords` manual chunk in `vite.config.ts`.
   - Total test suites expanded to **359 / 359 with 100% pass rate**.
+- **2026-10-25 19:15 (Iteration 106 Checkpoint — 13h 28m Real Time, PHASE D)**:
+  - Implemented Electrostatic Supercapacitor Energy Storage with Graphene Hybrid Electrodes in `src/domain/electrostaticSupercapacitorEngine.ts` strictly conforming to IUPAC electrochemistry, Helmholtz double-layer capacitance, and fast pulse power electrodynamics:
+    - Hierarchical 3D porous graphene ($S_{BET} = 2,800\text{ m}^2/\text{g}$) paired with high-voltage ionic liquid $[EMIM][TFSI]$ ($3.80\text{ V}$) and organic $TEABF_4/ACN$ ($2.85\text{ V}$).
+    - Packaged Cell Real-World Sizing: Evaluated packaging factor ($f_{packaging} = 0.42$), yielding commercial cell energy density of $24.9\text{ Wh/kg}$, 5-second specific power of $17.9\text{ kW/kg}$, sub-second pulse power of $178.1\text{ kW/kg}$ ($>100\text{ kW/kg}$), and **$1,200,000\text{ cycle life}$** (>94% capacitance retention).
+    - 220-ton Metro Train Regenerative Braking: Captures $15.1\text{ kWh}$ ($54.3\text{ MJ}$) per braking stop at peak power $3,018\text{ kW}$ into a $238.2\text{ F}$ bank ($561\text{ kg}$), saving **$\$134,494/\text{year}$** in transit power costs and avoiding $616.4\text{ tons } CO_2/\text{year}$.
+  - Created and passed Test Suite 360 (`test-electrostatic-supercapacitor.mjs`, 3/3 passed).
+  - Implemented `ElectrostaticSupercapacitorVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Bản Đồ Ragone Năng Lượng with interactive discharge time slider and chemistry comparison.
+    - Mode 2: Động Học Xung Điện Cực Nhanh with millisecond pulse discharge profiles.
+    - Mode 3: Thu Hồi Hãm Phanh Tàu Điện & Transit with metro train kinetic energy recovery counters.
+  - Integrated into `PeriodicCodexTab.tsx` under `'ELECTROSTATIC_SUPERCAPACITOR'` with `Zap` icon.
+  - Created and passed Test Suite 361 (`test-electrostatic-supercapacitor-visualizer-ui.mjs`, 8/8 passed).
+  - Total test suites expanded to **361 / 361 with 100% pass rate**.
+- **2026-10-25 19:25 (Iteration 107 Checkpoint — 13h 36m Real Time, PHASE D)**:
+  - Implemented Closed-Loop Thermochemical Ammonia-Water ($NH_3\text{-}H_2O$) Absorption Chiller in `src/domain/ammoniaWaterAbsorptionChillerEngine.ts` strictly conforming to IUPAC physical chemistry, binary vapor-liquid phase equilibria, and industrial waste heat cogeneration:
+    - Binary $NH_3\text{-}H_2O$ Phase Equilibria & Rectification: Generator desorber with rectifier column achieves ammonia vapor purity $>99.85\%$ at $18\text{ bar}$ / $100^\circ\text{C}$, circulation ratio $f = 3.97\text{ kg/kg}$, preventing expansion valve icing.
+    - Thermal COP & Solution Pumping Economics: Thermal COP reaches $0.72 - 1.28$, while liquid solution pump consumes only $1.5\%$ of cooling capacity, yielding effective electrical equivalent COP of **$66.7$** ($>95\%$ electric savings vs mechanical compressors).
+    - AI Data Center GPU Waste Heat Cogeneration (10 MW IT load): Captures liquid coolant waste heat ($75 - 90^\circ\text{C}$) to produce $5.86\text{ MW}$ of chilled water ($7^\circ\text{C}$), slashing facility PUE from **$1.35$ down to $1.13$**, saving **$19,062\text{ MWh/year}$** ($\$2,096,776/\text{year}$), avoiding **$10,484\text{ tons } CO_2/\text{year}$**, and eliminating $879\text{ kg}$ HFC refrigerants ($GWP = 0$).
+  - Created and passed Test Suite 362 (`test-ammonia-water-absorption-chiller.mjs`, 4/4 passed).
+  - Implemented `AmmoniaWaterAbsorptionChillerVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Cân Bằng Lỏng-Hơi & Tinh Cất with dynamic SVG absorption loop (Generator, Rectifier, Condenser, Evaporator, Absorber, Solution pump).
+    - Mode 2: COP Nhiệt & Cân Bằng Năng Lượng with temperature sensitivity sliders and comparison vs electric chillers.
+    - Mode 3: Đồng Phát Nhiệt Trung Tâm AI with PUE reduction gauge (1.35 ➔ 1.13), electricity cost savings, and avoided CO2.
+  - Integrated into `PeriodicCodexTab.tsx` under `'AMMONIA_WATER_ABSORPTION_CHILLER'` with `Snowflake` icon.
+  - Created and passed Test Suite 363 (`test-ammonia-water-absorption-chiller-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'AmmoniaWaterAbsorption'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - Total test suites expanded to **363 / 363 with 100% pass rate**.
+- **2026-10-25 19:35 (Iteration 108 Checkpoint — 13h 44m Real Time, PHASE D)**:
+  - Implemented Solid-State Thermochemical Metal Hydride Heat Pump & Heat Transformer (MH-HP) in `src/domain/metalHydrideHeatPumpEngine.ts` strictly conforming to IUPAC chemical thermodynamics, Van 't Hoff hydride phase equilibria, and industrial waste heat upgrading:
+    - Reversible Hydride Thermodynamics: Models $LaNi_5$, $MmNi_{4.5}Al_{0.5}$ (HTH, $\Delta H = -34.5\text{ kJ/mol}$), $TiFe_{0.85}Mn_{0.15}$ (LTH, $\Delta H = -27.5\text{ kJ/mol}$), and $Zr_{0.9}Ti_{0.1}Cr_{1.2}Fe_{0.8}$ Laves phase with hysteresis ($P_{abs} / P_{des} = 1.15 - 1.25$).
+    - Solid-State Hydrogen Shuttle (Zero Moving Parts): Closed-loop hydrogen circulation between dual porous alloy reactors with embedded expanded natural graphite ($k_{eff} = 8.5\text{ W/(m}\cdot\text{K)}$), achieving $0\%$ mechanical compressor work, zero vibration ($0\text{ dB}$), and zero greenhouse refrigerants ($GWP = 0, ODP = 0$).
+    - Industrial Waste Heat Upgrading (Transformer Mode): Upgrades low-grade waste hot water/steam ($95^\circ\text{C}$) to high-grade industrial process steam at **$144.8^\circ\text{C}$** (temperature lift **$+49.8\text{ K}$**) with thermal COP $= 0.47$, saving **$\$122,976/\text{year}$** in industrial fuel costs and avoiding **$662\text{ tons } CO_2/\text{year}$** per $500\text{ kW}$ unit.
+    - Zero-Electricity Refrigeration Mode: Driven by low-grade thermal heat ($130^\circ\text{C}$) to deliver $5^\circ\text{C}$ chilled water with $134\text{ kW}$ cooling capacity and effective electric COP $>50$.
+  - Created and passed Test Suite 364 (`test-metal-hydride-heat-pump.mjs`, 4/4 passed).
+  - Implemented `MetalHydrideHeatPumpVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Nâng Cấp Nhiệt Thải (Transformer) with dynamic SVG hydrogen shuttle flow tube and HTH/LTH reactor boxes.
+    - Mode 2: Đẳng Nhiệt Van 't Hoff & Hợp Kim with ln(P) vs 1/T equations, hysteresis gap, and alloy comparison cards.
+    - Mode 3: Làm Lạnh Nhiệt Hóa (Zero Electricity) with chilled water slider and zero-vibration cryo-cooling profile.
+  - Integrated into `PeriodicCodexTab.tsx` under `'METAL_HYDRIDE_HEAT_PUMP'` with `Flame` icon.
+  - Created and passed Test Suite 365 (`test-metal-hydride-heat-pump-visualizer-ui.mjs`, 4/4 passed).
+  - Total test suites expanded to **365 / 365 with 100% pass rate**.
