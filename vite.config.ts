@@ -47,12 +47,12 @@ export default defineConfig({
           }
           if (id.includes('src/components/visualizations/')) {
             const energyKeywords = [
-              'AlkalineMembrane', 'AllIronFlow', 'AluminumAir', 'AmmoniaWaterAbsorption', 'AnionExchange', 'BioConcrete', 'CuCl', 'DeepSea', 'DirectAir', 'DirectEthanol', 'DirectFormicAcid', 'DirectFormicAcidSolidOxide', 'DirectLithium', 'ElectrochemicalCorr', 'ElectrostaticSupercapacitor', 'ForwardOsmosis', 'Geothermal',
+              'AlkalineMembrane', 'AllIronFlow', 'AluminumAir', 'AmmoniaWaterAbsorption', 'AnionExchange', 'BioConcrete', 'CopperChlorine', 'CuCl', 'DeepSea', 'DirectAir', 'DirectEthanol', 'DirectFormicAcid', 'DirectFormicAcidSolidOxide', 'DirectLithium', 'ElectrochemicalCorr', 'ElectrostaticSupercapacitor', 'ForwardOsmosis', 'Geothermal',
               'IodineSulfur', 'IronAir', 'IronSlurry', 'LiquidAir', 'LiquidMetal', 'LithiumCarbonDioxide', 'LithiumCo2', 'LithiumMediated', 'Magnetocaloric', 'ManganeseHydrogen', 'MembraneMethane', 'MetalAir', 'MetalHydride',
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
               'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'OsmoticallyDrivenHeatEngine', 'PerovskiteSolar', 'Photocatalytic',
               'Photoelectrochemical', 'PotassiumDualIon', 'ProtonSolidOxide', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
-              'SodiumIon', 'SodiumSulfur', 'Sofc', 'SolidOxide', 'SulfurIodine', 'SupercriticalCo2', 'SupercriticalWater', 'ThermallyRegenerative', 'Thermoelectric', 'ThermoGalvanic', 'Thermophotovoltaic', 'Tokamak',
+              'SodiumIon', 'SodiumSulfur', 'SoecSabatier', 'Sofc', 'SolidOxide', 'SulfurIodine', 'SupercriticalCo2', 'SupercriticalWater', 'ThermallyRegenerative', 'Thermoelectric', 'ThermoGalvanic', 'Thermophotovoltaic', 'Tokamak',
               'VanadiumFlow', 'ZincAirOxide', 'ZincBromine'
             ];
             if (energyKeywords.some(keyword => id.includes(keyword))) {

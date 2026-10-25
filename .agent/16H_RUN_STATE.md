@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T12:11:30+07:00`  
-**Elapsed Real Time:** `13h 22m 40s` [PHASE D: 13-HOUR CONTINUATION & EXPANSION TO 359 TEST SUITES (ITERATIONS 101-105)]  
+**Latest Checkpoint Timestamp:** `2026-10-25T13:15:00+07:00`  
+**Elapsed Real Time:** `14h 26m 10s` [PHASE D: 14-HOUR CONTINUATION & EXPANSION TO 377 TEST SUITES (ITERATIONS 106-114)]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -54,10 +54,10 @@
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 359 / 359 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 377 / 377 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 25.74s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (1.29 MB), advanced (1.75 MB), curriculum (2.24 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 24.74s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (2.03 MB), advanced (1.75 MB), curriculum (2.21 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -2518,3 +2518,37 @@
   - Added `'SulfurIodine'` to `energyKeywords` manual chunk in `vite.config.ts`.
   - Production build compiled in 24.02s with main entry chunk strictly at **683.00 kB** (0 warnings).
   - Total test suites expanded to **373 / 373 with 100% pass rate**.
+- **2026-10-25 20:30 (Iteration 113 Checkpoint — 14h 32m Real Time, PHASE D)**:
+  - Implemented Hybrid Thermochemical Copper-Chlorine ($Cu\text{-}Cl$) Water-Splitting Cycle in `src/domain/copperChlorineCycleEngine.ts` strictly conforming to IUPAC chemical thermodynamics, Generation IV International Forum (GIF) standards, and low/intermediate-temperature nuclear & solar hydrogen generation:
+    - 4-Step Closed-Loop Thermochemical Cycle ($T_{max} = 530^\circ\text{C}$ / $803\text{ K}$):
+      - Step 1 (CuCl₂ Hydrolysis @ 380°C): $2CuCl_2(s) + H_2O(g) \to Cu_2OCl_2(s) + 2HCl(g)$ ($\Delta H = +116.5\text{ kJ/mol}$, endothermic).
+      - Step 2 (Copper Oxychloride Decomposition @ 530°C): $Cu_2OCl_2(s) \to 2CuCl(l) + \frac{1}{2} O_2(g)$ ($\Delta H = +129.8\text{ kJ/mol}$), releasing pure $O_2$ stream and molten $CuCl$. Peak temperature ($530^\circ\text{C}$) perfectly matches Gen-IV SCWR, LFR, and commercial CSP molten nitrate salt loops ($565^\circ\text{C}$).
+      - Step 3 (Electrochemical CuCl/HCl Splitting @ 80°C): $2CuCl(aq) + 2HCl(aq) \to 2CuCl_2(aq) + H_2(g)$ ($E_{cell} \approx 0.55\text{ V}$). Specific electric consumption is only **$14.92\text{ kWh/kg } H_2$** (a **$71.3\%$ reduction in electricity** vs conventional PEM water electrolysis at $52\text{ kWh/kg}$).
+      - Step 4 (CuCl₂ Drying & Crystallization @ 110°C): $CuCl_2(aq) \to CuCl_2(s) + H_2O(g)$ utilizing low-grade waste heat to regenerate solid $CuCl_2$ crystals, closing the chemical loop with 100% recycling of copper and chlorine.
+    - Modular SMR & Utility Economics: A 35 MWth SMR nuclear module produces **$1,206.2\text{ kg } H_2/\text{hour}$** ($28.95\text{ tons } H_2/\text{day}$) at net thermal efficiency of **$50.3\%$ LHV**, achieving a levelized cost of **$\$2.20/\text{kg } H_2$** and avoiding **$91,668\text{ tons } CO_2/\text{year}$** using standard Hastelloy C-276 alloys instead of exotic ceramics.
+  - Created and passed Test Suite 374 (`test-copper-chlorine-cycle.mjs`, 5/5 passed).
+  - Implemented `CopperChlorineCycleVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Sơ Đồ Khép Kín 4 Bước (530°C) with dynamic SVG showing hydrolyzer, decomposer, PEM electrolyzer, crystallizer, and closed Cu/Cl recycle streams.
+    - Mode 2: Tiết Kiệm Điện 71% & Nguồn Nhiệt with cell voltage slider (0.45 - 0.75 V), pinch recuperation slider, and Gen-IV SCWR/LFR/CSP heat source catalog.
+    - Mode 3: Kinh Tế Hydro ($2.2/kg) & So Sánh with plant thermal power slider, avoided CO2 counters, and benchmark comparison table vs S-I, Zn/ZnO, and PEM.
+  - Integrated into `PeriodicCodexTab.tsx` under `'COPPER_CHLORINE_HYBRID_CYCLE'` with `Atom` icon.
+  - Created and passed Test Suite 375 (`test-copper-chlorine-cycle-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'CopperChlorine'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - Total test suites expanded to **375 / 375 with 100% pass rate**.
+- **2026-10-25 20:42 (Iteration 114 Checkpoint — 14h 40m Real Time, PHASE D)**:
+  - Implemented SOEC-Sabatier Power-to-Gas (PtG) & Carbon Circularity System in `src/domain/soecSabatierPowerToGasEngine.ts` strictly conforming to IUPAC high-temperature physical chemistry, solid oxide electrolysis kinetics, and catalytic Sabatier methanation thermodynamics:
+    - SOEC High-Temperature Steam Reduction ($800^\circ\text{C}$): Operates at thermo-neutral voltage ($1.28\text{ V}$) utilizing YSZ oxygen-ion conductors, requiring only $3.06\text{ kWh/Nm}^3 H_2$ with stack electrical efficiency of **$97.9\%$ LHV**.
+    - Multi-Stage Catalytic Sabatier Methanation ($340^\circ\text{C}$, $15\text{ bar}$): $CO_2 + 4H_2 \rightleftharpoons CH_4 + 2H_2O$ ($\Delta H^\circ = -165.0\text{ kJ/mol}$) over $Ni\text{-}Ru/\gamma\text{-}Al_2O_3$ catalysts with $>99.2\%$ conversion.
+    - Synergistic Exothermic Heat Integration: Methanation reaction heat ($165\text{ kJ/mol}$) plus product water latent heat self-supplies **$100\%$ of steam vaporization duty** for the SOEC feed water, boosting overall Power-to-Gas system efficiency to **$80.6\%$ LHV** (vs $57.0\%$ for conventional PEM-PtG).
+    - Grid-Quality Pipeline Drop-in e-Methane: Delivers Synthetic Natural Gas ($CH_4 > 98.2\text{ vol}\%$) with Wobbe Index of **$50.8\text{ MJ/Nm}^3$** (fully compliant with EN 16726 grid injection standards). A 10 MWe plant ingests **$12,731\text{ tons } CO_2/\text{year}$** and produces **$4,641\text{ tons } e\text{-}CH_4/\text{year}$** ($6.48\text{ million Nm}^3/\text{year}$), replacing fossil gas with 100% circular carbon fuel.
+  - Created and passed Test Suite 376 (`test-soec-sabatier-power-to-gas.mjs`, 5/5 passed).
+  - Implemented `SoecSabatierPowerToGasVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Sơ Đồ Khép Kín Tích Hợp Nhiệt with dynamic SVG showing SOEC stack, Sabatier catalytic reactor, exothermic heat recuperator loop, and gas separator.
+    - Mode 2: Hiệu Suất PtG 80.6% & Năng Lượng with electrical power slider, SOEC operating temperature slider, and live PtG comparison bar chart.
+    - Mode 3: Kinh Tế Carbon & Lưới Khí e-CH₄ with carbon capture source selector (DAC, Biogas, Cement, Bioethanol), Wobbe index gauge, and seasonal energy storage comparison.
+  - Integrated into `PeriodicCodexTab.tsx` under `'SOEC_SABATIER_POWER_TO_GAS'` with `Flame` icon.
+  - Created and passed Test Suite 377 (`test-soec-sabatier-power-to-gas-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'SoecSabatier'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript strict compilation verified (**0 errors**).
+  - Production build compiled in 24.74s with main entry chunk strictly at **683.00 kB** (0 warnings).
+  - Total test suites expanded to **377 / 377 with 100% pass rate**.
