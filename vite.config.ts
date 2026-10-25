@@ -48,11 +48,11 @@ export default defineConfig({
           if (id.includes('src/components/visualizations/')) {
             const energyKeywords = [
               'AlkalineMembrane', 'AllIronFlow', 'AluminumAir', 'AnionExchange', 'BioConcrete', 'CuCl', 'DeepSea', 'DirectAir', 'DirectFormicAcid', 'DirectFormicAcidSolidOxide', 'DirectLithium', 'ElectrochemicalCorr', 'ForwardOsmosis', 'Geothermal',
-              'IodineSulfur', 'IronAir', 'LiquidMetal', 'LithiumCarbonDioxide', 'LithiumCo2', 'LithiumMediated', 'MembraneMethane', 'MetalAir', 'MetalHydride',
+              'IodineSulfur', 'IronAir', 'IronSlurry', 'LiquidMetal', 'LithiumCarbonDioxide', 'LithiumCo2', 'LithiumMediated', 'MembraneMethane', 'MetalAir', 'MetalHydride',
               'MicrobialElectrosynthesis', 'MicrobialFuelCell', 'MicrochannelFischerTropsch',
               'MoltenMetal', 'MoltenSalt', 'OceanThermal', 'OsmoticallyDrivenHeatEngine', 'PerovskiteSolar', 'Photocatalytic',
               'Photoelectrochemical', 'ProtonSolidOxide', 'RedoxFlow', 'SalinityGradient', 'SmesCryogenic',
-              'SodiumIon', 'Sofc', 'SolidOxide', 'SupercriticalCo2', 'SupercriticalWater', 'ThermallyRegenerative', 'ThermoGalvanic', 'Thermophotovoltaic', 'Tokamak',
+              'SodiumIon', 'SodiumSulfur', 'Sofc', 'SolidOxide', 'SupercriticalCo2', 'SupercriticalWater', 'ThermallyRegenerative', 'ThermoGalvanic', 'Thermophotovoltaic', 'Tokamak',
               'VanadiumFlow', 'ZincBromine'
             ];
             if (energyKeywords.some(keyword => id.includes(keyword))) {
