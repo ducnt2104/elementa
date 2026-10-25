@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T06:50:00+07:00`  
-**Elapsed Real Time:** `8h 01m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE — 8H HALFWAY MARK ACHIEVED]  
+**Latest Checkpoint Timestamp:** `2026-10-25T07:25:00+07:00`  
+**Elapsed Real Time:** `8h 36m 10s` [PHASE C: LONG-HORIZON EXTENSION ACTIVE]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -22,11 +22,11 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 8h 01m)
+## 1. CURRENT AUDIT SUMMARY (T = 8h 36m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 277 / 277 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 279 / 279 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
 | **Vite Production Build** | Clean | Output in `dist/`, chunks split in 18.02s with 0 warnings |
 | **Code Splitting** | Optimized | Entry chunk 682 kB; visualizers split into curriculum (1.74 MB) & advanced (1.53 MB) |
@@ -1409,3 +1409,26 @@
   - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
   - Production build: `dist/assets/index-SMRqQU8L.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
   - Total test suites expanded to 277 / 277 with 100% pass rate.
+- **2026-10-25 08:25 (Iteration 65 Checkpoint — PHASE C EXTENSION)**:
+  - Implemented Metal-Hydride Solid-State Hydrogen Storage & Reversible Sorption in `src/domain/metalHydrideStorageEngine.ts` strictly conforming to IUPAC, NIST Chemistry WebBook, and US DOE Hydrogen Storage Technical Benchmarks:
+    - Volumetric Density Superiority & Interstitial Packing:
+      - Interstitial hydriding of $LaNi_5$ yields $LaNi_5H_6$ with a volumetric density of **$115.0\text{ kg } H_2/\text{m}^3$** — that is **$1.62\times$ denser than cryogenic liquid hydrogen** ($71\text{ kg/m}^3$ at $20\text{ K}$) and nearly **$3\times$ denser than $700\text{ bar}$ compressed gas** ($40\text{ kg/m}^3$) without cryogenic cooling or high pressures.
+      - Zero boil-off losses ($0.0\%/\text{day}$ vs $1.5\%/\text{day}$ for liquid cryogenic tanks) and minimal parasitic compression penalty ($1.8\%$ vs $15.4\%$ for 700 bar and $32.5\%$ for liquid cryo).
+    - Van 't Hoff Equilibrium Pressure Thermodynamics:
+      - $\ln(P_{eq}) = \frac{\Delta H}{R \cdot T} - \frac{\Delta S}{R}$.
+      - For $LaNi_5$ ($\Delta H = -30.8\text{ kJ/mol}$, $\Delta S = -108.0\text{ J/(mol K)}$), equilibrium plateau pressure at $25^\circ\text{C}$ is **$1.76\text{ bar}$**.
+    - Autothermal PEMFC Thermal Coupling:
+      - $LaNi_5$ desorption at $1.0\text{ bar}$ requires only $12.3^\circ\text{C}$.
+      - PEMFC fuel cell waste heat (cooling water at $65-80^\circ\text{C}$) provides $100\%$ of endothermic desorption enthalpy ($\Delta H_{des} = +30.8\text{ kJ/mol}$) with zero electric parasitic heating, achieving **PERFECT_MATCH_AUTOTHERMAL** balance.
+    - Multi-Hydride Material Matrix:
+      - Catalogs $LaNi_5$ ($1.4\text{ wt}\%$, room temperature), $TiMn_2$ ($1.8\text{ wt}\%$, fast automotive kinetics), $MgH_2$ ($7.6\text{ wt}\%$, $278^\circ\text{C}$ desorption for MSR molten salt heat coupling), $NaAlH_4$ ($5.5\text{ wt}\%$, complex alanate), and $LiBH_4$ ($18.5\text{ wt}\%$ world-record gravimetric borohydride).
+  - Created and passed Test Suite 278 (`test-metal-hydride-storage.mjs`, 5/5 passed).
+  - Implemented `MetalHydrideStorageVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Buồng Lưu Trữ Kim Loại Hydrua & Lưới Tinh Thể AB5 with interactive SVG diagram of interstitial hydride packing, thermal jackets, and real-time volumetric packing meters.
+    - Mode 2: Đường Đẳng Nhiệt Áp Suất - Thành Phần (Van 't Hoff PCT) with interactive temperature slider, equilibrium plateau curve, and enthalpy readouts.
+    - Mode 3: Ghép Nhiệt Thải Autothermal Pin Nhiên Liệu PEMFC & So Sánh 3 Công Nghệ with thermal loop balance diagram and side-by-side comparison matrix.
+  - Integrated `MetalHydrideStorageVisualizer` into `PeriodicCodexTab.tsx` under `'METAL_HYDRIDE_STORAGE'` with `Boxes` icon.
+  - Created and passed Test Suite 279 (`test-metal-hydride-storage-visualizer-ui.mjs`, 7/7 passed).
+  - TypeScript validation: 0 errors across entire workspace (`npx tsc --noEmit`).
+  - Production build: `dist/assets/index-Du9ARzEH.js` strictly maintained at 682.96 kB (134.30 kB gzip) and 0 warnings.
+  - Total test suites expanded to 279 / 279 with 100% pass rate.
