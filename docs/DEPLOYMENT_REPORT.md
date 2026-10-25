@@ -10,10 +10,11 @@
 
 - **Repository URL:** `https://github.com/ducnt2104/elementa.git`
 - **Branch triển khai:** `main`
-- **Commit Hash mới nhất:** `b768cfc2d9b3857a89302e12ed58525f387ea3c6`
+- **Commit Hash mới nhất:** `eb2d6874a8d1df99b3096577358b0b50fe9e93b7`
 - **Trạng thái Push:** **THÀNH CÔNG (Push verified against GitHub remote via `git ls-remote`)**
+- **Tự động hóa CI/CD:** `.github/workflows/deploy.yml` tích hợp quy trình kiểm tra `npm ci`, typecheck `npx tsc --noEmit`, đóng gói `npm run build`, chạy kiểm thử khói `npm run test:smoke` và triển khai tự động lên GitHub Pages.
 - **Bảo mật mã nguồn & Secret Leaks Prevention:**
-  - Kiểm tra toàn bộ 1.069 tệp tin được Git theo dõi (`git ls-files`).
+  - Kiểm tra toàn bộ 1.070 tệp tin được Git theo dõi (`git ls-files`).
   - **Kết quả:** Tuyệt đối không có file `.env`, file private key (`*.key`, `*.pem`), service account JSON, hay file database nhạy cảm (`*.db`, `*.db-shm`, `*.db-wal`) bị đẩy lên kho mã nguồn.
   - Tệp `.gitignore` được cấu hình toàn diện cho hệ sinh thái Node/Vite/Firebase/SQLite.
 
