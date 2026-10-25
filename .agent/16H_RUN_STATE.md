@@ -4,8 +4,8 @@
 **Start Timestamp:** `2026-10-24T22:48:50+07:00`  
 **6-Hour Milestone:** `2026-10-25T04:48:50+07:00`  
 **16-Hour Maximum:** `2026-10-25T14:48:50+07:00`  
-**Latest Checkpoint Timestamp:** `2026-10-25T13:38:00+07:00`  
-**Elapsed Real Time:** `14h 49m 10s` [PHASE D: 16-HOUR ABSOLUTE HORIZON CONVERGENCE & EXPANSION TO 379 TEST SUITES (ITERATIONS 106-115)]  
+**Latest Checkpoint Timestamp:** `2026-10-25T13:57:00+07:00`  
+**Elapsed Real Time:** `15h 08m 10s` [PHASE D: 16-HOUR ABSOLUTE HORIZON CONVERGENCE & EXPANSION TO 381 TEST SUITES (ITERATIONS 106-116)]  
 **Live Production URL:** `http://stellular-starship-a88f5a.netlify.app` / `http://creative-liger-68e227.netlify.app` (Password: `My-Drop-Site`)  
 **Git Repository:** `https://github.com/ducnt2104/elementa` (Branch: `main`)  
 **Recurring Checkpoint Schedule:** Enabled (`*/30 * * * *` via Antigravity daemon task `task-5800`)
@@ -50,14 +50,14 @@
 
 ---
 
-## 1. CURRENT AUDIT SUMMARY (T = 13h 22m)
+## 1. CURRENT AUDIT SUMMARY (T = 15h 08m)
 
 | Metric | Status | Details |
 | :--- | :---: | :--- |
-| **Active Test Suites** | 379 / 379 | 100% Passed (`node run-all-tests.mjs`) |
+| **Active Test Suites** | 381 / 381 | 100% Passed (`node run-all-tests.mjs`) |
 | **TypeScript Compilation** | 0 Errors | `tsc` clean (100% strict type safety) |
-| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 29.46s with 0 warnings |
-| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (2.06 MB), advanced (1.75 MB), curriculum (2.21 MB) |
+| **Vite Production Build** | Clean | Output in `dist/`, chunks split in 20.66s with 0 warnings |
+| **Code Splitting** | Optimized | Entry chunk 683.00 kB; visualizers split into energy (2.09 MB), advanced (1.75 MB), curriculum (2.21 MB) |
 | **Multiplayer Resilience** | Hardened | SSE exponential backoff reconnect + 2s polling fallback + room state reconciliation |
 | **CA-SRS Integration** | Integrated | Duel Defeat / Endgame screen linked to CA-SRS flashcards, review stats incremented |
 | **Chemical Engine** | Expanded | Organic pathways (PE polymerization, Bromine test, Methane, Cellulose) added |
@@ -2569,3 +2569,24 @@
   - TypeScript strict compilation verified (**0 errors**).
   - Production build compiled in 29.46s with main entry chunk strictly preserved at **683.00 kB** (0 warnings).
   - Total test suites expanded to **379 / 379 with 100% pass rate**.
+- **2026-10-25 20:58 (Iteration 116 Checkpoint — 15h 08m Real Time, 16-HOUR ABSOLUTE HORIZON CONVERGENCE)**:
+  - Implemented Subcritical Hydrothermal Liquefaction (HTL) & Wet Biomass Biocrude Refining in `src/domain/hydrothermalLiquefactionEngine.ts` strictly conforming to IUPAC thermochemical kinetics, subcritical hydrothermal solvation physics, and circular bioeconomy standards:
+    - Subcritical Water Solvation Physics ($300 - 350^\circ\text{C}$, $10 - 25\text{ MPa}$): Water dielectric constant drops from $78.5$ to $21.4$ (behaving like an organic solvent to dissolve non-polar lipids and triglycerides without extraction solvents), while $K_w$ increases by $1000\times$ (acting as an in-situ acid-base catalyst for rapid depolymerization).
+    - Zero-Drying Wet Feedstock Processing: Directly processes wet biomass slurries ($80 - 90\%$ moisture such as microalgae, sewage sludge, dairy manure, and swine wastewater), eliminating energy-intensive thermal drying and achieving a Net Energy Ratio ($NER$) of **$13.09$** and Energy Recovery Ratio ($ERR$) of **$75.1\%$**.
+    - 4-Phase Continuous Separation & SAF Refining:
+      - Biocrude Phase: Yields $884.2\text{ kg/hour}$ ($131\text{ barrels/day}$) with high heating value of **$36.5\text{ MJ/kg}$** ($83 - 87\%$ of petroleum crude), upgraded via hydrotreating into Drop-in Sustainable Aviation Fuel (SAF).
+      - Aqueous Nutrient Phase: Captures $78.0\%$ of nitrogen ($114.8\text{ kg } N/\text{h}$) and $65.0\%$ of phosphorus ($19.5\text{ kg } P/\text{h}$), recycled directly as nutrient broth for closed-loop algae cultivation ponds.
+      - Solid Hydrochar: High surface area biochar ($13.8\text{ MJ/kg}$) for agricultural soil amendment and permanent carbon sequestration.
+      - Biogenic Gas: $>85\% CO_2$ plus trace $CH_4$, routed to carbon capture or algae raceway sparging.
+    - Decarbonization Impact: Avoids **$22,283\text{ tons } CO_2/\text{year}$** with net biocrude production cost of **$\$58.50/\text{barrel}$** (competing favorably with fossil jet fuel under carbon pricing).
+  - Created and passed Test Suite 380 (`test-hydrothermal-liquefaction.mjs`, 4/4 passed).
+  - Implemented `HydrothermalLiquefactionVisualizer.tsx` with 3 interactive modes:
+    - Mode 1: Sơ Đồ Quy Trình HTL 4 Pha with dynamic SVG showing wet slurry feed pump, high-pressure preheater, subcritical HTL reactor ($320^\circ\text{C}$, $18\text{ MPa}$), flash depressurizer, 4-phase gravity separator, and nutrient recycle loop.
+    - Mode 2: Hóa Học Nước Siêu Tới Hạn with temperature slider ($280 - 360^\circ\text{C}$), pressure slider ($10 - 25\text{ MPa}$), dielectric constant meter, auto-catalysis $K_w$, and energy recovery ratio gauge.
+    - Mode 3: Kinh Tế Tuần Hoàn & Nhiên Liệu SAF with feedstock selector (Microalgae, Sewage Sludge, Swine Waste, Corn Stover), feed flow slider, biocrude barrels/day, avoided CO2 counters, and nutrient recovery stats.
+  - Integrated into `PeriodicCodexTab.tsx` under `'HYDROTHERMAL_LIQUEFACTION'` with `Droplets` icon.
+  - Created and passed Test Suite 381 (`test-hydrothermal-liquefaction-visualizer-ui.mjs`, 4/4 passed).
+  - Added `'HydrothermalLiquefaction'` to `energyKeywords` manual chunk in `vite.config.ts`.
+  - TypeScript strict compilation verified (**0 errors**).
+  - Production build compiled in 20.66s with main entry chunk strictly preserved at **683.00 kB** (0 warnings).
+  - Total test suites expanded to **381 / 381 with 100% pass rate**.
